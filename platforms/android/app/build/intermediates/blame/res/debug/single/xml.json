@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\xml\\app_config.xml",
+        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\xml\\app_config.xml"
+    },
+    {
+        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\xml\\config.xml",
+        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\android\\weexplugin\\unspecified\\res\\xml\\config.xml"
+    }
+]

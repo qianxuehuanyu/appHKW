@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_hkw.png",
+        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_hkw.png"
+    },
+    {
+        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_launcher.png",
+        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_huakewang.png",
+        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_huakewang.png"
+    }
+]
