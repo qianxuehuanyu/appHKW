@@ -1,18 +1,13 @@
 <template>
   <div class="main-tab">
     <div class="main-tab-nav">
-      <div class="main-tab-link" v-for="(item,index) in items" :class="{active: index === selectedIndex}" @click="selectTab(index, item.url)">
+      <div class="main-tab-link" v-for="(item,index) in items" :class="{'active-main-tab': index === selectedIndex}" @click="selectTab(index, item.url)">
         <template v-if="index !== 2">
-          <div class="main-tab-icon-box">
-            <img v-if="index===selectedIndex" class="main-tab-icon" :src="item.activeImg" />
-            <img v-else class="main-tab-icon" :src="item.img" />
-          </div>
+          <text class="main-tab-icon icon" :class="[item.icon, {'active-main-tab-icon': index===selectedIndex }]"></text>
           <text class="main-tab-title" :class="{'active-main-tab-text': index === selectedIndex}">{{item.title}}</text> 
         </template>
         <template v-if="index === 2">
-          <div class="main-tab-publish-tab">
-            <img class="main-tab-publish-icon" :src="item.img"  />
-          </div>
+          <text class="main-tab-publish-icon icon icon-minus"></text>
         </template>
       </div>  
     </div>
@@ -45,35 +40,30 @@
   export default {
     data () {
       return {
-        showPub: true,
+        showPub: false,
         selectedIndex: 0,
         items: [
           {
             title: '首页',
-            img: 'http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png',
-            activeImg: 'http://gtms04.alicdn.com/tps/i4/TB16jjPMpXXXXazXVXX9t7RGVXX-46-46.png',
+            icon: 'icon-plus',
             url: 'views/Home.js'
           },
           {
             title: '画客圈',
-            img: 'http://gtms03.alicdn.com/tps/i3/TB1LEn9MpXXXXaUXpXX9t7RGVXX-46-46.png',
-            activeImg: 'http://gtms02.alicdn.com/tps/i2/TB1qysbMpXXXXcnXXXX9t7RGVXX-46-46.png',
+            icon: 'icon-bell',
             url: 'views/Friends.js'
           },
           {
-            img: 'http://gtms03.alicdn.com/tps/i3/TB1LEn9MpXXXXaUXpXX9t7RGVXX-46-46.png',
-            activeImg: 'http://gtms02.alicdn.com/tps/i2/TB1qysbMpXXXXcnXXXX9t7RGVXX-46-46.png',
+            icon: 'icon-minus',
           },
           {
             title: '消息',
-            img: 'http://gtms01.alicdn.com/tps/i1/TB1B0v5MpXXXXcvXpXX9t7RGVXX-46-46.png',
-            activeImg: 'http://gtms04.alicdn.com/tps/i4/TB1NxY5MpXXXXcrXpXX9t7RGVXX-46-46.png',
+            icon: 'icon-message',
             url: 'views/Message.js'
           },
           {
             title: '我的',
-            img: '',
-            activeImg: '',
+            icon: 'icon-person',
             url: 'views/My.js'
           }
         ],
@@ -98,9 +88,6 @@
           }
         ]
       }
-    },
-    mounted () {
-      this.showPub = false
     },
     methods: {
       selectTab (index, url) {
@@ -138,41 +125,41 @@
     align-items: center;
     justify-content: center;
   }
-  .main-tab-icon-box{
+  .main-tab-icon{
     width: 50px;
     height: 50px;
+    line-height: 50px;
     margin-top: 10px;
     border-radius: 50%;
     border-style: solid;
     border-width: 1px;
     justify-content: center;
     align-items: center;
+    text-align: center;
   }
   .main-tab-icon{
-    width: 30px;
-    height: 30px;
+    font-size: 30px;
   }
   .main-tab-title{
     text-align: center;
-    height: 40px;
+    height: 30px;
     font-size: 22px;
   }
+  /* 选中样式 */
+  .active-main-tab-icon{
+    color: #fff;
+    border-color: grey;
+    background: grey;
+  }
   .active-main-tab-text{
-    color: #f00;
+    color: grey;
   }
   /* 发布按钮 */
-  .main-tab-publish-tab{
-    width: 90px;
-    height: 90px;
+  .main-tab-publish-icon{
     border-radius: 50%;
     border-style: solid;
     border-width: 1px;
-    justify-content: center;
-    align-items: center;
-  }
-  .main-tab-publish-icon{
-    width: 60px;
-    height: 60px;
+    font-size: 70px;
   }
   /* 弹出发布 */
   .main-tab-mask{

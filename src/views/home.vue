@@ -1,15 +1,18 @@
 <template>
   <div>
     <div class="header">
+      <!-- 顶部地址及按钮 -->
       <div class="header-top">
-        <text class="location">滨江区长河路351...</text>
+        <text class="icon icon-location" :style="{color: '#fff', fontSize: '28px'}"></text>
+        <text class="location">&nbsp;滨江区长河路351...</text>
         <div class="more">
-          <img class="search" src="http://t.cn/RGE3AJt" style="width: 40px; height: 40px; border-radius: 50%;"/>
-          <img class="person" src="http://t.cn/RGE3AJt" style="width: 40px; height: 40px; border-radius: 50%;"/>
+          <text class="icon icon-search" :style="{color: '#fff'}"></text>
+          <text class="icon icon-user" :style="{color: '#fff'}"></text>
         </div>
       </div>
+      <!-- 排序，筛选条件 -->
       <div class="header-filters">
-        <div class="distance item">
+        <div class="sort item">
           <div class="circle"><text style="color: #fff;">距离</text> </div> 
           <div class="text more-filters" ><text style="font-size: 40px; text-align: center;color: #fff;">&raquo;</text></div>
         </div>
@@ -27,24 +30,26 @@
         </div>
       </div>
     </div>
+    <!-- 设计师列表 -->
     <list class="main" @loadmore="fetch" loadmoreoffset="10">
       <cell class="designer" v-for="designer in lists">
         <div class="designer-info">
           <img class="designer-avatar" src="http://www.huakewang.com/uploads/2013/1018/20131018235643643644_thumb.jpg" />
           <div class="info">
             <div style="flex-direction: row;">
-              <text class="name">wadeyao</text>
-              <img class="sex" src="http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png" style="width: 30px; height: 30px;"/>  
+              <text class="name">wadeyao&nbsp;</text>
+              <text class="icon icon-male" style="color: #88bcde;font-size: 35px;"></text>
             </div>
-            <text class="num">8年经验|10作品|31231人喜欢</text>  
+            <text class="num" style="fontSize: 25px;margin-top: 5px;">8年经验|10作品|31231人喜欢</text>  
           </div>
           <div class="designer-location">
-            <img src="http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png" style="width: 30px; height: 30px;"/>
-            <text style="color: #999; font-size: 22px;">距离：200M</text>
+            <text class="icon icon-location" style="color: #999; font-size: 25px;"></text>
+            <text style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;距离：200M</text>
           </div>
         </div>
         <div class="designer-tags">
-          <text>平面设计师，界面设计师，交互设计师，GUI设计，极简主义，热爱设计...</text>
+          <text class="icon icon-idea2" style="color: #b6d4df; margin-right: 15px;margin-top: 5px;"></text>
+          <text class="tag-contents" style="fontSize: 25px;line-height: 40px;">平面设计师，界面设计师，交互设计师，GUI设计，极简主义，热爱设计...</text>
         </div>
         <div class="designer-works">
           <img class="work" src="http://www.huakewang.com/uploads/2013/1031/20131031002345161039_thumb.jpg" />
@@ -54,6 +59,7 @@
         </div>
       </cell>
     </list>
+    <!-- 导航栏 -->
     <main-tab></main-tab>
   </div>
 </template>
@@ -83,13 +89,25 @@
         }, 1000);
       }
     },
+    /* 引入字体图标ttf */
+    created () {
+      var domModule = weex.requireModule('dom')
+      domModule.addRule('fontFace', {
+        'fontFamily': 'iconfont',
+        'src': 'url(//at.alicdn.com/t/font_7rs29zefqvq85mi.ttf)'
+      })
+    },
     components: {
       mainTab
     }
   }
 </script>
 
+<!-- 引入字体图标样式 -->
+<style src="../common/fonts/iconfont.css"></style>
+
 <style scope>
+
   /* header */
   .header{
     width: 100%;
@@ -102,10 +120,11 @@
   .header-top{
     height: 80px;
     width: 100%;
+    margin-top: 10px;
     justify-content: center;
     flex-direction: row;
     position: relative;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
   }
   .location{
@@ -117,9 +136,15 @@
     top: 0;
     flex-direction: row;
     height: 80px;
-    width: 100px;
+    width: 120px;
     justify-content: space-around;
     align-items: center;
+  }
+  .icon-search,.icon-user{
+    border-radius: 50%;
+    border-width: 1px;
+    border-color: #fff;
+    font-size: 40px;
   }
   .header-filters{
     flex-direction: row;
@@ -153,7 +178,7 @@
   .more-filters{
     transform: rotate(90deg)
   }
-  /* main */
+  /* main 设计师列表 */
   .main{
     position: fixed;
     width: 100%;
@@ -189,6 +214,10 @@
   .designer-tags{
     padding-top: 10px;
     padding-bottom: 10px;
+    flex-direction: row;
+  }
+  .tag-contents{
+    flex: 1;
   }
   .designer-works{
     flex-wrap: wrap;

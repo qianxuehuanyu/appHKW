@@ -1,0 +1,78 @@
+/*  @font-face{
+ font-family:"iconfont";
+ src:url(iconfont.eot?t=1493948890382);
+ src:url(iconfont.eot?t=1493948890382#iefix) format('embedded-opentype'),
+ url(iconfont.woff?t=1493948890382) format('woff'),
+ url(iconfont.ttf?t=1493948890382) format('truetype'),
+ url(iconfont.svg?t=1493948890382#iconfont) format('svg')
+}  */
+  .icon{
+    font-family:"iconfont" !important;
+    font-size:30px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  } 
+
+  .icon-search2:before{content:"\e618"}
+  .icon-more:before{content:"\e677"}
+  .icon-net:before{content:"\e667"}
+  .icon-play:before{content:"\e614"}
+  .icon-left:before{content:"\e697"}
+  .icon-cart:before{content:"\e698"}
+  .icon-close:before{content:"\e69a"}
+  .icon-delete:before{content:"\e69d"}
+  .icon-edit:before{content:"\e69e"}
+  .icon-up:before{content:"\e6a5"}
+  .icon-down:before{content:"\e6a6"}
+  .icon-right:before{content:"\e6a7"}
+  .icon-pic:before{content:"\e6a8"}
+  .icon-refresh:before{content:"\e6aa"}
+  .icon-search:before{content:"\e6ac"}
+  .icon-selected:before{content:"\e6ad"}
+  .icon-setting4:before{content:"\e6ae"}
+  .icon-account:before{content:"\e6b8"}
+  .icon-add:before{content:"\e6b9"}
+  .icon-heart:before{content:"\e61b"}
+  .icon-message:before{content:"\e649"}
+  .icon-home:before{content:"\e626"}
+  .icon-design7:before{content:"\e602"}
+  .icon-scanning:before{content:"\e6ec"}
+  .icon-show:before{content:"\e642"}
+  .icon-design6:before{content:"\e619"}
+  .icon-hide:before{content:"\e73a"}
+  .icon-location:before{content:"\e612"}
+  .icon-design5:before{content:"\e60d"}
+  .icon-male2:before{content:"\e627"}
+  .icon-female2:before{content:"\e628"}
+  .icon-map:before{content:"\e715"}
+  .icon-bad:before{content:"\e716"}
+  .icon-good:before{content:"\e717"}
+  .icon-minus:before{content:"\e68d"}
+  .icon-hide1:before{content:"\e6af"}
+  .icon-female:before{content:"\e648"}
+  .icon-double-up:before{content:"\e601"}
+  .icon-male:before{content:"\e621"}
+  .icon-upload:before{content:"\e78a"}
+  .icon-double-left:before{content:"\e61c"}
+  .icon-double-down:before{content:"\e606"}
+  .icon-double-right:before{content:"\e607"}
+  .icon-note:before{content:"\e60a"}
+  .icon-design3:before{content:"\e695"}
+  .icon-design4:before{content:"\e64b"}
+  .icon-idea2:before{content:"\e605"}
+  .icon-bell:before{content:"\e631"}
+  .icon-flag:before{content:"\e638"}
+  .icon-setting:before{content:"\e657"}
+  .icon-setting3:before{content:"\e61f"}
+  .icon-person:before{content:"\e652"}
+  .icon-cup:before{content:"\e63a"}
+  .icon-plus:before{content:"\e632"}
+  .icon-design2:before{content:"\e60b"}
+  .icon-msg:before{content:"\e658"}
+  .icon-menu:before{content:"\e613"}
+  .icon-setting2:before{content:"\e617"}
+  .icon-zhuji:before{content:"\e691"}
+  .icon-idea:before{content:"\e61a"}
+  .icon-design1:before{content:"\e69f"}
+  .icon-user:before{content:"\e600"}
