@@ -74,6 +74,14 @@ const webConfig = {
     path: pathTo.join(__dirname, 'dist'),
     filename: '[name].web.js',
   },
+  resolve: {
+    extensions: ['', '.js', '.vue'],
+    fallback: [path.join(__dirname, './node_modules')],
+    alias: {
+      'views': path.resolve(__dirname, './src/views/'),
+      'common': path.resolve(__dirname, './src/common/')
+    }
+  },
   module: {
     // webpack 2.0 
     rules: [
@@ -99,6 +107,14 @@ const weexConfig = {
   output: {
     path: pathTo.join(__dirname, 'dist'),
     filename: '[name].js',
+  },
+  resolve: {
+    extensions: ['', '.js', '.vue'],
+    fallback: [path.join(__dirname, './node_modules')],
+    alias: {
+      'views': path.resolve(__dirname, './src/views/'),
+      'common': path.resolve(__dirname, './src/common/')
+    }
   },
   module: {
     rules: [
