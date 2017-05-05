@@ -30,7 +30,7 @@
       var domModule = weex.requireModule('dom')
       domModule.addRule('fontFace', {
         'fontFamily': 'iconfont',
-        'src': 'url(//at.alicdn.com/t/font_7rs29zefqvq85mi.ttf)'
+        'src': 'url(//at.alicdn.com/t/font_nvmf3cs5umrvygb9.ttf)'
       })
     },
     components: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header">
+    <div class="header" >
       <!-- 顶部地址及按钮 -->
       <div class="header-top">
         <text class="icon icon-location"></text>
@@ -10,23 +10,36 @@
           <text class="icon icon-user"></text>
         </div>
       </div>
-      <!-- 排序，筛选条件 -->
-      <div class="header-filters">
-        <div class="sort item">
-          <div class="circle"><text style="color: #fff;">距离</text> </div> 
-          <div class="text more-filters" ><text style="font-size: 40px; text-align: center;color: #fff;">&raquo;</text></div>
-        </div>
-        <div v-for="item in items" class="item">
-          <div class="circle">
-            <img class="" src="http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png" style="width: 30px; height: 30px;"/>
+      <div class="header-main" >
+        <!-- 排序： 距离/最新/最热 -->
+        <div class="header-sort">
+          <div class="item" style="position: relative;">
+            <div class="sort" style="position: absolute; top: 0;z-index: 1;overflow:hidden;">
+              <transition-group name="sort-slidedown">
+                <div v-for="(sort,index) in sortItems" v-show="index === 0 || showSort " class="circle" :class="'sort'+index" style="background: #3e9bd7;border-color: #3e9bd7;" key="index">
+                  <text  style="color: #fff;font-size: 28px;" :class="sort.class" @click="selectSort(index)">{{sort.name}}</text>
+                </div> 
+              </transition-group>
+            </div>
+            <div class="text" :class="{'fold': showMoreFilter}" style="margin-top: 80px;transition: all 0.5s ease;" @click="toggleFilters"><text class="icon icon-double-down" style="text-align: center;color: #fff;line-height: 60px;"></text></div>
           </div>
-          <div class="text">
-            <text style="font-size: 20px; text-align: center;color: #fff;">{{item}}</text>
+        </div>
+        <!-- 筛选：各种类型 -->
+        <div class="header-filters" :class="{'unfolder-filters': showMoreFilter}">
+          <div v-for="(filter,index) in filterItems" class="item" >
+            <div class="circle" :class="{'active-filter': filter.selected}" @click="selectFilter(index)" >
+              <text class="icon" :class="filter.icon" style="color: #fff; font-size: 50px;"></text>
+            </div>
+            <div class="text">
+              <text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">{{filter.name}}</text>
+            </div>
           </div>
         </div>
-        <div class="add item">
-          <div class="circle"><text style="color: #fff; font-size: 80px;">+</text></div>
-          <div class="text"><text style="font-size: 20px; text-align: center;color: #fff;">添加</text></div>
+        <div class="header-add">
+          <div class="add item">
+            <div class="circle"><text class="icon icon-add" style="color: #fff; font-size: 80px;"></text></div>
+            <div class="text"><text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">添加</text></div>
+          </div>
         </div>
       </div>
     </div>
@@ -75,7 +88,47 @@
   export default {
     data () {
       return {
-        items: ['平面设计', '网站设计', '界面设计', '工业设计', '室内设计'],
+        sort: '距离',
+        showSort: false,
+        sortItems: [
+          {name: '距离', class: ''},
+          {name: '最新', class: ''}, 
+          {name: '最热', class: ''}, 
+          {name: '', class: 'icon icon-menu'}
+        ],
+        showMoreFilter: false,
+        filterItems: [
+          {
+            name: '平面设计',
+            icon: 'icon-design8',
+            selected: false
+          },
+          {
+            name: '网站设计',
+            icon: 'icon-net',
+            selected: false
+          },
+          {
+            name: '界面设计',
+            icon: 'icon-design1',
+            selected: false
+          }, 
+          {
+            name: '工业设计',
+            icon: 'icon-design6',
+            selected: false
+          }, 
+          {
+            name: '室内设计',
+            icon: 'icon-home',
+            selected: false
+          },
+          {
+            name: '互联网设计',
+            icon: 'icon-home',
+            selected: false
+          }
+        ],
         showLoading: false,
         lists: [1, 2, 3, 4, 5]
       }
@@ -93,6 +146,19 @@
       jump (url) {
         let base = getBaseURL(weex)
         event.openURL(base + url)
+      },
+      selectSort (index) {
+        this.showSort = !this.showSort
+        if (index === 0) return false
+        this.sort = this.sortItems[index].name
+        this.sortItems.unshift(this.sortItems.splice(index, 1)[0])
+      },
+      selectFilter (index) {
+        let filter = this.filterItems[index]
+        filter.selected = !filter.selected
+      },
+      toggleFilters () {
+        this.showMoreFilter = !this.showMoreFilter
       }
     },
     /* 引入字体图标ttf */
@@ -100,7 +166,7 @@
       var domModule = weex.requireModule('dom')
       domModule.addRule('fontFace', {
         'fontFamily': 'iconfont',
-        'src': 'url(//at.alicdn.com/t/font_7rs29zefqvq85mi.ttf)'
+        'src': 'url(//at.alicdn.com/t/font_nvmf3cs5umrvygb9.ttf)'
       })
     },
     components: {
@@ -117,11 +183,12 @@
   /* header */
   .header{
     width: 100%;
-    height: 280px;
+    /*overflow: hidden;*/
     background: #1d205a;
     position: fixed;
     z-index: 1;
     top: 0;
+    padding-bottom: 50px;
   }
   .header-top{
     height: 80px;
@@ -163,20 +230,57 @@
     text-align: center;
     color: #fff;
   }
-  .header-filters{
+  .header-main{
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     padding-top: 25px;
     padding-left: 20px;
     padding-right: 20px;
+  }
+  .header-sort{
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .fold{
+    transform: translateY(160px) rotate(180deg);
+  }
+  .header-filters{
+    flex: 5;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+    overflow: hidden;
+    height: 130px;
+    transition: all 0.5s linear;
+  }
+  .unfolder-filters{
+    height: 280px;
+  }
+  .header-add{
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .sort{
+    position: relative;
+    transition: all 0.5s ease;
+  }
+  .sort0{
+    position: relative;
+    z-index: 2;
   }
   .item{
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 80px;
-    height: 120px;
+    height: 140px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-bottom: 20px;
   }
   .circle{
     width: 80px;
@@ -189,8 +293,11 @@
   }
   .text{
     width: 80px;
-    height: 40px;
-    margin-top: 20px;
+    height: 60px;
+  }
+  .active-filter{
+    background: #3e9bd7;
+    border-color: #3e9bd7;
   }
   .more-filters{
     transform: rotate(90deg)
@@ -245,5 +352,12 @@
     width: 45%;
     height: 200px;
     margin-bottom: 20px;
+  }
+  /* 过渡 */
+  .sort-slidedown-enter,.sort-slidown-leave-active{
+    transform: translateY(-80px);
+  }
+  .sort-slidedown-enter-active,.sort-slidown-leave-active{
+    transition: all 0.2s linear;
   }
 </style>
