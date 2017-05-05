@@ -7,18 +7,20 @@
 </template>
 
 <script>
-  var getBaseURL = require('./common/util.js').getBaseURL
-  var event = weex.requireModule('event')
+  import {setBundleUrl} from './common/util.js'
+  const navigator = weex.requireModule('navigator')
 
-  module.exports = {
+  export default {
     data: {
       username: '',
       password: ''
     },
     methods: {
       login () {
-        var base = getBaseURL(weex)
-        event.openURL(base+'views/Home.js')
+        const baseurl = this.$getConfig().bundleUrl
+        navigator.push({
+          url: setBundleUrl(baseurl, 'Home.js')
+        })
       }
     }
   }

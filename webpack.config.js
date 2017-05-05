@@ -75,11 +75,11 @@ const webConfig = {
     filename: '[name].web.js',
   },
   resolve: {
-    extensions: ['', '.js', '.vue'],
-    fallback: [path.join(__dirname, './node_modules')],
+    extensions: ['.js', '.vue'],
     alias: {
-      'views': path.resolve(__dirname, './src/views/'),
-      'common': path.resolve(__dirname, './src/common/')
+      'common': pathTo.resolve(__dirname, './src/common/'),
+      'views': pathTo.resolve(__dirname, './src/views/'),
+      'components': pathTo.resolve(__dirname, './src/components/')
     }
   },
   module: {
@@ -109,11 +109,11 @@ const weexConfig = {
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['', '.js', '.vue'],
-    fallback: [path.join(__dirname, './node_modules')],
+    extensions: ['.js', '.vue'],
     alias: {
-      'views': path.resolve(__dirname, './src/views/'),
-      'common': path.resolve(__dirname, './src/common/')
+      'common': pathTo.resolve(__dirname, './src/common/'),
+      'views': pathTo.resolve(__dirname, './src/views/'),
+      'components': pathTo.resolve(__dirname, './src/components/')
     }
   },
   module: {

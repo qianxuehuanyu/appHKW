@@ -33,9 +33,8 @@
 </template>
 
 <script>
-  // var getBaseURL = require('../common/util.js').getBaseURL
-  // var base = getBaseURL(weex)
-  // var event = weex.requireModule('event')
+  import {setBundleUrl} from '../common/util.js'
+  const navigator = weex.requireModule('navigator')
 
   export default {
     data () {
@@ -46,12 +45,12 @@
           {
             title: '首页',
             icon: 'icon-plus',
-            url: 'views/Home.js'
+            url: 'Home.js'
           },
           {
             title: '画客圈',
             icon: 'icon-bell',
-            url: 'views/Friends.js'
+            url: 'Friends.js'
           },
           {
             icon: 'icon-minus',
@@ -59,12 +58,12 @@
           {
             title: '消息',
             icon: 'icon-message',
-            url: 'views/Message.js'
+            url: 'Message.js'
           },
           {
             title: '我的',
             icon: 'icon-person',
-            url: 'views/My.js'
+            url: 'My.js'
           }
         ],
         publishLinks: [
@@ -99,7 +98,10 @@
         }
       },
       jump (url) {
-        console.log(url)
+        const baseurl = this.$getConfig().bundleUrl
+        navigator.push({
+          url: setBundleUrl(baseurl, url)
+        })
       }
     }
   }

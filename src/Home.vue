@@ -3,11 +3,11 @@
     <div class="header">
       <!-- 顶部地址及按钮 -->
       <div class="header-top">
-        <text class="icon icon-location" :style="{color: '#fff', fontSize: '28px'}"></text>
+        <text class="icon icon-location"></text>
         <text class="location">&nbsp;滨江区长河路351...</text>
         <div class="more">
-          <text class="icon icon-search" :style="{color: '#fff'}"></text>
-          <text class="icon icon-user" :style="{color: '#fff'}"></text>
+          <text class="icon icon-search"></text>
+          <text class="icon icon-user"></text>
         </div>
       </div>
       <!-- 排序，筛选条件 -->
@@ -65,9 +65,11 @@
 </template>
 
 <script>
-  import mainTab from '../components/main-tab.vue'
+  import mainTab from './components/main-tab.vue'
+  import {getBaseURL} from './common/util.js'
 
   const modal = weex.requireModule('modal')
+  const event = weex.requireModule('event')
   const LOADMORE_COUNT = 4
 
   export default {
@@ -87,6 +89,10 @@
             this.lists.push(i+1)
           }
         }, 1000);
+      },
+      jump (url) {
+        let base = getBaseURL(weex)
+        event.openURL(base + url)
       }
     },
     /* 引入字体图标ttf */
@@ -104,7 +110,7 @@
 </script>
 
 <!-- 引入字体图标样式 -->
-<style src="../common/fonts/iconfont.css"></style>
+<style src="./common/fonts/iconfont.css"></style>
 
 <style scope>
 
@@ -129,6 +135,12 @@
   }
   .location{
     color: #fff;
+    font-size: 40px;
+  }
+  .icon-location{
+    color: #fff;
+    font-size: 25px;
+    margin-top: 5px;
   }
   .more{
     position: absolute;
@@ -144,7 +156,12 @@
     border-radius: 50%;
     border-width: 1px;
     border-color: #fff;
-    font-size: 40px;
+    font-size: 25px;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    color: #fff;
   }
   .header-filters{
     flex-direction: row;
