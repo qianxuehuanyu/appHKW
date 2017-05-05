@@ -2,7 +2,7 @@
   <div>
     <text>消息</text>
     <!-- 导航栏 -->
-    <main-tab></main-tab>
+    <main-tab :selectedIndex="3"></main-tab>
   </div>
 </template>
 

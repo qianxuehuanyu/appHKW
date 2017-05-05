@@ -37,10 +37,10 @@
   const navigator = weex.requireModule('navigator')
 
   export default {
+    props: ['selectedIndex'],
     data () {
       return {
         showPub: false,
-        selectedIndex: 0,
         items: [
           {
             title: '首页',
@@ -87,6 +87,9 @@
           }
         ]
       }
+    },
+    mounted () {
+
     },
     methods: {
       selectTab (index, url) {

@@ -2,7 +2,7 @@
   <div>
     <text>画客圈</text>
     <!-- 导航栏 -->
-    <main-tab></main-tab>
+    <main-tab :selectedIndex="1"></main-tab>
   </div>
 </template>
 

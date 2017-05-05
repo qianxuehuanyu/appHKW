@@ -1,45 +1,3 @@
-export function getBaseURL(vm) {
-  var bundleUrl = weex.config.bundleUrl;
-  console.log(`eex.config=${JSON.stringify(weex.config)}`);
-  var nativeBase;
-  if (isAndroid()) {
-     console.log('isAndroid');
-    nativeBase = 'file://assets/';
-  } else if (isiOS()) {
-    console.log('isiOS');
-    // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
-    // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
-    nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
-  } else {
-    console.log('web');
-    var host = 'localhost:8080';
-    var matches = /\/\/([^\/]+?)\//.exec(bundleUrl);
-    if (matches && matches.length >= 2) {
-      host = matches[1];
-    }
-    nativeBase = 'http://' + host + '/'  + '/build/';
-  }
-  console.log('nativeBase='+nativeBase);
-  var h5Base = './weex.html?page=./dist/';
-  // in Native
-  var base = nativeBase;
-  if (typeof window === 'object') {
-    // in Browser or WebView
-    base = h5Base;
-  }
-  console.log(`getPlatform()=${getPlatform()}`);
-  console.log(`base=${base}`);
-  return base
-}
-
-export function isAndroid () {
-  if(getPlatform() == 'Android'|| getPlatform() == 'android') {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 export function isiOS () {
   console.log(getPlatform() == 'iOS');
   return getPlatform() == 'iOS';
@@ -68,50 +26,51 @@ export function getScreenHeight() {
   return weex.config.deviceHeight;
 }
 
-export function setBundleUrl(url, jsFile) {
-    const bundleUrl = url;
-    let host = '';
-    let path = '';
-    let nativeBase;
-    const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0;
-    const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
-    if (isAndroidAssets) {
-      nativeBase = 'file://assets/dist';
-    } else if (isiOSAssets) {
-      // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
-      // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
-      nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
-    } else {
-      const matches = /\/\/([^\/]+?)\//.exec(bundleUrl);
-      const matchFirstPath = /\/\/.+\/([^\/]+?)\//.exec(bundleUrl);
-      if (matches && matches.length >= 2) {
-        host = matches[1];
-      }
-      if (matchFirstPath && matchFirstPath.length >= 2) {
-        path = matchFirstPath[1];
-      }
-      nativeBase = 'http://' + host + '/';
-    }
-    const h5Base = './index.html?page=';
-    // in Native
-    let base = nativeBase;
-    if (typeof navigator !== 'undefined' && (navigator.appCodeName === 'Mozilla' || navigator.product === 'Gecko')) {
-      // check if in weexpack project
-      if (path === 'web' || path === 'dist') {
-        base = h5Base + '/dist/';
-      } else {
-        base = h5Base + '';
-      }
-    } else {
-      base = nativeBase + path + '/';
-    }
+export function getUrlParam(url, key) {
+  const reg = new RegExp('[?|&]' + key + '=([^&]+)');
+  const match = url.match(reg);
+  return match && match[1];
+}
 
-    const newUrl = base + jsFile;
-    return newUrl;
+export function setBundleUrl(url, jsFile) {
+  const bundleUrl = url;
+  let host = '';
+  let path = '';
+  let nativeBase;
+  const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0;
+  const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
+  if (isAndroidAssets) {
+    nativeBase = 'file://assets/dist';
+  } else if (isiOSAssets) {
+    // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
+    // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
+    nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
+  } else {
+    const matches = /\/\/([^\/]+?)\//.exec(bundleUrl);
+    const matchFirstPath = /\/\/.+\/([^\/]+?)\//.exec(bundleUrl);
+    if (matches && matches.length >= 2) {
+      host = matches[1];
+    }
+    if (matchFirstPath && matchFirstPath.length >= 2) {
+      path = matchFirstPath[1];
+    }
+    nativeBase = 'http://' + host + '/';
   }
-  
-  export function getUrlParam(url, key) {
-    const reg = new RegExp('[?|&]' + key + '=([^&]+)');
-    const match = url.match(reg);
-    return match && match[1];
+  const h5Base = './index.html?page=';
+  // in Native
+  let base = nativeBase;
+  if (typeof navigator !== 'undefined' && (navigator.appCodeName === 'Mozilla' || navigator.product === 'Gecko')) {
+    // check if in weexpack project
+    if (path === 'web' || path === 'dist') {
+      base = h5Base + '/dist/';
+    } else {
+      base = h5Base + '';
+    }
+  } else {
+    base = nativeBase + path + '/';
   }
+
+  const newUrl = base + jsFile;
+  return newUrl;
+}
+

@@ -60,7 +60,7 @@
       </cell>
     </list>
     <!-- 导航栏 -->
-    <main-tab></main-tab>
+    <main-tab :selectedIndex="0"></main-tab>
   </div>
 </template>
 
