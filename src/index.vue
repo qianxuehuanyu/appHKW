@@ -28,7 +28,6 @@
 
 <style scope>
   .login{
-    margin-top: 200px;
     justify-content: center;
     align-items: center;
   }

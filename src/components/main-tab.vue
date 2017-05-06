@@ -130,6 +130,9 @@
     align-items: center;
     justify-content: center;
   }
+  .active-main-tab{
+    flex: 1;
+  }
   .main-tab-icon{
     width: 50px;
     height: 50px;
