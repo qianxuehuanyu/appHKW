@@ -30,7 +30,7 @@
       var domModule = weex.requireModule('dom')
       domModule.addRule('fontFace', {
         'fontFamily': 'iconfont',
-        'src': 'url(//at.alicdn.com/t/font_nvmf3cs5umrvygb9.ttf)'
+        'src': 'url(/src/fonts/iconfont.ttf)'
       })
     },
     components: {
@@ -40,7 +40,7 @@
 </script>
 
 <!-- 引入字体图标样式 -->
-<style src="./common/fonts/iconfont.css"></style>
+<style src="./fonts/iconfont.css"></style>
 
 <style scope>
     

@@ -1,6 +1,8 @@
 const pathTo = require('path');
 const fs = require('fs-extra');
 const webpack = require('webpack');
+const TransferWebpackPlugin = require('transfer-webpack-plugin')
+const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 const entry = {};
 const weexEntry = {};
@@ -65,94 +67,84 @@ const plugins = [
     banner: '// { "framework": ' + (fileType === '.vue' ? '"Vue"' : '"Weex"') + '} \n',
     raw: true,
     exclude: 'Vue'
-  })
+  }),
+  // 复制指定目录
+  new TransferWebpackPlugin([
+    {from: './src/fonts', to: 'fonts'}
+  ], pathTo.resolve(__dirname)),
+  // 热更新
+  // new webpack.HotModuleReplacementPlugin()
+  // 自动打开浏览器
+  // new OpenBrowserPlugin({
+  //     url: 'http://localhost:8080'
+  // })
 ];
-const webConfig = {
-  context: pathTo.join(__dirname, ''),
-  entry: entry,
-  output: {
-    path: pathTo.join(__dirname, 'dist'),
-    filename: '[name].web.js',
-  },
-  resolve: {
-    extensions: ['.js', '.vue'],
-    alias: {
-      'common': pathTo.resolve(__dirname, './src/common/'),
-      'views': pathTo.resolve(__dirname, './src/views/'),
-      'components': pathTo.resolve(__dirname, './src/components/')
-    }
-  },
-  module: {
-    // webpack 2.0 
-    rules: [
-      {
-        test: /\.js$/,
-        use: [{
-          loader: 'babel-loader'
-        }],
-        exclude: /node_modules/
-      },
-      {
-        test: /\.vue(\?[^?]+)?$/,
-        use: [{
-          loader: 'vue-loader'
-        }]
+function getBaseConfig () {
+  return {
+    context: pathTo.join(__dirname, ''),
+    entry: entry,
+    output: {
+      path: pathTo.join(__dirname, 'dist'),
+      filename: '[name].web.js',
+    },
+    resolve: {
+      extensions: ['.js', '.vue'],
+      alias: {
+        'src': pathTo.resolve(__dirname, './src'),
+        'common': pathTo.resolve(__dirname, './src/common/'),
+        'views': pathTo.resolve(__dirname, './src/views/'),
+        'components': pathTo.resolve(__dirname, './src/components/')
       }
-    ]
-  },
-  devServer: {
-    contentBase: './',
-    open: true,
-    port: 8080,
-    inline: true
-  },
-  plugins: plugins
-};
-const weexConfig = {
-  entry: weexEntry,
-  output: {
-    path: pathTo.join(__dirname, 'dist'),
-    filename: '[name].js',
-  },
-  resolve: {
-    extensions: ['.js', '.vue'],
-    alias: {
-      'common': pathTo.resolve(__dirname, './src/common/'),
-      'views': pathTo.resolve(__dirname, './src/views/'),
-      'components': pathTo.resolve(__dirname, './src/components/')
-    }
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        use: [{
-          loader: 'babel-loader',
-        }],
-        exclude: /node_modules/
-      },
-      {
-        test: /\.vue(\?[^?]+)?$/,
-        use: [{
-          loader: 'weex-loader'
-        }]
-      },
-      {
-        test: /\.we(\?[^?]+)?$/,
-        use: [{
-          loader: 'weex-loader'
-        }]
-      }
-    ]
-  },
-  devServer: {
-    contentBase: './',
-    open: true,
-    port: 8080,
-    inline: true
-  },
-  plugins: plugins,
-};
+    },
+    module: {
+      // webpack 2.0 
+      rules: [
+        {
+          test: /\.js$/,
+          use: [{
+            loader: 'babel-loader'
+          }],
+          exclude: /node_modules/
+        },
+        {
+          test: /\.vue(\?[^?]+)?$/,
+          use: []
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+          loader: 'url-loader',
+          query: {
+            limit: 10000,
+            name: 'img/[name].[ext]'
+          }
+        },
+        {
+          test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+          loader: 'url-loader',
+          query: {
+            limit: 10000,
+            name: 'common/fonts/[name].[ext]'
+          }
+        }
+      ]
+    },
+    devServer: {
+      contentBase: './',
+      open: true,
+      port: 8080,
+      inline: true
+    },
+    plugins: plugins
+  }
+}
+
+var webConfig = getBaseConfig()
+webConfig.output.filename = '[name].web.js'
+webConfig.module.rules[1].use.push({loader: 'vue-loader'})
+
+var weexConfig = getBaseConfig()
+weexConfig.output.filename = '[name].js'
+weexConfig.module.rules[1].use.push({loader: 'weex-loader'})
 
 var exports = [webConfig, weexConfig];
 

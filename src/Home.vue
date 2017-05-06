@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header" >
+    <div class="header" :style="{'background-image': 'url(/dist/'+bg+')'}">
       <!-- 顶部地址及按钮 -->
       <div class="header-top">
         <text class="icon icon-location"></text>
@@ -88,6 +88,7 @@
   export default {
     data () {
       return {
+        bg: require('./img/bg.png'),
         sort: '距离',
         showSort: false,
         sortItems: [
@@ -165,11 +166,13 @@
     },
     /* 引入字体图标ttf */
     created () {
-      var domModule = weex.requireModule('dom')
+      const baseurl = this.$getConfig().bundleUrl
+      const domModule = weex.requireModule('dom')
       domModule.addRule('fontFace', {
         'fontFamily': 'iconfont',
-        'src': 'url(//at.alicdn.com/t/font_nvmf3cs5umrvygb9.ttf)'
+        'src': 'url(/src/fonts/iconfont.ttf)'
       })
+      console.log(this.bg)
     },
     components: {
       mainTab
@@ -178,7 +181,7 @@
 </script>
 
 <!-- 引入字体图标样式 -->
-<style src="./common/fonts/iconfont.css"></style>
+<style src="./fonts/iconfont.css"></style>
 
 <style scope>
 
@@ -186,11 +189,12 @@
   .header{
     width: 100%;
     /*overflow: hidden;*/
-    background: #1d205a;
     position: fixed;
     z-index: 1;
     top: 0;
     padding-bottom: 50px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%; 
   }
   .header-top{
     height: 80px;
@@ -245,7 +249,7 @@
     align-items: center;
   }
   .fold{
-    transform: translateY(160px) rotate(180deg);
+    transform: translateY(100px) rotate(180deg);
   }
   .header-filters{
     flex: 5;
@@ -308,7 +312,7 @@
   .main{
     position: fixed;
     width: 100%;
-    top: 280px;
+    top: 325px;
     bottom: 100px;
   }
   .designer{
