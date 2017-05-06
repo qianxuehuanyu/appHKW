@@ -100,6 +100,12 @@ const webConfig = {
       }
     ]
   },
+  devServer: {
+    contentBase: './',
+    open: true,
+    port: 8080,
+    inline: true
+  },
   plugins: plugins
 };
 const weexConfig = {
@@ -138,6 +144,12 @@ const weexConfig = {
         }]
       }
     ]
+  },
+  devServer: {
+    contentBase: './',
+    open: true,
+    port: 8080,
+    inline: true
   },
   plugins: plugins,
 };

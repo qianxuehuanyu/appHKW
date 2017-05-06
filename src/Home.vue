@@ -79,10 +79,10 @@
 
 <script>
   import mainTab from './components/main-tab.vue'
-  import {getBaseURL} from './common/util.js'
+  import {setBundleUrl} from './common/util.js'
 
   const modal = weex.requireModule('modal')
-  const event = weex.requireModule('event')
+  const navigator = weex.requireModule('navigator')
   const LOADMORE_COUNT = 4
 
   export default {
@@ -144,8 +144,10 @@
         }, 1000);
       },
       jump (url) {
-        let base = getBaseURL(weex)
-        event.openURL(base + url)
+        const baseurl = this.$getConfig().bundleUrl
+        navigator.push({
+          url: setBundleUrl(baseurl, url)
+        })
       },
       selectSort (index) {
         this.showSort = !this.showSort

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "build_plugin": "webpack --config ./tools/webpack.config.plugin.js --color",
-    "dev": "webpack --watch",
+    "dev": "webpack-dev-server --devtool eval-source-map --progress --colors --hot",
     "serve": "serve -p 12580"
   },
   "keywords": [
