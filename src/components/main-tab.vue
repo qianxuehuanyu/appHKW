@@ -19,7 +19,11 @@
       <div class="main-tab-publish" v-show="showPub">
         <div class="main-publish-nav">
           <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
-            <img class="main-publish-icon" :src="link.img"/>
+            <div class="main-publish-icon" :style="{
+                'background-image': 'url('+ link.img +')',
+                'background-repeat': 'no-repeat',
+                'background-size': 'contain'
+              }"></div>
             <div class="main-publish-info">
               <text class="main-publish-title">{{link.title}}</text>  
               <text class="main-publish-desc">{{link.desc}}</text>  
@@ -45,12 +49,12 @@
           {
             title: '首页',
             icon: 'icon-plus',
-            url: 'Home.js'
+            url: 'home.js'
           },
           {
             title: '画客圈',
             icon: 'icon-bell',
-            url: 'Friends.js'
+            url: 'friends.js'
           },
           {
             icon: 'icon-minus',
@@ -58,31 +62,31 @@
           {
             title: '消息',
             icon: 'icon-message',
-            url: 'Message.js'
+            url: 'message.js'
           },
           {
             title: '我的',
             icon: 'icon-person',
-            url: 'My.js'
+            url: 'my.js'
           }
         ],
         publishLinks: [
           {
             title: '一句话发需求',
             desc: '智能匹配最合适的设计师',
-            img: 'http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png',
+            img: require('../img/faxvqiu.png'),
             url: ''
           },
           {
             title: '秀作品',
             desc: '是金子 就是要让它发光',
-            img: 'http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png',
+            img: require('../img/xiuzuopin.png'),
             url: ''
           },
           {
             title: '云报价',
             desc: '一键合同，分享支付，快速订单',
-            img: 'http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png',
+            img: require('../img/yunbaojia.png'),
             url: ''
           }
         ]
@@ -117,7 +121,7 @@
     z-index: 10;
     height: 100px;
     bottom: 0;
-    width: 100%;
+    left: 0;
     flex-direction: row;
     height: 100px;
     background-color: #f7f7f7;
@@ -168,12 +172,15 @@
     border-style: solid;
     border-width: 1px;
     font-size: 70px;
+    width: 72px;
+    height: 72px;
   }
   /* 弹出发布 */
   .main-tab-mask{
     position: fixed;
     z-index: 1;
     top: 0px;
+    left: 0;
     bottom: 100px;
     width: 100%;
     background-color: rgba(0,0,0,0.5);
@@ -184,6 +191,7 @@
     bottom: 100px;
     width: 100%;
     z-index: 2;
+    left: 0;
   }
   .main-publish-nav{
     padding-left: 30px;
@@ -240,7 +248,7 @@
   }
   .main-tab-pub-slide-enter-active,
   .main-tab-pub-slide-leave-active{
-    transition: all linear 0.5s;
+    transition: all linear 0.3s;
   }
   .main-tab-mask-fade-enter,
   .main-tab-mask-fade-leave-active{
@@ -248,6 +256,6 @@
   }
   .main-tab-mask-fade-enter-active,
   .main-tab-mask-fade-leave-active{
-    transition: all linear 0.5s;
+    transition: all linear 0.3s;
   }
 </style>

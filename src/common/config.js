@@ -1,0 +1,1 @@
+export const iconfont = '/src/fonts/iconfont.ttf' 

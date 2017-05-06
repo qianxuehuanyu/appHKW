@@ -1,3 +1,3 @@
-var App = require('..\\src\\Friends.vue')
+var App = require('..\\src\\friends.vue')
 App.el = '#root'
 new Vue(App)

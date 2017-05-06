@@ -19,7 +19,7 @@
       login () {
         const baseurl = this.$getConfig().bundleUrl
         navigator.push({
-          url: setBundleUrl(baseurl, 'Home.js')
+          url: setBundleUrl(baseurl, 'home.js')
         })
       }
     }

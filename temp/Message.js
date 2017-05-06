@@ -1,3 +1,3 @@
-var App = require('..\\src\\Message.vue')
+var App = require('..\\src\\message.vue')
 App.el = '#root'
 new Vue(App)

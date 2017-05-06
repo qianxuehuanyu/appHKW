@@ -80,6 +80,7 @@
 <script>
   import mainTab from './components/main-tab.vue'
   import {setBundleUrl} from './common/util.js'
+  import {iconfont} from './common/config.js'
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
@@ -170,9 +171,8 @@
       const domModule = weex.requireModule('dom')
       domModule.addRule('fontFace', {
         'fontFamily': 'iconfont',
-        'src': 'url(/src/fonts/iconfont.ttf)'
+        'src': 'url(' + iconfont + ')'
       })
-      console.log(this.bg)
     },
     components: {
       mainTab
@@ -192,6 +192,7 @@
     position: fixed;
     z-index: 1;
     top: 0;
+    left: 0;
     padding-bottom: 50px;
     background-repeat: no-repeat;
     background-size: 100% 100%; 
@@ -313,6 +314,7 @@
     position: fixed;
     width: 100%;
     top: 325px;
+    left: 0;
     bottom: 100px;
   }
   .designer{

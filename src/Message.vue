@@ -8,10 +8,11 @@
 
 <script>
   import mainTab from './components/main-tab.vue'
-  import {getBaseURL} from './common/util.js'
+  import {setBundleUrl} from './common/util.js'
+  import {iconfont} from './common/config.js'
 
   const modal = weex.requireModule('modal')
-  const event = weex.requireModule('event')
+  const navigator = weex.requireModule('navigator')
 
   export default {
     data () {
@@ -21,8 +22,10 @@
     },
     methods: {
       jump (url) {
-        let base = getBaseURL(weex)
-        event.openURL(base + url)
+        const baseurl = this.$getConfig().bundleUrl
+        navigator.push({
+          url: setBundleUrl(baseurl, url)
+        })
       }
     },
     /* 引入字体图标ttf */
@@ -30,7 +33,7 @@
       var domModule = weex.requireModule('dom')
       domModule.addRule('fontFace', {
         'fontFamily': 'iconfont',
-        'src': 'url(/src/fonts/iconfont.ttf)'
+        'src': 'url(' + iconfont + ')'
       })
     },
     components: {
