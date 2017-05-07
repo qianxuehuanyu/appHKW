@@ -54,7 +54,7 @@
           {
             title: '画客圈',
             icon: 'icon-bell',
-            url: 'friends.js'
+            url: 'moments.js'
           },
           {
             icon: 'icon-minus',
@@ -67,7 +67,7 @@
           {
             title: '我的',
             icon: 'icon-person',
-            url: 'my.js'
+            url: 'me.js'
           }
         ],
         publishLinks: [

@@ -12,51 +12,53 @@
       </slider>  
       <tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></tab>
       <div class="content">
-        <cell v-for="i in 10" class="person">
+        <cell v-for="moment in momentsData" class="person">
           <div class="person-info">
-            <img class="person-avatar" src="http://www.huakewang.com/uploads/2013/1018/20131018235643643644_thumb.jpg" />
+            <img class="person-avatar" :src="moment.avatar" />
             <div class="info">
               <div style="flex-direction: row;">
-                <text class="name">wadeyao&nbsp;</text>
-                <text class="icon icon-male" style="color: #88bcde;font-size: 33px;"></text>
+                <text class="name">{{moment.name}}&nbsp;</text>
+                <text :class="['icon', {'icon-male': moment.sex === 0}, {'icon-female': moment.sex === 1}]" style="font-size: 33px"></text>
               </div>
-              <text class="job" style="fontSize: 20px;color: #999;">产品经理 三汇信息</text>  
+              <text class="job" style="fontSize: 20px;color: #999;">{{moment.job}} {{moment.corp}}</text>  
             </div>
             <div class="person-location">
               <text class="icon icon-location" style="color: #999; font-size: 25px;"></text>
-              <text style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;杭州</text>
+              <text style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{moment.city}}</text>
             </div>
           </div>
           <div class="person-saying">
-            <text style="fontSize: 20px;color: #f00;"> [预算：1.5万元] </text>
-            <text style="fontSize: 20px;flex-wrap: wrap;color: #777;">找：平面设计师做画册，需要有案例；有个画册设计想外包，求动漫之都一带的童鞋，近一点方便沟通，大家都省时省力，有意向请留言，无相关作品勿扰！谢谢理解！</text>
+            <text style="fontSize: 20px;color: #f00;" v-if="moment.subject"> [{{moment.subject}}] </text>
+            <text style="fontSize: 20px;flex-wrap: wrap;color: #777;">{{moment.content}}</text>
           </div>
           <div class="photos">
-            <div class="photo" v-for="i in 3">
-              <img src=""  />
+            <div class="photo" v-for="pic in moment.pics">
+              <img :src="pic"  style="width: 160px; height: 160px;" resize="cover"/>
             </div>
           </div>
           <div class="vote-header">
-            <text class="grey small">2小时前</text>
+            <text class="grey small">{{passtime(moment.time)}}</text>
             <div class="right-btns">
               <text class="icon icon-heart" style="font-size: 25px; line-height: 20px;"></text>
-              <text class="small">4</text>
+              <text class="small">{{moment.likes.length}}</text>
               <text>&nbsp;</text>
               <text class="icon icon-message" style="font-size: 20px;"></text>
-              <text class="small">3</text>
+              <text class="small">{{moment.message.length}}</text>
               <div class="shangsanjiao"></div>
             </div>
           </div>
-          <div class="like-people">
+          <div class="like-people" v-show="moment.likes.length > 0">
             <text class="icon icon-heart blue" style="font-size: 25px;">&nbsp;</text>
-            <text class="small blue">夏庆峰，PD.HU，袁中伟，韩杰</text>
+            <text class="small blue">{{moment.likes.join('，')}}</text>
           </div>
-          <div class="msglist">
-            <div class="row">
-              <text class="small blue">MiaZhang：</text><text class="small">倒了给我打电话哈！</text>
+          <div class="msglist" v-show="moment.message.length > 0">
+            <div class="row" v-for="(comment,index) in moment.message" v-show="index < 5 || !foldComment">
+              <!-- weex不存在行内元素，分开多个text并设置父元素flex-direction: row时，段落不换行 -->
+              <text class="small">{{comment.from}}{{comment.to?' 回复':''}}{{comment.to}}：{{comment.text}}</text>
             </div>
-            <div class="showMore">
-              <text class="small blue center">查看全部9条评论</text>
+            <div class="showMore" v-show="moment.message.length > 5" @click="toggleComment">
+              <text class="small blue center" v-show="foldComment">查看全部{{moment.message.length}}条评论</text>
+              <text class="small blue center" v-show="!foldComment">收起评论</text>
             </div>
           </div>
         </cell>  
@@ -72,9 +74,11 @@
   import tab from './components/tab.vue'
   import {setBundleUrl} from './common/util.js'
   import {iconfont} from './common/config.js'
+  import {getData} from './common/api.js'
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
+  const domModule = weex.requireModule('dom')
 
   export default {
     data () {
@@ -117,8 +121,13 @@
             bgColor: '#31408f',
             url: ''
           }
-        ]
+        ],
+        momentsData: [],
+        foldComment: true,
+        nowtime: ''
       }
+    },
+    computed: {
     },
     methods: {
       jump (url) {
@@ -126,15 +135,33 @@
         navigator.push({
           url: setBundleUrl(baseurl, url)
         })
+      },
+      toggleComment () {
+        this.foldComment = !this.foldComment
+      },
+      passtime (time) {
+        let delta = (this.nowtime - new Date(time)) / 60000 << 0
+        console.log(delta)
+        if (delta > 60*24*365) return Math.floor(delta / 525600) + '年前'
+        if (delta > 60*24*30) return Math.floor(delta / 43200) + '月前'
+        if (delta > 60*24) return Math.floor(delta / 1440) + '天前'
+        if (delta > 60) return Math.floor(delta / 60) + '小时前'
+        return delta + '分钟前'
       }
     },
-    /* 引入字体图标ttf */
     created () {
-      var domModule = weex.requireModule('dom')
+      /* 引入字体图标ttf */
       domModule.addRule('fontFace', {
         'fontFamily': 'iconfont',
         'src': 'url(' + iconfont + ')'
       })
+      /* 获取数据 */
+      getData('getMoments', {
+        id: 1, page: 1, perpage: 5
+      }, (res) => {
+        this.momentsData = res.data
+      }),
+      this.nowtime = new Date().getTime()
     },
     components: {
       mainTab, tab
@@ -144,6 +171,7 @@
 
 <!-- 引入字体图标样式 -->
 <style src="./fonts/iconfont.css"></style>
+<style src="./common/common.css"></style>
 
 <style scope>
   /* 头部标题 */
@@ -271,9 +299,9 @@
     flex-direction: row;
   }
   .row{
-    flex-direction: row;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    /*flex-direction: row;*/
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   .showMore{
 

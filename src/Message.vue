@@ -44,6 +44,7 @@
 
 <!-- 引入字体图标样式 -->
 <style src="./fonts/iconfont.css"></style>
+<style src="./common/common.css"></style>
 
 <style scope>
     
