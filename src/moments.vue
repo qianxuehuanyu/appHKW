@@ -12,7 +12,7 @@
       </slider>  
       <tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></tab>
       <div class="content">
-        <cell v-for="moment in momentsData" class="person">
+        <cell v-for="(moment,index) in momentsData" class="person">
           <div class="person-info">
             <img class="person-avatar" :src="moment.avatar" />
             <div class="info">
@@ -39,7 +39,7 @@
           <div class="vote-header">
             <text class="grey small">{{passtime(moment.time)}}</text>
             <div class="right-btns">
-              <text class="icon icon-heart" style="font-size: 25px; line-height: 20px;"></text>
+              <text :class="['icon', {'icon-heart': !moment.ilike}, {'icon-heart-fill': moment.ilike}]" style="font-size: 20px; line-height: 25px;" @click="togglelike(index)"></text>
               <text class="small">{{moment.likes.length}}</text>
               <text>&nbsp;</text>
               <text class="icon icon-message" style="font-size: 20px;"></text>
@@ -141,12 +141,26 @@
       },
       passtime (time) {
         let delta = (this.nowtime - new Date(time)) / 60000 << 0
-        console.log(delta)
         if (delta > 60*24*365) return Math.floor(delta / 525600) + '年前'
         if (delta > 60*24*30) return Math.floor(delta / 43200) + '月前'
         if (delta > 60*24) return Math.floor(delta / 1440) + '天前'
         if (delta > 60) return Math.floor(delta / 60) + '小时前'
         return delta + '分钟前'
+      },
+      togglelike (index) {
+        let moment = this.momentsData[index]
+        if (moment.ilike) {
+          moment.ilike = false
+          // 从likes列表删除当前name
+          moment.likes = moment.likes.filter((like) => {
+            return like !== moment.name
+          })
+          
+        } else {
+          moment.ilike = true
+          moment.likes.push(moment.name)
+        }
+        // 提交更新到服务器
       }
     },
     created () {
