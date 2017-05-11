@@ -4,11 +4,11 @@
       <div class="main-tab-mask" v-if="showPub">
       </div>
     </transition>
-    <div class="main-tab-publish" v-if="showPub">
-      <div class="main-publish-nav">
+    <div class="main-tab-publish" v-if="showPub" style="background: #fff;">
+      <div class="main-publish-nav" style="background: #fff;">
         <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
           <div class="main-publish-icon">
-            <img :src="link.src" style="width:30px;height:30px;" />
+            <img :src="link.src" style="width:60px;height:60px;" />
           </div>
           <div class="main-publish-info">
             <text class="main-publish-title">{{link.title}}</text>  
