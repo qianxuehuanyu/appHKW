@@ -32,7 +32,7 @@
     <!-- header， 比main层级高，放下面 -->
     <div class="header" >
       <!-- 背景图片 -->
-      <img :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 350px;" resize="stretch"/>
+      <img ref="bg" :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 325px;" resize="stretch"/>
       <!-- 顶部地址及按钮 -->
       <div class="header-top">
         <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
@@ -44,21 +44,19 @@
       </div>
       <div class="header-main" >
         <!-- 排序： 距离/最新/最热 -->
-        <div class="header-sort">
-          <div class="item" style="position: relative;">
-            <div class="sort" style="position: absolute; top: 0;overflow:hidden;">
-              <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" :class="'sort'+index" style="background: #3e9bd7;border-color: #3e9bd7;" key="index" @click="selectSort(index)">
-                <text  style="color: #fff;font-size: 28px;" v-if="sort.name" >{{sort.name}}</text>
-                <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
-              </div> 
-            </div>
-            <div class="text" :class="{'fold': showMoreFilter}" style="margin-top: 80px;transition: all 0.5s ease;justify-content: center;align-items: center;" @click="toggleFilters">
-              <img :src="picRoot+'double-down-white.png'" style="width: 30px; height: 30px;"/>
-            </div>
+        <div class="header-sort" style="position: relative;">
+          <div class="sort" style="position: absolute; top: 0;">
+            <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" @click="selectSort(index)" style="background: #3e9bd7;border-color: #3e9bd7;">
+              <text  style="color: #fff;font-size: 28px;" v-if="sort.name" >{{sort.name}}</text>
+              <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
+            </div> 
+          </div>
+          <div v-if="!showSort" ref="showBtn" class="text" style="margin-top: 80px;transition: all 0.5s ease;justify-content: center;align-items: center;" @click="toggleFilters">
+            <img :src="picRoot+'double-down-white.png'" style="width: 30px; height: 30px;"/>
           </div>
         </div>
         <!-- 筛选：各种类型 -->
-        <div class="header-filters" :class="{'unfolder-filters': showMoreFilter}">
+        <div class="header-filters" ref="filters">
           <div v-for="(filter,index) in filterItems" class="item" >
             <div v-if="filter.selected" class="circle" style="background-color: #3e9bd7; border-color: #3e9bd7;" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
               <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
@@ -67,14 +65,14 @@
               <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
             </div>
             <div class="text">
-              <text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">{{filter.name}}</text>
+              <text style="font-size: 16px; text-align: center;color: #fff;line-height: 60px;">{{filter.name}}</text>
             </div>
           </div>
         </div>
         <div class="header-add">
           <div class="add item">
             <div class="circle"><img :src="picRoot + 'plus-white.png'" style="width:50px; height: 50px;" /></div>
-            <div class="text"><text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">添加</text></div>
+            <div class="text"><text style="font-size: 18px; text-align: center;color: #fff;line-height: 60px;">添加</text></div>
           </div>
         </div>
       </div>
@@ -92,6 +90,7 @@
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
+  const animation = weex.requireModule('animation')
 
   const LOADMORE_COUNT = 4
 
@@ -166,7 +165,36 @@
         filter.selected = !filter.selected
       },
       toggleFilters () {
+        const showBtn = this.$refs.showBtn
+        const filters = this.$refs.filters
+        const bg = this.$refs.bg
         this.showMoreFilter = !this.showMoreFilter
+        console.log(this.showMoreFilter)
+        animation.transition(showBtn, {
+          styles: {
+            transform: !this.showMoreFilter ? 'translate(0, 0) rotate(0deg)' : 'translate(0, 100px) rotate(180deg)',
+            transformOrigin: 'center center'
+          },
+          duration: 500,
+          timingFunction: 'ease',
+          delay: 0
+        })
+        animation.transition(filters, {
+          styles: {
+            height: !this.showMoreFilter ? '130px' : '280px'
+          },
+          duration: 500,
+          timingFunction: 'ease',
+          delay: 0
+        })
+        animation.transition(bg, {
+          styles: {
+            height: !this.showMoreFilter ? '325px' : '450px'
+          },
+          duration: 500,
+          timingFunction: 'ease',
+          delay: 0
+        })
       }
     },
     components: {
@@ -217,7 +245,8 @@
     justify-content: space-around;
     align-items: center;
   }
-  .icon-search,.icon-user{
+  .icon-search,
+  .icon-user{
     border-radius: 23px;
     border-width: 1px;
     border-color: #fff;
@@ -241,9 +270,6 @@
     justify-content: space-around;
     align-items: center;
   }
-  .fold{
-    transform: translateY(100px) rotate(180deg);
-  }
   .header-filters{
     flex: 5;
     flex-direction: row;
@@ -253,10 +279,6 @@
     flex-wrap: wrap;
     overflow: hidden;
     height: 130px;
-    transition: all 0.5s linear;
-  }
-  .unfolder-filters{
-    height: 280px;
   }
   .header-add{
     flex: 1;
@@ -292,13 +314,7 @@
   .text{
     width: 80px;
     height: 60px;
-  }
-  .active-filter{
-    background-color: #3e9bd7;
-    border-color: #3e9bd7;
-  }
-  .more-filters{
-    transform: rotate(90deg);
+    font-size: 10px;
   }
   /* main 设计师列表 */
   .main{

@@ -174,7 +174,7 @@
         // 提交更新到服务器
       }
     },
-    created () {
+    mounted () {
       /* 获取数据 */
       getData('getMoments', {
         id: 1, page: 1, perpage: 5

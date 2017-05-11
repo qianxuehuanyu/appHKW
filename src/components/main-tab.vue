@@ -1,39 +1,41 @@
 <template>
-  <div class="main-tab">
-    <transition name="main-tab-mask-fade">
-      <div class="main-tab-mask" v-if="showPub">
-      </div>
-    </transition>
-    <div class="main-tab-publish" v-if="showPub" style="background-color: #fff;">
-      <div class="main-publish-nav" style="background-color: #fff;">
-        <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
-          <div class="main-publish-icon">
-            <img :src="link.src" style="width:60px;height:60px;" />
-          </div>
-          <div class="main-publish-info">
-            <text class="main-publish-title">{{link.title}}</text>  
-            <text class="main-publish-desc">{{link.desc}}</text>  
+  <div>
+    <div class="main-tab">
+      <!-- 遮罩 -->
+      <div class="main-tab-mask" v-if="showPub" key="main-tab-mask" ></div>
+      <!-- 弹出发布 -->
+      <div class="main-tab-publish"  key="main-tab-publish" ref="publish" style="background-color: #fff;">
+        <div class="main-publish-nav" style="background-color: #fff;">
+          <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
+            <div class="main-publish-icon">
+              <img :src="link.src" style="width:60px;height:60px;" />
+            </div>
+            <div class="main-publish-info">
+              <text class="main-publish-title">{{link.title}}</text>  
+              <text class="main-publish-desc">{{link.desc}}</text>  
+            </div>
           </div>
         </div>
-      </div>
-      <div class="main-publish-triangle"></div>  
+        <div class="main-publish-triangle"></div>  
+      </div>  
     </div>  
+    <!-- 导航 -->
     <div class="main-tab-nav">
       <div class="main-tab-link" v-for="(item,index) in items" :class="{'active-main-tab': index === selectedIndex}" @click="selectTab(index, item.url)">
-        <template v-if="index !== 2">
-          <div class="main-tab-circle" :class="{'active-main-tab-circle': index === selectedIndex}">
-            <img :src="index===selectedIndex?item.activeSrc:item.src" style="width: 40px; height: 40px;"/>
-          </div>
-          <text class="main-tab-title" :class="{'active-main-tab-text': index === selectedIndex}">{{item.title}}</text> 
-        </template>
         <template v-if="index === 2">
           <div style="width: 80px; height: 80px; border-radius: 40px;border-width: 1px;justify-content: center; align-items: center;">
             <img :src="item.src" style="width: 60px; height: 60px;"/>
           </div>
         </template>
+        <template v-else>
+          <div class="main-tab-circle" :class="{'active-main-tab-circle': index === selectedIndex}">
+            <img :src="index===selectedIndex?item.activeSrc:item.src" style="width: 40px; height: 40px;"/>
+          </div>
+          <text class="main-tab-title" :class="{'active-main-tab-text': index === selectedIndex}">{{item.title}}</text> 
+        </template>
       </div>  
-    </div> 
-  </div>  
+    </div>
+  </div>
 </template>
 
 <script>
@@ -42,6 +44,7 @@
 
   const navigator = weex.requireModule('navigator')
   const modal = weex.requireModule('modal')
+  const animation = weex.requireModule('animation')
 
   export default {
     props: {
@@ -54,7 +57,7 @@
       return {
         baseUrl: getBaseUrl(),
         picRoot: config.picRoot,
-        showPub: true,
+        showPub: false,
         items: [
           {
             title: '首页',
@@ -110,12 +113,54 @@
     },
     mounted () {
       this.showPub = false
+      const publish = this.$refs.publish
+      animation.transition(publish, {
+        styles: {
+          transform: 'translate(0, 600px)',
+          backgroundColor: '#fff'
+        },
+        duration: 0,
+        timingFunction: 'ease',
+        delay: 0
+      })
     },
     methods: {
       selectTab (index, url) {
-        if (index === this.selectedIndex) return false
-        if (index === 2) return this.showPub = !this.showPub
-        jump(url)
+        if (index === this.selectedIndex) {
+          return false  
+        } else if (index === 2) {
+          const publish = this.$refs.publish
+          let self = this
+          console.log(this.showPub)
+          if (this.showPub) {
+            this.showPub = false
+            console.log(this.showPub)
+            animation.transition(publish, {
+              styles: {
+                transform: 'translate(0, 600px)',
+                backgroundColor: '#fff'
+              },
+              duration: 500,
+              timingFunction: 'ease',
+              delay: 0
+            })
+          } else {
+            animation.transition(publish, {
+              styles: {
+                transform: 'translate(0, 0)',
+                backgroundColor: '#fff'
+              },
+              duration: 500,
+              timingFunction: 'ease',
+              delay: 0
+            }, function () {
+              self.showPub = true
+              console.log(self.showPub)
+            })
+          }
+        } else {
+          jump(url)
+        }
       }
     }
   }
@@ -161,14 +206,11 @@
     font-size: 22px;
   }
   /* 选中样式 */
-  .active-main-tab-circle{
+  /*.main-tab-circle:active{
     color: #fff;
     border-color: grey;
     background-color: grey;
-  }
-  .active-main-tab-text{
-    color: grey;
-  }
+  }*/
   /* 发布按钮 */
   .main-tab-publish-icon{
     border-radius: 36px;
@@ -182,7 +224,7 @@
   .main-tab-mask{
     position: fixed;
     top: 0px;
-    bottom: 100px;
+    bottom: 600px;
     left: 0;
     width: 750px;
     background-color: rgba(0,0,0,0.5);
@@ -192,6 +234,7 @@
     position: fixed;
     bottom: 100px;
     width: 750px;
+    height: 500px;
     left: 0;
   }
   .main-publish-nav{
@@ -211,9 +254,7 @@
     border-bottom-color: #999;
     text-align: center;
     flex-direction: row;
-  }
-  .main-publish-link:last-child{
-    border-bottom: none;
+    background-color: #fff;
   }
   .main-publish-icon{
     width: 100px;
@@ -239,7 +280,7 @@
     border-top-color: transparent;
     border-left-color: transparent;
     position: absolute;
-    bottom: 18px;
+    bottom: 32px;
     left: 375px;
     transform: translateX(-18px) rotate(45deg);
   }
