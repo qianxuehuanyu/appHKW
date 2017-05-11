@@ -1,34 +1,38 @@
 <template>
   <div>
-    <div class="header" :style="{'background-image': 'url(/dist/'+bg+')'}">
+    <div class="header" :style="{'background-image': 'url(' + bg + ')'}">
       <!-- 顶部地址及按钮 -->
       <div class="header-top">
-        <text class="icon icon-location"></text>
+        <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
         <text class="location">&nbsp;滨江区长河路351...</text>
         <div class="more">
-          <text class="icon icon-search"></text>
-          <text class="icon icon-user"></text>
+          <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
+          <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
         </div>
       </div>
       <div class="header-main" >
         <!-- 排序： 距离/最新/最热 -->
         <div class="header-sort">
           <div class="item" style="position: relative;">
-            <div class="sort" style="position: absolute; top: 0;z-index: 1;overflow:hidden;">
+            <div class="sort" style="position: absolute; top: 0;overflow:hidden;">
               <transition-group name="sort-slidedown">
-                <div v-for="(sort,index) in sortItems" v-show="index === 0 || showSort " class="circle" :class="'sort'+index" style="background: #3e9bd7;border-color: #3e9bd7;" key="index">
-                  <text  style="color: #fff;font-size: 28px;" :class="sort.class" @click="selectSort(index)">{{sort.name}}</text>
+                <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" :class="'sort'+index" style="background: #3e9bd7;border-color: #3e9bd7;" key="index" @click="selectSort(index)">
+                  <text  style="color: #fff;font-size: 28px;" v-if="sort.name" >{{sort.name}}</text>
+                  <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
                 </div> 
               </transition-group>
             </div>
-            <div class="text" :class="{'fold': showMoreFilter}" style="margin-top: 80px;transition: all 0.5s ease;" @click="toggleFilters"><text class="icon icon-double-down" style="text-align: center;color: #fff;line-height: 60px;"></text></div>
+            <div class="text" :class="{'fold': showMoreFilter}" style="margin-top: 80px;transition: all 0.5s ease;justify-content: center;align-items: center;" @click="toggleFilters"><img :src="picRoot+'double-down-white.png'" style="width: 30px; height: 30px;"/></div>
           </div>
         </div>
         <!-- 筛选：各种类型 -->
         <div class="header-filters" :class="{'unfolder-filters': showMoreFilter}">
           <div v-for="(filter,index) in filterItems" class="item" >
-            <div class="circle" :class="{'active-filter': filter.selected}" @click="selectFilter(index)" >
-              <text class="icon" :class="filter.icon" style="color: #fff; font-size: 50px;"></text>
+            <div v-if="filter.selected" class="circle" style="background: #3e9bd7;" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
+              <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
+            </div>
+            <div v-if="!filter.selected" class="circle" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
+              <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
             </div>
             <div class="text">
               <text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">{{filter.name}}</text>
@@ -37,7 +41,7 @@
         </div>
         <div class="header-add">
           <div class="add item">
-            <div class="circle"><text class="icon icon-add" style="color: #fff; font-size: 80px;"></text></div>
+            <div class="circle"><img :src="picRoot + 'plus-white.png'" style="width:50px; height: 50px;" /></div>
             <div class="text"><text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">添加</text></div>
           </div>
         </div>
@@ -51,17 +55,17 @@
           <div class="info">
             <div style="flex-direction: row;">
               <text class="name">wadeyao&nbsp;</text>
-              <text class="icon icon-male" style="color: #88bcde;font-size: 35px;"></text>
+              <img :src="picRoot+'male.png'" style="width:30px; height: 30px;" />
             </div>
             <text class="num" style="fontSize: 25px;margin-top: 5px;">8年经验|10作品|31231人喜欢</text>  
           </div>
           <div class="designer-location">
-            <text class="icon icon-location" style="color: #999; font-size: 25px;"></text>
+            <img :src="picRoot+'location.png'" style="width:20px; height: 20px;" />
             <text style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;距离：200M</text>
           </div>
         </div>
         <div class="designer-tags">
-          <text class="icon icon-idea2" style="color: #b6d4df; margin-right: 15px;margin-top: 5px;"></text>
+          <img :src="picRoot+'idea.png'" style="width:20px; height: 20px;" />
           <text class="tag-contents" style="fontSize: 25px;line-height: 40px;">平面设计师，界面设计师，交互设计师，GUI设计，极简主义，热爱设计...</text>
         </div>
         <div class="designer-works">
@@ -72,24 +76,27 @@
         </div>
       </cell>
     </list>
-    <!-- 导航栏 -->
-    <main-tab :selectedIndex="0"></main-tab>
+    <mainTab :selectedIndex="0"></mainTab>
   </div>
 </template>
 
 <script>
+
+  import {getBaseUrl, jump} from './common/util.js'
   import mainTab from './components/main-tab.vue'
-  import {setBundleUrl} from './common/util.js'
-  import {iconfont} from './common/config.js'
+  import config from './common/config.js'
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
+
   const LOADMORE_COUNT = 4
 
   export default {
     data () {
       return {
-        bg: require('./img/bg.png'),
+        baseUrl: getBaseUrl(),
+        picRoot: config.picRoot,
+        bg: config.picRoot + 'bg.png',
         sort: '距离',
         showSort: false,
         sortItems: [
@@ -102,32 +109,32 @@
         filterItems: [
           {
             name: '平面设计',
-            icon: 'icon-design8',
+            src: 'design-pingmian-white.png',
             selected: false
           },
           {
             name: '网站设计',
-            icon: 'icon-net',
+            src: 'design-web-white.png',
             selected: false
           },
           {
             name: '界面设计',
-            icon: 'icon-design1',
+            src: 'design-jiemian-white.png',
             selected: false
           }, 
           {
             name: '工业设计',
-            icon: 'icon-design6',
+            src: 'design-gongye-white.png',
             selected: false
           }, 
           {
             name: '室内设计',
-            icon: 'icon-home',
+            src: 'design-shinei-white.png',
             selected: false
           },
           {
             name: '互联网设计',
-            icon: 'icon-home',
+            src: 'design-hulianwang-white.png',
             selected: false
           }
         ],
@@ -145,12 +152,6 @@
           }
         }, 1000);
       },
-      jump (url) {
-        const baseurl = this.$getConfig().bundleUrl
-        navigator.push({
-          url: setBundleUrl(baseurl, url)
-        })
-      },
       selectSort (index) {
         this.showSort = !this.showSort
         if (index === 0) return false
@@ -165,42 +166,28 @@
         this.showMoreFilter = !this.showMoreFilter
       }
     },
-    /* 引入字体图标ttf */
-    created () {
-      const baseurl = this.$getConfig().bundleUrl
-      const domModule = weex.requireModule('dom')
-      domModule.addRule('fontFace', {
-        'fontFamily': 'iconfont',
-        'src': 'url(' + iconfont + ')'
-      })
-    },
     components: {
       mainTab
     }
   }
 </script>
 
-<!-- 引入字体图标样式 -->
-<style src="./fonts/iconfont.css"></style>
-<style src="./common/common.css"></style>
-
-<style scope>
+<style scoped>
 
   /* header */
   .header{
-    width: 100%;
+    width: 750px;
     /*overflow: hidden;*/
     position: fixed;
-    z-index: 1;
     top: 0;
     left: 0;
     padding-bottom: 50px;
     background-repeat: no-repeat;
-    background-size: 100% 100%; 
+    background-size: cover; 
   }
   .header-top{
     height: 80px;
-    width: 100%;
+    width: 750px;
     margin-top: 10px;
     justify-content: center;
     flex-direction: row;
@@ -228,7 +215,7 @@
     align-items: center;
   }
   .icon-search,.icon-user{
-    border-radius: 50%;
+    border-radius: 23px;
     border-width: 1px;
     border-color: #fff;
     font-size: 25px;
@@ -278,7 +265,6 @@
   }
   .sort0{
     position: relative;
-    z-index: 2;
   }
   .item{
     flex-direction: column;
@@ -294,7 +280,7 @@
     width: 80px;
     height: 80px;
     border-width: 1px;
-    border-radius: 50%;
+    border-radius: 40px;
     border-color: #fff;
     justify-content: center;
     align-items: center;
@@ -304,16 +290,16 @@
     height: 60px;
   }
   .active-filter{
-    background: #3e9bd7;
+    background-color: #3e9bd7;
     border-color: #3e9bd7;
   }
   .more-filters{
-    transform: rotate(90deg)
+    transform: rotate(90deg);
   }
   /* main 设计师列表 */
   .main{
     position: fixed;
-    width: 100%;
+    width: 750px;
     top: 325px;
     left: 0;
     bottom: 100px;
@@ -333,7 +319,7 @@
   }
   .designer-avatar{
     width: 80px; height: 80px;
-    border-radius: 50%;
+    border-radius: 40px;
   }
   .info{
     padding-left: 20px;
@@ -358,7 +344,7 @@
     justify-content: space-around;
   }
   .work{
-    width: 45%;
+    width: 300px;
     height: 200px;
     margin-bottom: 20px;
   }

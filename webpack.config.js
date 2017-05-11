@@ -67,17 +67,12 @@ const plugins = [
     banner: '// { "framework": ' + (fileType === '.vue' ? '"Vue"' : '"Weex"') + '} \n',
     raw: true,
     exclude: 'Vue'
-  }),
-  // 复制指定目录
-  new TransferWebpackPlugin([
-    {from: './src/fonts', to: 'fonts'}
-  ], pathTo.resolve(__dirname)),
-  // 热更新
-  // new webpack.HotModuleReplacementPlugin()
-  // 自动打开浏览器
-  // new OpenBrowserPlugin({
-  //     url: 'http://localhost:8080'
-  // })
+  })
+  // 复制指定目录，打开本地图片需要增加java类
+  // new TransferWebpackPlugin([
+  //   {from: './src/img', to: './img'},
+  //   {from: './src/img', to: '../platforms/android/app/src/main/assets/dist/img'}
+  // ], pathTo.resolve(__dirname))
 ];
 function getBaseConfig () {
   return {
@@ -109,22 +104,6 @@ function getBaseConfig () {
         {
           test: /\.vue(\?[^?]+)?$/,
           use: []
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-          loader: 'url-loader',
-          query: {
-            limit: 10000,
-            name: 'img/[name].[ext]'
-          }
-        },
-        {
-          test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-          loader: 'url-loader',
-          query: {
-            limit: 10000,
-            name: 'common/fonts/[name].[ext]'
-          }
         }
       ]
     },

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\APP_huakewang\Weex\appHKW\platforms\android\weexplugin\src\main\shaders"/></dataSet><dataSet config="release"><source path="E:\APP_huakewang\Weex\appHKW\platforms\android\weexplugin\src\release\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\workplace\appHKW\platforms\android\weexplugin\src\main\shaders"/></dataSet><dataSet config="release"><source path="D:\workplace\appHKW\platforms\android\weexplugin\src\release\shaders"/></dataSet></merger>

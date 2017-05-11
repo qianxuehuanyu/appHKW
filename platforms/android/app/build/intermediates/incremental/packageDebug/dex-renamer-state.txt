@@ -1,4 +1,4 @@
-#Tue May 02 17:11:41 CST 2017
-base.0=E\:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
+#Thu May 11 10:37:21 CST 2017
+base.0=D\:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
-file.0=E\:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
+file.0=D\:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

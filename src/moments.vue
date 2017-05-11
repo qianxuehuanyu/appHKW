@@ -11,14 +11,15 @@
         <indicator class="indicator"></indicator>
       </slider>  
       <tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></tab>
-      <div class="content">
-        <cell v-for="(moment,index) in momentsData" class="person">
+      <div class="content" v-if="momentsData.length > 0">
+        <cell v-for="(moment,index) in momentsData" class="person" key="index">
           <div class="person-info">
             <img class="person-avatar" :src="moment.avatar" />
             <div class="info">
               <div style="flex-direction: row;">
                 <text class="name">{{moment.name}}&nbsp;</text>
-                <text :class="['icon', {'icon-male': moment.sex === 0}, {'icon-female': moment.sex === 1}]" style="font-size: 33px"></text>
+                <img v-if="moment.sex === 0" :src="picRoot + 'male.png'" style="width: 30px; height: 30px;"/>
+                <img v-if="moment.sex === 1" :src="picRoot + 'female.png'" style="width: 30px; height: 30px;"/>
               </div>
               <text class="job" style="fontSize: 20px;color: #999;">{{moment.job}} {{moment.corp}}</text>  
             </div>
@@ -39,41 +40,42 @@
           <div class="vote-header">
             <text class="grey small">{{passtime(moment.time)}}</text>
             <div class="right-btns">
-              <text :class="['icon', {'icon-heart': !moment.ilike}, {'icon-heart-fill': moment.ilike}]" style="font-size: 20px; line-height: 25px;" @click="togglelike(index)"></text>
+              <img v-if="moment.ilike" :src="picRoot + 'heart-fill-blue.png'" @click="togglelike(index)" style="width: 20px; height: 20px;" :key="'like'+index"/>
+              <img v-if="!moment.ilike" :src="picRoot + 'heart.png'" @click="togglelike(index)" style="width: 20px; height: 20px;" :key="'dislike'+index"/>
               <text class="small">{{moment.likes.length}}</text>
               <text>&nbsp;</text>
-              <text class="icon icon-message" style="font-size: 20px;"></text>
+              <img :src="picRoot + 'message.png'" style="width: 20px; height: 20px;"/>
               <text class="small">{{moment.message.length}}</text>
               <div class="shangsanjiao"></div>
             </div>
           </div>
-          <div class="like-people" v-show="moment.likes.length > 0">
-            <text class="icon icon-heart blue" style="font-size: 25px;">&nbsp;</text>
-            <text class="small blue">{{moment.likes.join('，')}}</text>
+          <div class="like-people" >
+            <img :src="picRoot + 'heart-blue.png'" style="width: 18px; height: 18px;"/>
+            <text class="small blue">&nbsp;{{moment.likes.join('，')}}</text>
           </div>
-          <div class="msglist" v-show="moment.message.length > 0">
-            <div class="row" v-for="(comment,index) in moment.message" v-show="index < 5 || !foldComment">
+          <div class="msglist" v-if="moment.message.length > 0">
+            <div class="row" v-for="(comment,index) in moment.message" v-if="index < 5 || !foldComment">
               <!-- weex不存在行内元素，分开多个text并设置父元素flex-direction: row时，段落不换行 -->
               <text class="small">{{comment.from}}{{comment.to?' 回复':''}}{{comment.to}}：{{comment.text}}</text>
             </div>
-            <div class="showMore" v-show="moment.message.length > 5" @click="toggleComment">
-              <text class="small blue center" v-show="foldComment">查看全部{{moment.message.length}}条评论</text>
-              <text class="small blue center" v-show="!foldComment">收起评论</text>
+            <div class="showMore" v-if="moment.message.length > 5" @click="toggleComment">
+              <text class="small blue center" v-if="foldComment">查看全部{{moment.message.length}}条评论</text>
+              <text class="small blue center" v-if="!foldComment">收起评论</text>
             </div>
           </div>
         </cell>  
       </div>
-    </list>  
-    <!-- 导航栏 -->
-    <main-tab :selectedIndex="1"></main-tab>
+    </list>
+    <mainTab :selectedIndex="1"></mainTab>
   </div>
 </template>
 
 <script>
-  import mainTab from './components/main-tab.vue'
   import tab from './components/tab.vue'
-  import {setBundleUrl} from './common/util.js'
-  import {iconfont} from './common/config.js'
+  import mainTab from './components/main-tab.vue'
+
+  import {getBaseUrl, jump} from './common/util.js'
+  import config from './common/config.js'
   import {getData} from './common/api.js'
 
   const modal = weex.requireModule('modal')
@@ -83,41 +85,43 @@
   export default {
     data () {
       return {
+        baseUrl: getBaseUrl(),
+        picRoot: config.picRoot,
         sliderList: [
-          'dist/' + require('./img/slider1.png'),
-          'dist/' + require('./img/slider1.png'),
-          'dist/' + require('./img/slider1.png')
+          'http://pic2.ooopic.com/13/58/87/63bOOOPICb3_1024.jpg',
+          'http://pic.58pic.com/58pic/13/56/99/88f58PICuBh_1024.jpg',
+          'http://img.zcool.cn/community/01919f5754de1d32f875a429805139.jpg@900w_1l_2o_100sh.jpg'
         ],
         linkList: [
           {
             name: '项目',
-            icon: 'icon-upload',
-            size: '35px',
+            src: config.picRoot + 'xiangmu.png',
             num: '45',
+            width: '45px',
             bgColor: '#f4c021',
             url: ''
           },
           {
             name: '贴子',
-            icon: 'icon-msg',
-            size: '40px',
+            src: config.picRoot + 'tiezi.png',
             num: '123',
+            width: '45px',
             bgColor: '#3dc077',
             url: ''
           },
           {
             name: '作品',
-            icon: 'icon-cup',
-            size: '45px',
+            src: config.picRoot + 'zuopin.png',
             num: '56',
+            width: '45px',
             bgColor: '#409ad6',
             url: ''
           },
           {
             name: '活动',
-            icon: 'icon-flag',
-            size: '35px',
+            src: config.picRoot + 'huodong.png',
             num: '11',
+            width: '45px',
             bgColor: '#31408f',
             url: ''
           }
@@ -128,14 +132,9 @@
       }
     },
     computed: {
+      
     },
     methods: {
-      jump (url) {
-        const baseurl = this.$getConfig().bundleUrl
-        navigator.push({
-          url: setBundleUrl(baseurl, url)
-        })
-      },
       toggleComment () {
         this.foldComment = !this.foldComment
       },
@@ -164,30 +163,27 @@
       }
     },
     created () {
-      /* 引入字体图标ttf */
-      domModule.addRule('fontFace', {
-        'fontFamily': 'iconfont',
-        'src': 'url(' + iconfont + ')'
-      })
       /* 获取数据 */
       getData('getMoments', {
         id: 1, page: 1, perpage: 5
       }, (res) => {
+        // 加moment.ilike属性
+        res.data.forEach((moment) => {
+          moment.ilike = moment.likes.some((name) => {
+            return name === moment.name
+          })
+        })
         this.momentsData = res.data
       }),
       this.nowtime = new Date().getTime()
     },
     components: {
-      mainTab, tab
+      tab, mainTab
     }
   }
 </script>
 
-<!-- 引入字体图标样式 -->
-<style src="./fonts/iconfont.css"></style>
-<style src="./common/common.css"></style>
-
-<style scope>
+<style scoped>
   /* 头部标题 */
   .header{
     position: fixed;

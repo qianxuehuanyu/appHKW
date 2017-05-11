@@ -1,14 +1,18 @@
 [
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_hkw.png",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_hkw.png"
+        "merged": "D:\\Users\\budao\\weex-pack\\generator\\platforms\\templates\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "D:\\Users\\budao\\weex-pack\\generator\\platforms\\templates\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "D:\\Users\\budao\\app-framework-android\\bin\\templates\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "D:\\Users\\budao\\app-framework-android\\bin\\templates\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_huakewang.png",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_huakewang.png"
+        "merged": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "D:\\workplace\\weextest\\platforms\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "D:\\workplace\\appHKW\\platforms\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     }
 ]

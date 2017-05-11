@@ -1,3 +1,6 @@
+const navigator = weex.requireModule('navigator')
+const modal = weex.requireModule('modal')
+
 export function isiOS () {
   console.log(getPlatform() == 'iOS');
   return getPlatform() == 'iOS';
@@ -32,45 +35,41 @@ export function getUrlParam(url, key) {
   return match && match[1];
 }
 
-export function setBundleUrl(url, jsFile) {
-  const bundleUrl = url;
+export function getBaseUrl() {
+  const bundleUrl = weex.config.bundleUrl
   let host = '';
   let path = '';
   let nativeBase;
   const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0;
-  const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
+  const isiOSAssets = bundleUrl.indexOf('file://') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
   if (isAndroidAssets) {
-    nativeBase = 'file://assets/dist';
+    nativeBase = 'file://assets/dist/';
   } else if (isiOSAssets) {
     // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
     // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
     nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
   } else {
-    const matches = /\/\/([^\/]+?)\//.exec(bundleUrl);
-    const matchFirstPath = /\/\/.+\/([^\/]+?)\//.exec(bundleUrl);
-    if (matches && matches.length >= 2) {
-      host = matches[1];
-    }
-    if (matchFirstPath && matchFirstPath.length >= 2) {
-      path = matchFirstPath[1];
-    }
-    nativeBase = 'http://' + host + '/';
+    nativeBase = '/dist/'
   }
-  const h5Base = './index.html?page=';
-  // in Native
-  let base = nativeBase;
-  if (typeof navigator !== 'undefined' && (navigator.appCodeName === 'Mozilla' || navigator.product === 'Gecko')) {
-    // check if in weexpack project
-    if (path === 'web' || path === 'dist') {
-      base = h5Base + '/dist/';
-    } else {
-      base = h5Base + '';
-    }
-  } else {
-    base = nativeBase + path + '/';
-  }
+  console.log('native: '+ nativeBase)
 
-  const newUrl = base + jsFile;
-  return newUrl;
+  return nativeBase;
 }
 
+export function jump (url) {
+  const bundleUrl = weex.config.bundleUrl
+  console.log(bundleUrl)
+  const baseUrl = getBaseUrl()
+  let base = ''
+
+  if (bundleUrl.indexOf('file://') >= 0) {
+    base = baseUrl
+  } else {
+    base = './index.html?page=/dist/'
+  }
+  let newUrl = base + url
+  modal.toast({'message': newUrl, 'duration': 1})
+  navigator.push({
+    url: newUrl
+  })
+}

@@ -1,10 +1,18 @@
 [
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\menu\\main.xml",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\menu\\main.xml"
+        "merged": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\menu\\main.xml",
+        "source": "D:\\workplace\\appHKW\\platforms\\android\\app\\src\\main\\res\\menu\\main.xml"
     },
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\menu\\main_scan.xml",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\src\\main\\res\\menu\\main_scan.xml"
+        "merged": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\menu\\main_scan.xml",
+        "source": "D:\\workplace\\appHKW\\platforms\\android\\app\\src\\main\\res\\menu\\main_scan.xml"
+    },
+    {
+        "merged": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\menu\\main.xml",
+        "source": "D:\\workplace\\weextest\\platforms\\android\\app\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\menu\\main_scan.xml",
+        "source": "D:\\workplace\\weextest\\platforms\\android\\app\\src\\main\\res\\menu\\main_scan.xml"
     }
 ]

@@ -1,6 +1,10 @@
 [
     {
-        "outputFile": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\appframework\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/budao/app-framework-android/bin/templates/appframework/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "map": []
+    },
+    {
+        "outputFile": "/Users/budao/weex-pack/generator/platforms/templates/android/appframework/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
         "map": []
     }
 ]

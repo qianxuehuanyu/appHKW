@@ -2,17 +2,20 @@
   <div class="tab-nav">
     <div class="tab-item" v-for="item in items" @click="jump(item.url)">
       <div style="position: relative">
-        <text :class="['icon', item.icon]" :style="{
+        <div :style="{
             'background-color': item.bgColor,
-            'font-size': item.size,
             'border-radius': radius,
-            'color': '#fff',
             'width': itemWidth,
             'height': itemWidth,
-            'line-height': itemWidth,
-            'text-align': 'center',
+            'justify-content': 'center',
+            'align-items': 'center',
             'margin-bottom': '10px' 
-          }"></text>
+          }">
+          <img :src="item.src" :style="{
+              width: item.width,
+              height: item.width
+            }"/>
+        </div>
           <div class="tab-num" v-if="showNum">
             <text style="color: #fff;  font-size: 18px;">{{item.num>100?'100+':item.num}}</text>
           </div>
@@ -23,10 +26,15 @@
 </template>
 
 <script>
-  import {setBundleUrl} from '../common/util.js'
+  import {getBaseUrl, jump} from '../common/util.js'
+
   const navigator = weex.requireModule('navigator')
+  const baseUrl = getBaseUrl()
 
   export default {
+    data () {
+      baseUrl: baseUrl
+    },
     props: {
       items: Array,
       itemWidth: {
@@ -43,12 +51,6 @@
       }
     },
     methods: {
-      jump (url) {
-        const baseurl = this.$getConfig().bundleUrl
-        navigator.push({
-          url: setBundleUrl(baseurl, url)
-        })
-      }
     }
   }
 </script>

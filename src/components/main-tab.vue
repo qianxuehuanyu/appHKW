@@ -1,22 +1,11 @@
 <template>
   <div class="main-tab">
-    <div class="main-tab-nav">
-      <div class="main-tab-link" v-for="(item,index) in items" :class="{'active-main-tab': index === selectedIndex}" @click="selectTab(index, item.url)">
-        <template v-if="index !== 2">
-          <text class="main-tab-icon icon" :class="[item.icon, {'active-main-tab-icon': index===selectedIndex }]"></text>
-          <text class="main-tab-title" :class="{'active-main-tab-text': index === selectedIndex}">{{item.title}}</text> 
-        </template>
-        <template v-if="index === 2">
-          <text class="main-tab-publish-icon icon icon-minus"></text>
-        </template>
-      </div>  
-    </div>
     <transition name="main-tab-mask-fade">
-      <div class="main-tab-mask" v-show="showPub">
+      <div class="main-tab-mask" v-if="showPub">
       </div>
     </transition>
     <transition name="main-tab-pub-slide" >
-      <div class="main-tab-publish" v-show="showPub">
+      <div class="main-tab-publish" v-if="showPub">
         <div class="main-publish-nav">
           <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
             <div class="main-publish-icon" :style="{
@@ -33,40 +22,70 @@
         <div class="main-publish-triangle"></div>  
       </div>  
     </transition>
+    <div class="main-tab-nav">
+      <div class="main-tab-link" v-for="(item,index) in items" :class="{'active-main-tab': index === selectedIndex}" @click="selectTab(index, item.url)">
+        <template v-if="index !== 2">
+          <div class="main-tab-circle" :class="{'active-main-tab-circle': index === selectedIndex}">
+            <img :src="index===selectedIndex?item.activeSrc:item.src" style="width: 40px; height: 40px;"/>
+          </div>
+          <text class="main-tab-title" :class="{'active-main-tab-text': index === selectedIndex}">{{item.title}}</text> 
+        </template>
+        <template v-if="index === 2">
+          <div style="width: 80px; height: 80px; border-radius: 40px;border-width: 1px;justify-content: center; align-items: center;">
+            <img :src="item.src" style="width: 60px; height: 60px;"/>
+          </div>
+        </template>
+      </div>  
+    </div> 
   </div>  
 </template>
 
 <script>
-  import {setBundleUrl} from '../common/util.js'
+  import {getBaseUrl, jump} from '../common/util.js'
+
   const navigator = weex.requireModule('navigator')
+  const modal = weex.requireModule('modal')
+
+  const baseUrl = getBaseUrl()
 
   export default {
-    props: ['selectedIndex'],
+    props: {
+      selectedIndex: {
+        type: Number,
+        default: 0
+      }
+    },
     data () {
       return {
         showPub: false,
         items: [
           {
             title: '首页',
-            icon: 'icon-plus',
+            activeSrc: baseUrl + 'img/plus-circle-white.png',
+            src: baseUrl + 'img/plus-circle.png',
             url: 'home.js'
           },
           {
             title: '画客圈',
-            icon: 'icon-bell',
+            activeSrc: baseUrl + 'img/bell-white.png',
+            src: baseUrl + 'img/bell.png',
             url: 'moments.js'
           },
           {
-            icon: 'icon-minus',
+            activeSrc: baseUrl + 'img/minus-white.png',
+            src: baseUrl + 'img/minus.png',
+            url: ''
           },
           {
             title: '消息',
-            icon: 'icon-message',
+            activeSrc: baseUrl + 'img/message-white.png',
+            src: baseUrl + 'img/message.png',
             url: 'message.js'
           },
           {
             title: '我的',
-            icon: 'icon-person',
+            activeSrc: baseUrl + 'img/me-white.png',
+            src: baseUrl + 'img/me.png',
             url: 'me.js'
           }
         ],
@@ -74,19 +93,19 @@
           {
             title: '一句话发需求',
             desc: '智能匹配最合适的设计师',
-            img: require('../img/faxvqiu.png'),
+            img: baseUrl + '/img/faxvqiu.png',
             url: ''
           },
           {
             title: '秀作品',
             desc: '是金子 就是要让它发光',
-            img: require('../img/xiuzuopin.png'),
+            img: baseUrl + 'img/xiuzuopin.png',
             url: ''
           },
           {
             title: '云报价',
             desc: '一键合同，分享支付，快速订单',
-            img: require('../img/yunbaojia.png'),
+            img: baseUrl + 'img/yunbaojia.png',
             url: ''
           }
         ]
@@ -97,28 +116,18 @@
     },
     methods: {
       selectTab (index, url) {
-        if (index !== 2) {
-          this.selectedIndex = index
-          this.jump(url)
-        } else {
-          this.showPub = !this.showPub
-        }
-      },
-      jump (url) {
-        const baseurl = this.$getConfig().bundleUrl
-        navigator.push({
-          url: setBundleUrl(baseurl, url)
-        })
+        if (index === this.selectedIndex) return false
+        if (index === 2) return this.showPub = !this.showPub
+        jump(url)
       }
     }
   }
 </script>
 
-<style scope>
+<style scoped>
   .main-tab-nav{
-    width: 100%;
+    width: 750px;
     position: fixed;
-    z-index: 10;
     height: 100px;
     bottom: 0;
     left: 0;
@@ -137,20 +146,17 @@
   .active-main-tab{
     flex: 1;
   }
-  .main-tab-icon{
+  .main-tab-circle{
     width: 50px;
     height: 50px;
     line-height: 50px;
     margin-top: 10px;
-    border-radius: 50%;
+    border-radius: 25px;
     border-style: solid;
     border-width: 1px;
     justify-content: center;
     align-items: center;
     text-align: center;
-  }
-  .main-tab-icon{
-    font-size: 30px;
   }
   .main-tab-title{
     text-align: center;
@@ -158,7 +164,7 @@
     font-size: 22px;
   }
   /* 选中样式 */
-  .active-main-tab-icon{
+  .active-main-tab-circle{
     color: #fff;
     border-color: grey;
     background: grey;
@@ -168,7 +174,7 @@
   }
   /* 发布按钮 */
   .main-tab-publish-icon{
-    border-radius: 50%;
+    border-radius: 36px;
     border-style: solid;
     border-width: 1px;
     font-size: 70px;
@@ -178,19 +184,17 @@
   /* 弹出发布 */
   .main-tab-mask{
     position: fixed;
-    z-index: 1;
     top: 0px;
     left: 0;
     bottom: 100px;
-    width: 100%;
+    width: 750px;
     background-color: rgba(0,0,0,0.5);
   }
   .main-tab-publish{
     background: #fff;
     position: fixed;
     bottom: 100px;
-    width: 100%;
-    z-index: 2;
+    width: 750px;
     left: 0;
   }
   .main-publish-nav{
@@ -200,6 +204,7 @@
     border-bottom-width: 5px; 
     border-bottom-color: #999; 
     border-bottom-style: solid; 
+    background: #fff;
   }
   .main-publish-link{
     height: 130px;
@@ -238,13 +243,13 @@
     border-left-color: transparent;
     position: absolute;
     bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
+    left: 375px;
+    transform: translateX(-18px) rotate(45deg);
   }
   /* 过渡 */
   .main-tab-pub-slide-enter,
   .main-tab-pub-slide-leave-active{
-    transform: translateY(100%);
+    transform: translateY(455px);
   }
   .main-tab-pub-slide-enter-active,
   .main-tab-pub-slide-leave-active{

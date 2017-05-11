@@ -1,1 +1,3 @@
-export const iconfont = '/src/fonts/iconfont.ttf' 
+export default {
+  picRoot: 'https://github.com/qianxuehuanyu/appHKW/blob/master/static/img/'
+}

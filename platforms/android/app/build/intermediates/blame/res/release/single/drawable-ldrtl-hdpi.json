@@ -1,18 +1,34 @@
 [
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_menu_cut_mtrl_alpha.png",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_menu_cut_mtrl_alpha.png"
+        "merged": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_ab_back_mtrl_am_alpha.png",
+        "source": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_ab_back_mtrl_am_alpha.png"
     },
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_spinner_mtrl_am_alpha.9.png",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_spinner_mtrl_am_alpha.9.png"
+        "merged": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_menu_cut_mtrl_alpha.png",
+        "source": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_menu_copy_mtrl_am_alpha.png",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_menu_copy_mtrl_am_alpha.png"
+        "merged": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_menu_cut_mtrl_alpha.png",
+        "source": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
-        "merged": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_ab_back_mtrl_am_alpha.png",
-        "source": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_ab_back_mtrl_am_alpha.png"
+        "merged": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_spinner_mtrl_am_alpha.9.png",
+        "source": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_ab_back_mtrl_am_alpha.png",
+        "source": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_ab_back_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_spinner_mtrl_am_alpha.9.png",
+        "source": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_menu_copy_mtrl_am_alpha.png",
+        "source": "D:\\workplace\\weextest\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-ldrtl-hdpi\\abc_ic_menu_copy_mtrl_am_alpha.png",
+        "source": "D:\\workplace\\appHKW\\platforms\\android\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\drawable-ldrtl-hdpi\\abc_ic_menu_copy_mtrl_am_alpha.png"
     }
 ]

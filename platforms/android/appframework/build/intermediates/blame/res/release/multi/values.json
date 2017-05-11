@@ -1,6 +1,14 @@
 [
     {
-        "outputFile": "E:\\APP_huakewang\\Weex\\appHKW\\platforms\\android\\appframework\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
+        "outputFile": "D:\\workplace\\appHKW\\platforms\\android\\appframework\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
+        "map": []
+    },
+    {
+        "outputFile": "D:\\Users\\budao\\app-framework-android\\bin\\templates\\appframework\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
+        "map": []
+    },
+    {
+        "outputFile": "D:\\workplace\\weextest\\platforms\\android\\appframework\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
         "map": []
     }
 ]
