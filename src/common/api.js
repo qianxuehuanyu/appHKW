@@ -51,10 +51,7 @@ export function getData (url, option, callback) {
   stream.fetch(
     {
       method: 'GET',
-      url: url,
-      headers: {
-        'Content-Type':'application/json'
-      }
+      url: url
     },
     function (res) {
       if (!res.ok) {

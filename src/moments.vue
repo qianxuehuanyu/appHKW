@@ -4,15 +4,23 @@
       <text>画客圈</text>
     </div>
     <list class="main">
-      <slider class="slider" interval="3000" auto-play="true">
-        <div class="sliderFrame" v-for="img in sliderList">
-          <img class="sliderImg" resize="cover" :src="img" /> 
-        </div>
-        <indicator class="indicator"></indicator>
-      </slider>  
-      <tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></tab>
-      <div class="content" v-if="momentsData.length > 0">
+      <!-- 轮播图 -->
+      <cell style="width: 750px;">
+        <slider class="slider" interval="3000" auto-play="true">
+          <div class="sliderFrame" v-for="img in sliderList">
+            <img class="sliderImg" resize="cover" :src="img" /> 
+          </div>
+          <indicator class="indicator"></indicator>
+        </slider>
+      </cell>
+      <!-- tab： 项目、帖子、作品、活动 -->
+      <cell style="width: 750px;">
+        <tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></tab>
+      </cell>
+      <!-- 画客圈数据 -->
+      <template v-if="momentsData.length > 0">
         <cell v-for="(moment,index) in momentsData" class="person" key="index">
+          <!-- 头像、位置信息 -->
           <div class="person-info">
             <img class="person-avatar" :src="moment.avatar" />
             <div class="info">
@@ -28,15 +36,18 @@
               <text style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{moment.city}}</text>
             </div>
           </div>
+          <!-- 消息内容 -->
           <div class="person-saying">
             <text style="fontSize: 20px;color: #f00;" v-if="moment.subject"> [{{moment.subject}}] </text>
             <text style="fontSize: 20px;flex-wrap: wrap;color: #777;">{{moment.content}}</text>
           </div>
+          <!-- 照片 -->
           <div class="photos">
             <div class="photo" v-for="pic in moment.pics">
               <img :src="pic"  style="width: 160px; height: 160px;" resize="cover"/>
             </div>
           </div>
+          <!-- 时间、按钮 -->
           <div class="vote-header">
             <text class="grey small">{{passtime(moment.time)}}</text>
             <div class="right-btns">
@@ -49,10 +60,12 @@
               <div class="shangsanjiao"></div>
             </div>
           </div>
-          <div class="like-people" >
+          <!-- 点赞的人 -->
+          <div class="like-people" v-if="moment.likes.length>0">
             <img :src="picRoot + 'heart-blue.png'" style="width: 18px; height: 18px;"/>
             <text class="small blue">&nbsp;{{moment.likes.join('，')}}</text>
           </div>
+          <!-- 回复消息 -->
           <div class="msglist" v-if="moment.message.length > 0">
             <div class="row" v-for="(comment,index) in moment.message" v-if="index < 5 || !foldComment">
               <!-- weex不存在行内元素，分开多个text并设置父元素flex-direction: row时，段落不换行 -->
@@ -64,7 +77,7 @@
             </div>
           </div>
         </cell>  
-      </div>
+      </template>
     </list>
     <mainTab :selectedIndex="1"></mainTab>
   </div>
@@ -80,7 +93,6 @@
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
-  const domModule = weex.requireModule('dom')
 
   export default {
     data () {
@@ -202,13 +214,13 @@
     top: 80px;
     bottom: 100px;
     left: 0;
-    width: 100%;
+    width: 750px;
   }
   /* slider */
   .slider{
     width: 750px;
     height: 160px;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
   }
   .sliderFrame{
@@ -224,7 +236,7 @@
     item-color: grey;
     item-selected-color: white;
     item-size: 20px;
-    padding-bottom: 25px;
+    padding-top: 40px;
   }
   /* nav */
   .nav{

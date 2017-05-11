@@ -1,52 +1,5 @@
 <template>
   <div>
-    <div class="header" :style="{'background-image': 'url(' + bg + ')'}">
-      <!-- 顶部地址及按钮 -->
-      <div class="header-top">
-        <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
-        <text class="location">&nbsp;滨江区长河路351...</text>
-        <div class="more">
-          <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
-          <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
-        </div>
-      </div>
-      <div class="header-main" >
-        <!-- 排序： 距离/最新/最热 -->
-        <div class="header-sort">
-          <div class="item" style="position: relative;">
-            <div class="sort" style="position: absolute; top: 0;overflow:hidden;">
-              <transition-group name="sort-slidedown">
-                <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" :class="'sort'+index" style="background: #3e9bd7;border-color: #3e9bd7;" key="index" @click="selectSort(index)">
-                  <text  style="color: #fff;font-size: 28px;" v-if="sort.name" >{{sort.name}}</text>
-                  <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
-                </div> 
-              </transition-group>
-            </div>
-            <div class="text" :class="{'fold': showMoreFilter}" style="margin-top: 80px;transition: all 0.5s ease;justify-content: center;align-items: center;" @click="toggleFilters"><img :src="picRoot+'double-down-white.png'" style="width: 30px; height: 30px;"/></div>
-          </div>
-        </div>
-        <!-- 筛选：各种类型 -->
-        <div class="header-filters" :class="{'unfolder-filters': showMoreFilter}">
-          <div v-for="(filter,index) in filterItems" class="item" >
-            <div v-if="filter.selected" class="circle" style="background: #3e9bd7;" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
-              <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
-            </div>
-            <div v-if="!filter.selected" class="circle" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
-              <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
-            </div>
-            <div class="text">
-              <text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">{{filter.name}}</text>
-            </div>
-          </div>
-        </div>
-        <div class="header-add">
-          <div class="add item">
-            <div class="circle"><img :src="picRoot + 'plus-white.png'" style="width:50px; height: 50px;" /></div>
-            <div class="text"><text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">添加</text></div>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- 设计师列表 -->
     <list class="main" @loadmore="fetch" loadmoreoffset="10">
       <cell class="designer" v-for="designer in lists">
@@ -76,6 +29,57 @@
         </div>
       </cell>
     </list>
+    <!-- header， 比main层级高，放下面 -->
+    <div class="header" >
+      <!-- 背景图片 -->
+      <img :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 350px;" resize="stretch"/>
+      <!-- 顶部地址及按钮 -->
+      <div class="header-top">
+        <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
+        <text class="location">&nbsp;滨江区长河路351...</text>
+        <div class="more">
+          <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
+          <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
+        </div>
+      </div>
+      <div class="header-main" >
+        <!-- 排序： 距离/最新/最热 -->
+        <div class="header-sort">
+          <div class="item" style="position: relative;">
+            <div class="sort" style="position: absolute; top: 0;overflow:hidden;">
+              <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" :class="'sort'+index" style="background: #3e9bd7;border-color: #3e9bd7;" key="index" @click="selectSort(index)">
+                <text  style="color: #fff;font-size: 28px;" v-if="sort.name" >{{sort.name}}</text>
+                <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
+              </div> 
+            </div>
+            <div class="text" :class="{'fold': showMoreFilter}" style="margin-top: 80px;transition: all 0.5s ease;justify-content: center;align-items: center;" @click="toggleFilters">
+              <img :src="picRoot+'double-down-white.png'" style="width: 30px; height: 30px;"/>
+            </div>
+          </div>
+        </div>
+        <!-- 筛选：各种类型 -->
+        <div class="header-filters" :class="{'unfolder-filters': showMoreFilter}">
+          <div v-for="(filter,index) in filterItems" class="item" >
+            <div v-if="filter.selected" class="circle" style="background-color: #3e9bd7; border-color: #3e9bd7;" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
+              <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
+            </div>
+            <div v-if="!filter.selected" class="circle" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
+              <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
+            </div>
+            <div class="text">
+              <text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">{{filter.name}}</text>
+            </div>
+          </div>
+        </div>
+        <div class="header-add">
+          <div class="add item">
+            <div class="circle"><img :src="picRoot + 'plus-white.png'" style="width:50px; height: 50px;" /></div>
+            <div class="text"><text style="font-size: 20px; text-align: center;color: #fff;line-height: 60px;">添加</text></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 主导航 -->
     <mainTab :selectedIndex="0"></mainTab>
   </div>
 </template>
@@ -96,7 +100,6 @@
       return {
         baseUrl: getBaseUrl(),
         picRoot: config.picRoot,
-        bg: config.picRoot + 'bg.png',
         sort: '距离',
         showSort: false,
         sortItems: [
@@ -226,6 +229,7 @@
     color: #fff;
   }
   .header-main{
+    width: 750px;
     flex-direction: row;
     align-items: flex-start;
     padding-top: 25px;
@@ -347,12 +351,5 @@
     width: 300px;
     height: 200px;
     margin-bottom: 20px;
-  }
-  /* 过渡 */
-  .sort-slidedown-enter,.sort-slidown-leave-active{
-    transform: translateY(-80px);
-  }
-  .sort-slidedown-enter-active,.sort-slidown-leave-active{
-    transition: all 0.2s linear;
   }
 </style>

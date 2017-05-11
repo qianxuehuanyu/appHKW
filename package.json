@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack",
     "build_plugin": "webpack --config ./tools/webpack.config.plugin.js --color",
-    "dev": "weex-builder src dist -w",
-    "serve": "webpack-dev-server --config webpack.dev.js -p --open"
+    "dev": "webpack --watch",
+    "serve": "serve -p 12580"
   },
   "keywords": [
     "weex"
@@ -32,6 +32,7 @@
     "css-loader": "^0.26.1",
     "open-browser-webpack-plugin": "0.0.5",
     "quick-local-ip": "^1.0.7",
+    "serve": "^5.1.5",
     "transfer-webpack-plugin": "^0.1.4",
     "vue-loader": "^10.0.2",
     "vue-template-compiler": "^2.1.8",

@@ -4,8 +4,8 @@
       <div class="main-tab-mask" v-if="showPub">
       </div>
     </transition>
-    <div class="main-tab-publish" v-if="showPub" style="background: #fff;">
-      <div class="main-publish-nav" style="background: #fff;">
+    <div class="main-tab-publish" v-if="showPub" style="background-color: #fff;">
+      <div class="main-publish-nav" style="background-color: #fff;">
         <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
           <div class="main-publish-icon">
             <img :src="link.src" style="width:60px;height:60px;" />
@@ -164,7 +164,7 @@
   .active-main-tab-circle{
     color: #fff;
     border-color: grey;
-    background: grey;
+    background-color: grey;
   }
   .active-main-tab-text{
     color: grey;
@@ -182,8 +182,8 @@
   .main-tab-mask{
     position: fixed;
     top: 0px;
-    left: 0;
     bottom: 100px;
+    left: 0;
     width: 750px;
     background-color: rgba(0,0,0,0.5);
   }
