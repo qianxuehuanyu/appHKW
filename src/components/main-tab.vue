@@ -4,24 +4,20 @@
       <div class="main-tab-mask" v-if="showPub">
       </div>
     </transition>
-    <transition name="main-tab-pub-slide" >
-      <div class="main-tab-publish" v-if="showPub">
-        <div class="main-publish-nav">
-          <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
-            <div class="main-publish-icon" :style="{
-                'background-image': 'url('+ link.img +')',
-                'background-repeat': 'no-repeat',
-                'background-size': 'contain'
-              }"></div>
-            <div class="main-publish-info">
-              <text class="main-publish-title">{{link.title}}</text>  
-              <text class="main-publish-desc">{{link.desc}}</text>  
-            </div>
+    <div class="main-tab-publish" v-if="showPub">
+      <div class="main-publish-nav">
+        <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
+          <div class="main-publish-icon">
+            <img :src="link.src" style="width:30px;height:30px;" />
+          </div>
+          <div class="main-publish-info">
+            <text class="main-publish-title">{{link.title}}</text>  
+            <text class="main-publish-desc">{{link.desc}}</text>  
           </div>
         </div>
-        <div class="main-publish-triangle"></div>  
-      </div>  
-    </transition>
+      </div>
+      <div class="main-publish-triangle"></div>  
+    </div>  
     <div class="main-tab-nav">
       <div class="main-tab-link" v-for="(item,index) in items" :class="{'active-main-tab': index === selectedIndex}" @click="selectTab(index, item.url)">
         <template v-if="index !== 2">
@@ -42,11 +38,10 @@
 
 <script>
   import {getBaseUrl, jump} from '../common/util.js'
+  import config from '../common/config.js'
 
   const navigator = weex.requireModule('navigator')
   const modal = weex.requireModule('modal')
-
-  const baseUrl = getBaseUrl()
 
   export default {
     props: {
@@ -57,35 +52,37 @@
     },
     data () {
       return {
-        showPub: false,
+        baseUrl: getBaseUrl(),
+        picRoot: config.picRoot,
+        showPub: true,
         items: [
           {
             title: '首页',
-            activeSrc: baseUrl + 'img/plus-circle-white.png',
-            src: baseUrl + 'img/plus-circle.png',
+            activeSrc: config.picRoot + 'plus-circle-white.png',
+            src: config.picRoot + 'plus-circle.png',
             url: 'home.js'
           },
           {
             title: '画客圈',
-            activeSrc: baseUrl + 'img/bell-white.png',
-            src: baseUrl + 'img/bell.png',
+            activeSrc: config.picRoot + 'bell-white.png',
+            src: config.picRoot + 'bell.png',
             url: 'moments.js'
           },
           {
-            activeSrc: baseUrl + 'img/minus-white.png',
-            src: baseUrl + 'img/minus.png',
+            activeSrc: config.picRoot + 'minus-white.png',
+            src: config.picRoot + 'minus.png',
             url: ''
           },
           {
             title: '消息',
-            activeSrc: baseUrl + 'img/message-white.png',
-            src: baseUrl + 'img/message.png',
+            activeSrc: config.picRoot + 'message-white.png',
+            src: config.picRoot + 'message.png',
             url: 'message.js'
           },
           {
             title: '我的',
-            activeSrc: baseUrl + 'img/me-white.png',
-            src: baseUrl + 'img/me.png',
+            activeSrc: config.picRoot + 'me-white.png',
+            src: config.picRoot + 'me.png',
             url: 'me.js'
           }
         ],
@@ -93,26 +90,26 @@
           {
             title: '一句话发需求',
             desc: '智能匹配最合适的设计师',
-            img: baseUrl + '/img/faxvqiu.png',
+            src: config.picRoot + 'faxvqiu.png',
             url: ''
           },
           {
             title: '秀作品',
             desc: '是金子 就是要让它发光',
-            img: baseUrl + 'img/xiuzuopin.png',
+            src: config.picRoot + 'xiuzuopin.png',
             url: ''
           },
           {
             title: '云报价',
             desc: '一键合同，分享支付，快速订单',
-            img: baseUrl + 'img/yunbaojia.png',
+            src: config.picRoot + 'yunbaojia.png',
             url: ''
           }
         ]
       }
     },
     mounted () {
-
+      this.showPub = false
     },
     methods: {
       selectTab (index, url) {
@@ -245,22 +242,5 @@
     bottom: 18px;
     left: 375px;
     transform: translateX(-18px) rotate(45deg);
-  }
-  /* 过渡 */
-  .main-tab-pub-slide-enter,
-  .main-tab-pub-slide-leave-active{
-    transform: translateY(455px);
-  }
-  .main-tab-pub-slide-enter-active,
-  .main-tab-pub-slide-leave-active{
-    transition: all linear 0.3s;
-  }
-  .main-tab-mask-fade-enter,
-  .main-tab-mask-fade-leave-active{
-    opacity: 0;
-  }
-  .main-tab-mask-fade-enter-active,
-  .main-tab-mask-fade-leave-active{
-    transition: all linear 0.3s;
   }
 </style>

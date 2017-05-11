@@ -27,13 +27,16 @@
 
 <script>
   import {getBaseUrl, jump} from '../common/util.js'
+  import config from '../common/config.js'
 
   const navigator = weex.requireModule('navigator')
-  const baseUrl = getBaseUrl()
 
   export default {
     data () {
-      baseUrl: baseUrl
+      return {
+        baseUrl: getBaseUrl(),
+        picRoot: config.picRoot
+      }
     },
     props: {
       items: Array,

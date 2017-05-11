@@ -1,3 +1,3 @@
 export default {
-  picRoot: 'https://github.com/qianxuehuanyu/appHKW/blob/master/static/img/'
+  picRoot: 'https://raw.githubusercontent.com/qianxuehuanyu/appHKW/master/static/img/'
 }
