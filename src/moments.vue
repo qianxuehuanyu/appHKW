@@ -3,7 +3,7 @@
     <div class="header">
       <text>画客圈</text>
     </div>
-    <list class="main">
+    <list class="main" @loadmore="onloading" loadmoreoffset="10">
       <!-- 轮播图 -->
       <cell style="width: 750px;">
         <slider class="slider" interval="3000" auto-play="true">
@@ -17,6 +17,9 @@
       <cell style="width: 750px;">
         <tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></tab>
       </cell>
+      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
+        <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
+      </refresh>
       <!-- 画客圈数据 -->
       <template v-if="momentsData.length > 0">
         <cell v-for="(moment,index) in momentsData" class="person" key="index">
@@ -78,6 +81,9 @@
           </div>
         </cell>  
       </template>
+      <loading :display="showloading" style="justify-content:center;align-items:center;">
+        <text style="font-size: 30px;padding-bottom: 20px;">正在加载数据...</text>
+      </loading>
     </list>
     <mainTab :selectedIndex="1"></mainTab>
   </div>
@@ -97,6 +103,8 @@
   export default {
     data () {
       return {
+        refreshing: 'hide',
+        showloading: 'hide',
         baseUrl: getBaseUrl(),
         picRoot: config.picRoot,
         sliderList: [
@@ -147,6 +155,38 @@
       
     },
     methods: {
+      fetchData () {
+        return getData('getMoments', {
+          id: 1, page: 1, perpage: 5
+        })
+      },
+      onrefresh () {
+        this.refreshing = 'show'
+        this.fetchData().then((res) => {
+          res.data.forEach((moment) => {
+            moment.ilike = moment.likes.some((name) => {
+              return name === moment.name
+            })
+          })
+          this.momentsData = []
+          this.momentsData = res.data
+          this.refreshing = 'hide'
+        })
+      },
+      onloading () {
+        this.showloading = 'show'
+        this.fetchData().then((res) => {
+          res.data.forEach((moment) => {
+            moment.ilike = moment.likes.some((name) => {
+              return name === moment.name
+            })
+          })
+          res.data.forEach((moment) => {
+            this.momentsData.push(moment)
+          })
+          this.showloading = 'hide'
+        })
+      },
       toggleComment () {
         this.foldComment = !this.foldComment
       },
@@ -175,19 +215,8 @@
       }
     },
     mounted () {
-      /* 获取数据 */
-      getData('getMoments', {
-        id: 1, page: 1, perpage: 5
-      }, (res) => {
-        // 加moment.ilike属性
-        res.data.forEach((moment) => {
-          moment.ilike = moment.likes.some((name) => {
-            return name === moment.name
-          })
-        })
-        this.momentsData = res.data
-      }),
       this.nowtime = new Date().getTime()
+      this.onloading()
     },
     components: {
       tab, mainTab

@@ -1,7 +1,7 @@
 <template>
   <div class="tab-nav">
     <div class="tab-item" v-for="item in items" @click="jump(item.url)">
-      <div style="position: relative">
+      <div style="position: relative;">
         <div :style="{
             'background-color': item.bgColor,
             'border-radius': radius,
@@ -15,10 +15,10 @@
               width: item.width,
               height: item.width
             }"/>
-        </div>
           <div class="tab-num" v-if="showNum">
             <text style="color: #fff;  font-size: 18px;">{{item.num>100?'100+':item.num}}</text>
           </div>
+        </div>
       </div>
       <text class="tab-name">{{item.name}}</text>
     </div>
@@ -63,6 +63,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    width: 750px;
   }
   .tab-num{
     position: absolute; 

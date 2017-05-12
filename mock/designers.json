@@ -1,0 +1,34 @@
+{
+    "code": 200,
+    "data|5": [
+        {
+            "avatar|1": [
+                "http://b.hiphotos.baidu.com/zhidao/wh%3D450%2C600/sign=f0c5c08030d3d539c16807c70fb7c566/8ad4b31c8701a18bbef9f231982f07082838feba.jpg",
+                "http://e.hiphotos.baidu.com/zhidao/wh%3D450%2C600/sign=0197b59000087bf47db95fedc7e37b1a/38dbb6fd5266d016152614f3952bd40735fa3529.jpg",
+                "http://img4.a0bi.com/upload/ttq/20170506/1494044884306.png",
+                "http://p3.music.126.net/oE3-OuYQW6kp47mj2qKSkQ==/7727367720166672.jpg"
+            ],
+            "exp|0-20": 72430,
+            "likes|0-10000": 42056,
+            "name|1": [
+                "张兰",
+                "洪辉",
+                "张三",
+                "李四",
+                "任浩",
+                "PD.HU",
+                "袁中伟",
+                "韩杰"
+            ],
+            "pics|4": [
+                "@IMG(100x100,@color,@integer)"
+            ],
+            "sex|1": [
+                0,
+                1
+            ],
+            "works|0-100": 71117
+        }
+    ],
+    "msg": "获取成功"
+}

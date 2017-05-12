@@ -1,33 +1,41 @@
 <template>
   <div>
     <!-- 设计师列表 -->
-    <list class="main" @loadmore="fetch" loadmoreoffset="10">
-      <cell class="designer" v-for="designer in lists">
+    <list class="main" @loadmore="onloading" loadmoreoffset="10">
+      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
+        <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
+      </refresh>
+      <cell class="designer" v-for="designer in designersData" >
         <div class="designer-info">
-          <img class="designer-avatar" src="http://www.huakewang.com/uploads/2013/1018/20131018235643643644_thumb.jpg" />
+          <img class="designer-avatar" :src="designer.avatar" />
           <div class="info">
             <div style="flex-direction: row;">
-              <text class="name">wadeyao&nbsp;</text>
-              <img :src="picRoot+'male.png'" style="width:30px; height: 30px;" />
+              <text class="name">{{designer.name}}&nbsp;</text>
+              <img v-if="designer.sex === 0" :src="picRoot+'male.png'" style="width:30px; height: 30px;" />
+              <img v-if="designer.sex === 1" :src="picRoot+'female.png'" style="width:30px; height: 30px;" />
             </div>
-            <text class="num" style="fontSize: 25px;margin-top: 5px;">8年经验|10作品|31231人喜欢</text>  
+            <text class="num" style="fontSize: 25px;margin-top: 5px;">{{designer.exp}}年经验|{{designer.works}}作品|{{designer.likes}}人喜欢</text>  
           </div>
-          <div class="designer-location">
-            <img :src="picRoot+'location.png'" style="width:20px; height: 20px;" />
-            <text style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;距离：200M</text>
+          <div class="designer-sort">
+            <img v-if="sortState === 1" :src="picRoot+'location.png'" style="width:20px; height: 20px;" />
+            <img v-if="sortState === 2" :src="picRoot+'hot.png'" style="width:20px; height: 20px;" />
+            <img v-if="sortState === 3" :src="picRoot+'clock.png'" style="width:20px; height: 20px;" />
+            <text v-if="sortState === 1" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;距离：{{designer.distance}}</text>
+            <text v-if="sortState === 2" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{designer.new}}</text>
+            <text v-if="sortState === 3" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{designer.hot}}</text>
           </div>
         </div>
         <div class="designer-tags">
           <img :src="picRoot+'idea.png'" style="width:20px; height: 20px;" />
-          <text class="tag-contents" style="fontSize: 25px;line-height: 40px;">平面设计师，界面设计师，交互设计师，GUI设计，极简主义，热爱设计...</text>
+          <text class="tag-contents" style="fontSize: 25px;line-height: 40px;">{{designer.tags.join('，')}}</text>
         </div>
         <div class="designer-works">
-          <img class="work" src="http://www.huakewang.com/uploads/2013/1031/20131031002345161039_thumb.jpg" />
-          <img class="work" src="http://www.huakewang.com/uploads/2013/1031/20131031002301555207_thumb.jpg" />
-          <img class="work" src="http://www.huakewang.com/uploads/2013/1031/20131031002222610112_thumb.jpg" />
-          <img class="work" src="http://www.huakewang.com/uploads/2013/1031/20131031002147100933_thumb.jpg" />
+          <img v-for="pic in designer.pics" class="work" :src="pic" />
         </div>
       </cell>
+      <loading :display="showloading" style="justify-content:center;align-items: center;">
+        <text style="font-size: 30px;padding-bottom: 20px;">正在加载数据...</text>
+      </loading>
     </list>
     <!-- header， 比main层级高，放下面 -->
     <div class="header" >
@@ -51,11 +59,8 @@
               <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
             </div> 
           </div>
-          <div v-if="!showSort" class="text" style="margin-top: 80px;justify-content: center;align-items: center;" @click="toggleFilters">
-            <div>
-              <img v-if="!showMoreFilter" key="arrow-down" :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
-              <img v-else key="arrow-up" :src="picRoot + 'double-up-white.png'" style="width: 30px; height: 30px;"/>
-            </div>
+          <div v-if="!showSort" class="text" style="margin-top: 100px;justify-content: flex-start;align-items: center;" @click="toggleFilters">
+            <img ref="arrow" :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
           </div>
         </div>
         <!-- 筛选：各种类型 -->
@@ -86,10 +91,11 @@
 </template>
 
 <script>
+  import mainTab from './components/main-tab.vue'
 
   import {getBaseUrl, jump} from './common/util.js'
-  import mainTab from './components/main-tab.vue'
   import config from './common/config.js'
+  import {getData} from './common/api.js'
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
@@ -100,15 +106,17 @@
   export default {
     data () {
       return {
+        refreshing: 'hide',
+        showloading: 'hide',
         baseUrl: getBaseUrl(),
         picRoot: config.picRoot,
         sort: '距离',
         showSort: false,
         sortItems: [
-          {name: '距离', class: ''},
-          {name: '最新', class: ''}, 
-          {name: '最热', class: ''}, 
-          {name: '', class: 'icon icon-menu'}
+          {name: '距离', class: '', state: 1},
+          {name: '最新', class: '', state: 2}, 
+          {name: '最热', class: '', state: 3}, 
+          {name: '', class: 'icon icon-menu', state: 0}
         ],
         showMoreFilter: false,
         filterItems: [
@@ -144,40 +152,82 @@
           }
         ],
         showLoading: false,
-        lists: [1, 2, 3, 4, 5]
+        designersData: []
       }
     },
+    computed: {
+      sortState () {
+        return this.sortItems[0].state
+      },
+      filters () {
+        let arr = []
+        this.filterItems.forEach((item) => {
+          if (item.selected) arr.push(item.name)
+        })
+        return arr
+      }
+    },
+    mounted () {
+      this.onloading()
+    },
     methods: {
-      fetch (e) {
-        modal.toast({message: 'loading', duration: 1})
-        setTimeout(() => {
-          const length = this.lists.length
-          for (let i = length; i < length + LOADMORE_COUNT; i++) {
-            this.lists.push(i+1)
-          }
-        }, 1000);
+      fetchData () {
+        return getData('getDesigners', {
+          id: 1, page: 1, perpage: 5,
+          sort: this.sortState,
+          filters: this.filters
+        })
+      },
+      onrefresh () {
+        this.refreshing = 'show'
+        this.fetchData().then((res) => {
+          this.designersData = []
+          this.designersData = res.data
+          this.refreshing = 'hide'
+        })
+      },
+      onloading () {
+        this.showloading = 'show'
+        this.fetchData().then((res) => {
+          res.data.forEach((designer) => {
+            this.designersData.push(designer)
+          })
+          this.showloading = 'hide'
+        })
       },
       selectSort (index) {
         this.showSort = !this.showSort
         if (index === 0) return false
         this.sort = this.sortItems[index].name
         this.sortItems.unshift(this.sortItems.splice(index, 1)[0])
+        this.onrefresh()
       },
       selectFilter (index) {
         let filter = this.filterItems[index]
         filter.selected = !filter.selected
+        this.onrefresh()
       },
       toggleFilters () {
         const bg = this.$refs.bg
+        const arrow = this.$refs.arrow
         this.showMoreFilter = !this.showMoreFilter
-        console.log(this.showMoreFilter)
+        let flag = this.showMoreFilter
         animation.transition(bg, {
           styles: {
-            height: !this.showMoreFilter ? '325px' : '450px'
+            height: flag ? '450px' : '325px'
           },
-          duration: 500,
+          duration: 200,
           timingFunction: 'ease',
           delay: 0
+        }, () => {
+          animation.transition(arrow, {
+            styles: {
+              transform: flag ? 'rotate(180deg)' : 'rotate(0deg)'
+            },
+            duration: 200,
+            timingFunction: 'ease',
+            delay: 0
+          })
         })
       }
     },
@@ -251,7 +301,7 @@
   }
   .header-sort{
     flex: 1;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     width: 80px;
     margin-bottom: 20px;
@@ -330,7 +380,7 @@
   .info{
     padding-left: 20px;
   }
-  .designer-location{
+  .designer-sort{
     position: absolute;
     top: 0;
     right: 0;

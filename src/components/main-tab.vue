@@ -6,9 +6,9 @@
       <!-- 弹出发布 -->
       <div class="main-tab-publish"  key="main-tab-publish" ref="publish" style="background-color: #fff;">
         <div class="main-publish-nav" style="background-color: #fff;">
-          <div class="main-publish-link" v-for="link in publishLinks" @click="jump(link.url)">
+          <div class="main-publish-link" v-for="link in publishLinks" @click="go(link.url)">
             <div class="main-publish-icon">
-              <img :src="link.src" style="width:60px;height:60px;" />
+              <img :src="link.src" style="width:100px;height:100px;" />
             </div>
             <div class="main-publish-info">
               <text class="main-publish-title">{{link.title}}</text>  
@@ -161,6 +161,9 @@
         } else {
           jump(url)
         }
+      },
+      go (url) {
+        jump(url)
       }
     }
   }

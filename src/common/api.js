@@ -46,51 +46,57 @@ function formUrlParam (option) {
   return str
 }
 
-export function getData (url, option, callback) {
+export function getData (url, option) {
   url = option ? baseUrl + url + '?' + formUrlParam(option) : baseUrl + url
-  stream.fetch(
-    {
-      method: 'GET',
-      url: url
-    },
-    function (res) {
-      if (!res.ok) {
-        modal.toast({'message': '网络错误', 'duration': 1})
-      } else {
-        let data = JSON.parse(res.data)
-        if (data.code === 200) {
-          callback && callback(data)
+  return new Promise((resolve, reject) => {
+    stream.fetch(
+      {
+        method: 'GET',
+        url: url
+      },
+      function (res) {
+        if (!res.ok) {
+          modal.toast({'message': '网络错误', 'duration': 1})
         } else {
-          modal.toast({'message': data.msg, 'duration': 1})
+          let data = JSON.parse(res.data)
+          if (data.code === 200) {
+            resolve(data)
+          } else {
+            modal.toast({'message': data.msg, 'duration': 1})
+            reject(data)
+          }
         }
       }
-    }
-  )
+    )
+  })
 }
 
-export function postData (url, option, callback) {
+export function postData (url, option) {
   url = baseurl + url
-  stream.fetch(
-    {
-      method: 'POST',
-      url: url,
-      headers: {
-        'Content-Type':'application/json'
+  return new Promise((resolve, reject) => {
+    stream.fetch(
+      {
+        method: 'POST',
+        url: url,
+        headers: {
+          'Content-Type':'application/json'
+        },
+        type: 'json',
+        body: option ? formUrlParam(option) : ''
       },
-      type: 'json',
-      body: option ? formUrlParam(option) : ''
-    },
-    function (res) {
-      if (!res.ok) {
-        modal.toast({'message': '网络错误', 'duration': 1})
-      } else {
-        let data = JSON.parse(res.data)
-        if (data.code === 200) {
-          callback && callback(data)
+      function (res) {
+        if (!res.ok) {
+          modal.toast({'message': '网络错误', 'duration': 1})
         } else {
-          modal.toast({'message': data.msg, 'duration': 1})
+          let data = JSON.parse(res.data)
+          if (data.code === 200) {
+            resolve(data)
+          } else {
+            modal.toast({'message': data.msg, 'duration': 1})
+            reject(data)
+          }
         }
       }
-    }
-  )
+    )
+  })
 }

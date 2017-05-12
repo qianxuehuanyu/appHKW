@@ -1,5 +1,6 @@
 const navigator = weex.requireModule('navigator')
 const modal = weex.requireModule('modal')
+const event = weex.requireModule('event')
 
 export function isiOS () {
   console.log(getPlatform() == 'iOS');
@@ -68,8 +69,9 @@ export function jump (url) {
     base = './index.html?page=/dist/'
   }
   let newUrl = base + url
-  modal.toast({'message': newUrl, 'duration': 1})
+  // modal.toast({'message': newUrl, 'duration': 1})
   navigator.push({
     url: newUrl
   })
+  // event.openURL(newUrl)
 }
