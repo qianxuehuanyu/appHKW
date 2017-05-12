@@ -236,6 +236,7 @@
     align-items: center;
     border-bottom-width: 1px;
     border-bottom-color: #000;
+    background-color: #f9f9f9;
   }
 
   .main{

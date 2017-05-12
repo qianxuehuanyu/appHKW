@@ -2,5 +2,5 @@
   "AppName":"画客网",
   "AppId":"com.alibaba.weex",
   "SplashText":"Hello\n画客网",
-  "WeexBundle":"index.js"
+  "WeexBundle":"login.js"
 }

@@ -69,8 +69,8 @@
     position: absolute; 
     top: 5px; 
     right: -10px; 
-    border-radius: 50%;
-    background: #f00;
+    border-radius: 16px;
+    background-color: #f00;
     padding-top: 5px;
     padding-right: 5px;
     padding-bottom: 5px;

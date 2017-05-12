@@ -58,6 +58,8 @@ export function getBaseUrl() {
 }
 
 export function jump (url) {
+  if (url === '') return false
+    
   const bundleUrl = weex.config.bundleUrl
   console.log(bundleUrl)
   const baseUrl = getBaseUrl()
