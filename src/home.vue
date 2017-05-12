@@ -52,8 +52,10 @@
             </div> 
           </div>
           <div v-if="!showSort" class="text" style="margin-top: 80px;justify-content: center;align-items: center;" @click="toggleFilters">
-            <img v-if="!showMoreFilter" key="arrow-down" :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
-            <img v-else key="arrow-up" :src="picRoot + 'double-up-white.png'" style="width: 30px; height: 30px;"/>
+            <div>
+              <img v-if="!showMoreFilter" key="arrow-down" :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
+              <img v-else key="arrow-up" :src="picRoot + 'double-up-white.png'" style="width: 30px; height: 30px;"/>
+            </div>
           </div>
         </div>
         <!-- 筛选：各种类型 -->
@@ -252,7 +254,6 @@
     justify-content: space-around;
     align-items: center;
     width: 80px;
-    height: 140px;
     margin-bottom: 20px;
   }
   .header-filters{
