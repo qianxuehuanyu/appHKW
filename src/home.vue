@@ -45,19 +45,20 @@
       <div class="header-main" >
         <!-- 排序： 距离/最新/最热 -->
         <div class="header-sort" style="position: relative;">
-          <div class="sort" style="position: absolute; top: 0;">
-            <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" @click="selectSort(index)" style="background: #3e9bd7;border-color: #3e9bd7;">
+          <div class="sort" style="position: absolute; top: 0;justify-content: center;">
+            <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" @click="selectSort(index)" style="background-color: #3e9bd7;border-color: #3e9bd7;">
               <text  style="color: #fff;font-size: 28px;" v-if="sort.name" >{{sort.name}}</text>
               <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
             </div> 
           </div>
-          <div v-if="!showSort" ref="showBtn" class="text" style="margin-top: 80px;transition: all 0.5s ease;justify-content: center;align-items: center;" @click="toggleFilters">
-            <img :src="picRoot+'double-down-white.png'" style="width: 30px; height: 30px;"/>
+          <div v-if="!showSort" class="text" style="margin-top: 80px;justify-content: center;align-items: center;" @click="toggleFilters">
+            <img v-if="!showMoreFilter" key="arrow-down" :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
+            <img v-else key="arrow-up" :src="picRoot + 'double-up-white.png'" style="width: 30px; height: 30px;"/>
           </div>
         </div>
         <!-- 筛选：各种类型 -->
         <div class="header-filters" ref="filters">
-          <div v-for="(filter,index) in filterItems" class="item" >
+          <div v-for="(filter,index) in filterItems" class="item" v-if="index <5 || showMoreFilter">
             <div v-if="filter.selected" class="circle" style="background-color: #3e9bd7; border-color: #3e9bd7;" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
               <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
             </div>
@@ -165,28 +166,9 @@
         filter.selected = !filter.selected
       },
       toggleFilters () {
-        const showBtn = this.$refs.showBtn
-        const filters = this.$refs.filters
         const bg = this.$refs.bg
         this.showMoreFilter = !this.showMoreFilter
         console.log(this.showMoreFilter)
-        animation.transition(showBtn, {
-          styles: {
-            transform: !this.showMoreFilter ? 'translate(0, 0) rotate(0deg)' : 'translate(0, 100px) rotate(180deg)',
-            transformOrigin: 'center center'
-          },
-          duration: 500,
-          timingFunction: 'ease',
-          delay: 0
-        })
-        animation.transition(filters, {
-          styles: {
-            height: !this.showMoreFilter ? '130px' : '280px'
-          },
-          duration: 500,
-          timingFunction: 'ease',
-          delay: 0
-        })
         animation.transition(bg, {
           styles: {
             height: !this.showMoreFilter ? '325px' : '450px'
@@ -269,6 +251,9 @@
     flex: 1;
     justify-content: space-around;
     align-items: center;
+    width: 80px;
+    height: 140px;
+    margin-bottom: 20px;
   }
   .header-filters{
     flex: 5;
@@ -278,7 +263,6 @@
     align-content: space-between;
     flex-wrap: wrap;
     overflow: hidden;
-    height: 130px;
   }
   .header-add{
     flex: 1;
@@ -288,6 +272,7 @@
   .sort{
     position: relative;
     transition: all 0.5s ease;
+    
   }
   .sort0{
     position: relative;
