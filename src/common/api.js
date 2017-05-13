@@ -37,14 +37,7 @@ const modal = weex.requireModule('modal')
 
 const baseUrl = 'http://rapapi.org/mockjsdata/18555/api/'
 
-function formUrlParam (option) {
-  let arr = []
-  for (let key in option) {
-    if (key) arr.push(key + '=' + option[key])
-  }
-  let str = arr.join('&') 
-  return str
-}
+import {formUrlParam} from './util.js'
 
 export function getData (url, option) {
   url = option ? baseUrl + url + '?' + formUrlParam(option) : baseUrl + url

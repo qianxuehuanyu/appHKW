@@ -15,9 +15,9 @@
               width: item.width,
               height: item.width
             }"/>
-          <div class="tab-num" v-if="showNum">
-            <text style="color: #fff;  font-size: 18px;">{{item.num>100?'100+':item.num}}</text>
-          </div>
+        </div>
+        <div class="tab-num" v-if="showNum">
+          <text style="color: #fff;  font-size: 18px;">{{item.num>100?'100+':item.num}}</text>
         </div>
       </div>
       <text class="tab-name">{{item.name}}</text>

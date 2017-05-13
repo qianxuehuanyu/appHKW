@@ -7,7 +7,7 @@
       </refresh>
       <cell class="designer" v-for="designer in designersData" >
         <div class="designer-info">
-          <img class="designer-avatar" :src="designer.avatar" />
+          <img class="designer-avatar" :src="designer.avatar" @click="goToDesigner(designer.designerid)"/>
           <div class="info">
             <div style="flex-direction: row;">
               <text class="name">{{designer.name}}&nbsp;</text>
@@ -172,7 +172,7 @@
     },
     methods: {
       fetchData () {
-        return getData('getDesigners', {
+        return getData('getDesignersList', {
           id: 1, page: 1, perpage: 5,
           sort: this.sortState,
           filters: this.filters
@@ -229,6 +229,9 @@
             delay: 0
           })
         })
+      },
+      goToDesigner (designerid) {
+        jump ('designer.js', {'id': designerid})
       }
     },
     components: {
