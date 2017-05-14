@@ -46,12 +46,16 @@
   }
   .back{
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 10px;
+    top: 10px;
+    width: 50px;
+    height: 50px;
   }
   .right{
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 10px;
+    top: 10px;
+    width: 50px;
+    height: 50px;
   }
 </style>

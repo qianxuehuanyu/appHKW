@@ -1,84 +1,48 @@
 <template>
   <div class="tab-nav">
-    <div class="tab-item" v-for="item in items" @click="jump(item.url)">
-      <div style="position: relative;">
-        <div :style="{
-            'background-color': item.bgColor,
-            'border-radius': radius,
-            'width': itemWidth,
-            'height': itemWidth,
-            'justify-content': 'center',
-            'align-items': 'center',
-            'margin-bottom': '10px' 
-          }">
-          <img :src="item.src" :style="{
-              width: item.width,
-              height: item.width
-            }"/>
-        </div>
-        <div class="tab-num" v-if="showNum">
-          <text style="color: #fff;  font-size: 18px;">{{item.num>100?'100+':item.num}}</text>
-        </div>
+    <template v-for="(item,index) in tabItems">
+      <div class="tab-item" v-if="index === tabIndex" :style="{'border-bottom-width': '5px'}" @click="selectTab(index)">
+        <text class="item-text" style="color: #000;font-weight: bold;">{{item}}</text>
       </div>
-      <text class="tab-name">{{item.name}}</text>
-    </div>
+      <div class="tab-item" v-else @click="selectTab(index)">
+        <text class="item-text" style="color: grey;">{{item}}</text>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-  import {getBaseUrl, jump} from '../common/util.js'
-  import config from '../common/config.js'
-
-  const navigator = weex.requireModule('navigator')
-
   export default {
-    data () {
-      return {
-        baseUrl: getBaseUrl(),
-        picRoot: config.picRoot
-      }
-    },
     props: {
-      items: Array,
-      itemWidth: {
-        type: String,
-        default: '80px'
-      },
-      radius: {
-        type: [String, Number],
-        default: '50%'
-      },
-      showNum: {
-        type: Boolean,
-        default: false
-      }
+      tabItems: Array,
+      tabIndex: Number
     },
     methods: {
+      selectTab (index) {
+        this.$emit('select', index)
+      }
     }
   }
-</script>
   
-<style scope>
+</script>
+
+<style scoped>
   .tab-nav{
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
     width: 750px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: grey;
   }
-  .tab-num{
-    position: absolute; 
-    top: 5px; 
-    right: -10px; 
-    border-radius: 16px;
-    background-color: #f00;
-    padding-top: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    padding-left: 5px;
+  .tab-item{
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
-  .tab-name{
+  .item-text{
     font-size: 25px;
-    color: grey;
-    text-align: center;
   }
 </style>

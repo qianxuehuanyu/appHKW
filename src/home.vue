@@ -168,7 +168,7 @@
       }
     },
     mounted () {
-      this.onloading()
+      this.onrefresh()
     },
     methods: {
       fetchData () {

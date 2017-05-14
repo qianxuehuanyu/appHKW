@@ -3,37 +3,37 @@
     <div class="header">
       <text>画客圈</text>
     </div>
-    <list class="main" @loadmore="onloading" loadmoreoffset="10">
+    <scroller class="main" @loadmore="onloading" loadmoreoffset="10">
+      <!-- refresh -->
+      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
+        <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
+      </refresh>
       <!-- 轮播图 -->
-      <cell style="width: 750px;">
+      <div style="width: 750px;">
         <slider class="slider" interval="3000" auto-play="true">
           <div class="sliderFrame" v-for="img in sliderList">
             <img class="sliderImg" resize="cover" :src="img" /> 
           </div>
           <indicator class="indicator"></indicator>
         </slider>
-      </cell>
+      </div>
       <!-- tab： 项目、帖子、作品、活动 -->
-      <cell style="width: 750px;">
-        <tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></tab>
-      </cell>
-      <!-- refresh -->
-      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
-        <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
-      </refresh>
+      <div style="width: 750px;">
+        <link-tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></link-tab>
+      </div>
       <!-- 画客圈数据 -->
       <moment-list :listdata="momentsData" type="moment"></moment-list>
       <!-- loading -->
       <loading :display="showloading" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-bottom: 20px;">正在加载数据...</text>
       </loading>
-    </list>
+    </scroller>
     <mainTab :selectedIndex="1"></mainTab>
   </div>
 </template>
 
 <script>
-  import tab from './components/tab.vue'
+  import linkTab from './components/link-tab.vue'
   import mainTab from './components/main-tab.vue'
   import momentList from './components/moment-list.vue'
 
@@ -134,10 +134,10 @@
       }
     },
     mounted () {
-      this.onloading()
+      this.onrefresh()
     },
     components: {
-      tab, mainTab, momentList
+      linkTab, mainTab, momentList
     }
   }
 </script>

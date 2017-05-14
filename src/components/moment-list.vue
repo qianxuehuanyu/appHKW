@@ -1,6 +1,6 @@
-<template>
-  <div v-if="listdata">
-    <cell v-for="(data,index) in listdata" class="person" key="index">
+<template v-if="listdata">
+  <div>
+    <div v-for="(data,index) in listdata" class="person" key="index">
       <!-- 头像、位置信息 -->
       <div class="person-header">
         <img class="person-avatar" :src="data.avatar" @click="goToDesigner(data.designerid)"/>
@@ -35,31 +35,31 @@
           <div class="right-btns">
             <img v-if="data.ilike" :src="picRoot + 'heart-fill-blue.png'" @click="togglelike(index)" style="width: 20px; height: 20px;" :key="'like'+index"/>
             <img v-if="!data.ilike" :src="picRoot + 'heart.png'" @click="togglelike(index)" style="width: 20px; height: 20px;" :key="'dislike'+index"/>
-            <text class="small">{{data.likes.length}}</text>
+            <text class="small" v-if="data.likes">{{data.likes.length}}</text>
             <text>&nbsp;</text>
             <img :src="picRoot + 'message.png'" style="width: 20px; height: 20px;" @click="say"/>
-            <text class="small">{{data.message.length}}</text>
+            <text class="small" v-if="data.messages">{{data.messages.length}}</text>
             <div class="shangsanjiao"></div>
           </div>
         </div>
         <!-- 点赞的人 -->
-        <div class="like-people" v-if="data.likes.length>0">
+        <div class="like-people" v-if="data.likes">
           <img :src="picRoot + 'heart-blue.png'" style="width: 18px; height: 18px;"/>
           <text class="small blue">&nbsp;{{data.likes.join('，')}}</text>
         </div>
         <!-- 回复消息 -->
-        <div class="msglist" v-if="data.message.length > 0" :key="'comment'+index">
-          <div class="row" v-for="(comment,index) in data.message" v-if="index < 5 || !data.foldComment">
+        <div class="msglist" v-if="data.messages" :key="'comment'+index">
+          <div class="row" v-for="(comment,index) in data.messages" v-if="index < 5 || !data.foldComment">
             <!-- weex不存在行内元素，分开多个text并设置父元素flex-direction: row时，段落不换行 -->
             <text class="small">{{comment.from}}{{comment.to?' 回复':''}}{{comment.to}}：{{comment.text}}</text>
           </div>
-          <div class="showMore" v-if="data.message.length > 5" @click="toggleComment(index)">
-            <text class="small blue center" :key="'unfoldComment'+index" v-if="data.foldComment">查看全部{{data.message.length}}条评论</text>
+          <div class="showMore" v-if="data.messages.length > 5" @click="toggleComment(index)">
+            <text class="small blue center" :key="'unfoldComment'+index" v-if="data.foldComment">查看全部{{data.messages.length}}条评论</text>
             <text class="small blue center" :key="'foldComment'+index" v-if="!data.foldComment">收起评论</text>
           </div>
         </div>
       </div>
-    </cell>  
+    </div>  
   </div>
 </template>
 
