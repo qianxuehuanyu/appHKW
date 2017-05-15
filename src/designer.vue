@@ -1,6 +1,6 @@
 <template>
   <div>
-    <scroller class="main" @loadmore="onloading" loadmoreoffset="10">
+    <scroller class="main" @loadmore="onloading" loadmoreoffset="10" @scroll="onscroll">
       <!-- refresh -->
       <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
@@ -57,15 +57,17 @@
         <!-- 作品 -->
         <div v-if="tabIndex === 0">
           <!-- 作品轮播 -->
-          <div class="works">
-            <slider class="slider" interval="3000" auto-play="false">
+          <div class="works" v-if="designerData.works">
+            <slider class="slider" interval="3000" auto-play="false" >
               <div class="sliderFrame" v-for="item in formedWorks">
                 <img class="sliderImg" resize="cover" :src="item[0].src" /> 
-                <img class="sliderImg" resize="cover" :src="item[1].src" /> 
-                <img class="sliderImg" resize="cover" :src="item[2].src" /> 
-                <img class="sliderImg" resize="cover" :src="item[3].src" /> 
+                <img class="sliderImg" resize="cover" v-if="item[1]" :src="item[1].src" /> 
+                <img class="sliderImg" resize="cover" v-if="item[2]" :src="item[2].src" /> 
+                <img class="sliderImg" resize="cover" v-if="item[3]" :src="item[3].src" /> 
               </div>
             </slider>
+            <img :src="picRoot + 'left.png'" class="prev-work" @click="prevWork"/>
+            <img :src="picRoot + 'right.png'" class="next-work" @click="nextWork"/>
           </div>
           <!-- 留言 -->
           <div class="say-title">
@@ -83,25 +85,47 @@
         </div>
         <!-- 服务 -->
         <div v-if="tabIndex === 1">
-          <div v-for="service in designerData.services">
-            <text>{{service.title}}</text>
-            <text>{{service.desc}}</text>
-            <text>{{service.price}}</text>
+          <div class="services">
+            <buy-list :listdata="designerData.services" @sendCart="getCart"></buy-list>  
           </div>
         </div>
       </div>
     </scroller>
-    <sub-header title="设计师主页"></sub-header>
-    <div class="nav">
-      <text>电话</text>
+    <sub-header title="设计师主页" v-if="showHeader"></sub-header>
+    <div class="nav" ref="nav">
+      <div class="nav1">
+        <div class="ul1">
+          <div class="link1" v-for="link in nav1" :style="{'background-color': link.bgColor}">
+            <img :src="link.src" class="link-img"/>
+            <text class="link-text">{{link.name}}</text>
+          </div>
+        </div>
+        <div class="next-nav" @click="toggleNav(-750)">
+          <img :src="picRoot + 'right.png'" class="nav-right-btn"/>
+        </div>
+      </div>
+      <div class="nav2">
+        <div class="prev-nav" @click="toggleNav(0)">
+          <img :src="picRoot + 'right.png'" class="nav-right-btn"/>
+        </div>
+        <div class="ul2">
+          <div class="link2" v-for="link in nav2">
+            <img :src="link.src" class="link-img"/>
+            <text class="link-text">{{link.name}}</text>
+          </div>
+        </div>
+      </div>
     </div>
+    <buy-footer :cart="cart"></buy-footer>
   </div>
 </template>
 
 <script>
   import subHeader from './components/sub-header.vue'
   import momentList from './components/moment-list.vue'
+  import buyList from './components/buy-list.vue'
   import tab from './components/tab.vue'
+  import buyFooter from './components/buy-footer.vue'
 
   import {getBaseUrl, jump} from './common/util.js'
   import config from './common/config.js'
@@ -109,6 +133,7 @@
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
+  const animation = weex.requireModule('animation')
 
   export default {
     data () {
@@ -118,23 +143,48 @@
         baseUrl: getBaseUrl(),
         picRoot: config.picRoot,
         designerData: {says: []},
-        tabItems: ['作品', '服务'],
         tabIndex: 0,
-        say: ''
+        say: '',
+        showHeader: false,
+        nav1: [
+          {src: config.picRoot + 'tel.png', name: '电话', url: '', bgColor: '#1a68ac'},
+          {src: config.picRoot + 'quote.png', name: '交谈', url: '', bgColor: '#3e98d7'},
+          {src: config.picRoot + 'xiangmu.png', name: '发需求', url: '', bgColor: '#1a68ac'},
+          {src: config.picRoot + '', name: '约见', url: '', bgColor: '#3e98d7'},
+        ],
+        nav2: [
+          {src: config.picRoot + '', name: '收藏', url: ''},
+          {src: config.picRoot + '', name: '关注', url: ''},
+          {src: config.picRoot + '', name: '喜欢', url: ''}
+        ],
+        cart: []
       }
     },
     computed: {
+      tabItems () {
+        let worksNum = 0
+        let servicesNum = 0
+        if (this.designerData.works) worksNum = this.designerData.works.length
+        if (this.designerData.services) servicesNum = this.designerData.services.length
+        return ['作品(' + worksNum + ')', '服务(' + servicesNum + ')']
+      },
       formedWorks () {
         let works = this.designerData.works
+        let length = works.length
         let arr = []
         let item = []
-        for (let i in works) {
+        console.log(works)
+        for (let i = 0; i < length; i++) {
           item.push(works[i])
-          if (item.length === 4 || i === works.length - 1) {
+          if (item.length === 4 ) {
+            arr.push(item)
+            item = []
+          } else if (i === length - 1) {
             arr.push(item)
             item = []
           }
         }
+        console.log(arr)
         return arr
       }
     },
@@ -173,13 +223,41 @@
             return name === item.name
           })
         })
+        data.services.forEach((item) => {
+          item.checked = false
+          item.num = 1
+        })
+      },
+      prevWork (e) {
+        // slider组件没有提供切换方法，回头手动写一个轮播
+      },
+      nextWork (e) {
+      },
+      onscroll (e) {
+        let top = e.contentOffset.y
+        if (top < -100) this.showHeader = true
+        else this.showHeader = false
+      },
+      toggleNav (pos) {
+        const nav = this.$refs.nav
+        animation.transition(nav, {
+          styles: {
+            transform: 'translate('+pos+'px, 0)'
+          },
+          duration: 200,
+          timingFunction: 'ease',
+          delay: 0
+        })
+      },
+      getCart (cart) {
+        this.cart = cart
       }
     },
     mounted () {
       this.onrefresh()
     },
     components: {
-      subHeader, momentList, tab
+      subHeader, momentList, tab, buyList, buyFooter
     }
   }
 </script>
@@ -276,27 +354,41 @@
   .works{
     padding-top: 20px;
     padding-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
   .slider{
-    width: 750px;
+    width: 650px;
     height: 400px;
-
   }
   .sliderFrame{
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: space-around;
-    width: 730px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 650px;
     height: 400px;
   }
   .sliderImg{
-    width: 330px;
+    width: 305px;
     height: 180px;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+  .prev-work{
+    position: absolute;
+    left: 10px;
+    top: 194px;
+    width: 50px; height: 50px;
+  }
+  .next-work{
+    position: absolute;
+    right: 10px;
+    top: 194px;
+    width: 50px; height: 50px;
   }
   /* 留言 */
   .say-title{
@@ -312,15 +404,6 @@
   .say-title-text{
     font-size: 22px;
     color: grey;
-  }
-  /* 底部导航 */
-  .nav{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 750px;
-    height: 100px;
-    background: #ccc;
   }
   .say{
     flex-direction: row;
@@ -341,5 +424,58 @@
     padding-left: 30px;
     padding-right: 30px;
     font-size: 22px;
+  }
+  /* 服务 */
+  .services{
+    background-color: #f2f2f2;
+  }
+  /* 底部导航 */
+  .nav{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 1500px;
+    height: 100px;
+    flex-direction: row;
+  }
+  .nav1, .nav2{
+    flex-direction: row;
+    width: 750px;
+    height: 100px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ul1, .ul2{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .link1, .link2{
+    width: 160px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+  }
+  .next-nav, .prev-nav{
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+  }
+  .link-img{
+    width: 40px;
+    height: 30px;
+  }
+  .link-text{
+    font-size: 30px;
+    color: #fff;
+  }
+  .nav-right-btn{
+    width: 50px;
+    height: 50px;
+  }
+  .link2{
+    background-color: #1a68ac;
+    margin-left: 1px;
   }
 </style>
