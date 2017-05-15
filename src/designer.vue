@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    <buy-footer :cart="cart"></buy-footer>
+    <buy-footer :cart="cart" v-if="tabIndex === 1 && cart.length"></buy-footer>
   </div>
 </template>
 
