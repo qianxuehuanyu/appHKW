@@ -20,21 +20,26 @@
         </div>
       </div>
       <div class="types">
-        <div class="item" v-for="pay in types">
-          <img :src="pay.img" />
-          <text>{{pay.text}}</text>
+        <div class="type" v-for="(type,index) in types" @click="selectType(index)">
+          <div class="circle" >
+            <div class="check-circle" :key="'checked'+index" v-if="type.checked" style="background-color: #000;"></div>
+          </div>
+          <img :src="type.img" style="width: 30px; height: 30px;"/>
+          <text> {{type.text}}</text>
         </div>
       </div>
     </scroller>
     <sub-header title="确认订单"></sub-header>
     <div class="pay">
-      
+      <text class="pay-text">支&emsp;付</text>
     </div>
+    <confirm-pay></confirm-pay>
   </div>
 </template>
 
 <script>
   import subHeader from './components/sub-header.vue'
+  import confirmPay from './components/confirm-pay.vue'
 
   import {getBaseUrl, jump} from './common/util.js'
   import config from './common/config.js'
@@ -48,9 +53,10 @@
         picRoot: config.picRoot,
         data: {},
         types: [
-          {checked: false, img: config.picRoot+'alipay.png', text: "支付宝"},
+          {checked: true, img: config.picRoot+'alipay.png', text: "支付宝"},
           {checked: false, img: config.picRoot+'wepay.png', text: "微信支付"}
-        ]
+        ],
+        selectedType: 0
       }
     },
     computed: {
@@ -64,13 +70,20 @@
         storage.getItem('order', e => {
           this.data = JSON.parse(e.data)
         })
+      },
+      selectType (index) {
+        if (this.selectedType === index) return false
+        this.types[0].checked = false
+        this.types[1].checked = false
+        this.types[index].checked = true
+        this.selectedType = index
       }
     },
     created () {
       this.initData()
     },
     components: {
-      subHeader
+      subHeader, confirmPay
     }
   }
 </script>
@@ -84,6 +97,7 @@
     width: 750px;
     background-color: #f2f2f2;
   }
+  /* 订单 */
   .orders{
     margin-top: 20px;
     margin-bottom: 40px;
@@ -121,6 +135,58 @@
     justify-content: space-between;
   }
   .left, .right{
+    font-size: 25px;
+  }
+  /* 支付方式 */
+  .types{
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+  }
+  .type{
+    flex-direction: row;
+    width: 700px;
+    border-bottom-width: 2px;
+    border-bottom-color: #f2f2f2;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  /* check */
+  .circle{
+    width: 25px;
+    height: 25px;
+    border-radius: 13px;
+    background-color: #ddd;
+    border-width: 1px;
+    border-color: #000;
+    position: relative;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 3px;
+  }
+  .check-circle{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 4px;
+    left: 4px;
+    border-radius: 10px;
+  }
+  /* 支付 */
+  .pay{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 750px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    background-color: #409ad6;
+  }
+  .pay-text{
+    color: #fff;
     font-size: 25px;
   }
 </style>
