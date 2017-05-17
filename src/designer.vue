@@ -8,7 +8,7 @@
       <div class="designer">
         <!-- 设计师面板 -->
         <div class="designer-top">
-          <img :src="picRoot+'left.png'" class="left-btn" />
+          <img :src="picRoot+'left.png'" class="left-btn" @click="back"/>
           <img :src="picRoot+'more.png'" class="right-btn" @click="toggleShare(true)"/>
           <img :src="designerData.avatar" class="avatar" style="width: 100px; height: 100px;"/>
           <img :src="picRoot+'male.png'" class="sex" v-if="designerData.sex === 0"/>
@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    <buy-footer :cart="cart" v-if="tabIndex === 1 && cart.length"></buy-footer>
+    <buy-footer :cart="cart" :designerid="designerid" v-if="tabIndex === 1 && cart.length"></buy-footer>
     <share v-if="showShare" @cancelShare="toggleShare(false)"></share>
   </div>
 </template>
@@ -129,7 +129,7 @@
   import share from './components/share.vue'
   import buyFooter from './components/buy-footer.vue'
 
-  import {getBaseUrl, jump} from './common/util.js'
+  import {getBaseUrl, jump, urlParse} from './common/util.js'
   import config from './common/config.js'
   import {getData} from './common/api.js'
 
@@ -140,6 +140,7 @@
   export default {
     data () {
       return {
+        designerid: urlParse().id,
         refreshing: 'hide',
         showloading: 'hide',
         baseUrl: getBaseUrl(),
@@ -192,12 +193,15 @@
       }
     },
     methods: {
+      back () {
+        navigator.pop()
+      },
       setSelectTab (index) {
         this.tabIndex = index
       },
       fetchData () {
         return getData('getDesigner', {
-          id: 1, page: 1, perpage: 10
+          id: this.designerid, page: 1, perpage: 10
         })
       },
       onrefresh () {

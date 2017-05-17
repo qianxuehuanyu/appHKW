@@ -30,10 +30,10 @@
       </div>
     </scroller>
     <sub-header title="确认订单"></sub-header>
-    <div class="pay">
+    <div class="pay" @click="pay">
       <text class="pay-text">支&emsp;付</text>
     </div>
-    <confirm-pay></confirm-pay>
+    <confirm-pay v-if="showConfirm" @confirmPay="confirmPay"></confirm-pay>
   </div>
 </template>
 
@@ -56,7 +56,8 @@
           {checked: true, img: config.picRoot+'alipay.png', text: "支付宝"},
           {checked: false, img: config.picRoot+'wepay.png', text: "微信支付"}
         ],
-        selectedType: 0
+        selectedType: 0,
+        showConfirm: false
       }
     },
     computed: {
@@ -77,6 +78,16 @@
         this.types[1].checked = false
         this.types[index].checked = true
         this.selectedType = index
+      },
+      pay () {
+        this.showConfirm = true
+      },
+      confirmPay () {
+        // 发送支付请求
+        jump('pay_result.js', {
+          id: this.data.designerid,
+          pay: 'success'
+        })
       }
     },
     created () {

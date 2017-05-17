@@ -40,7 +40,8 @@
 
   export default {
     props: {
-      cart: Array
+      cart: Array,
+      designerid: null
     },
     computed: {
       amount () {
@@ -102,10 +103,12 @@
         obj.taxRate = this.tax
         obj.amount = this.amount
         obj.orders = this.cart
+        obj.designerid = this.designerid
         // 提交服务器下单
         let order = JSON.stringify(obj)
+        // 本地存储
         storage.setItem('order', order, () => {
-          jump('order.js')
+          jump('pay_order.js')
         })
       },
       help () {
