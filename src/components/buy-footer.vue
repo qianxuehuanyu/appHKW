@@ -35,7 +35,7 @@
   import {getBaseUrl, jump} from '../common/util.js'
   import config from '../common/config.js'
 
-  const navigator = weex.requireModule('navigator')
+  const storage = weex.requireModule('storage')
   const animation = weex.requireModule('animation')
 
   export default {
@@ -56,6 +56,7 @@
     data () {
       return {
         picRoot: config.picRoot,
+        getBaseUrl: getBaseUrl(),
         taxItems: [
           {text: '不需要税率', num: 0, checked: true}, 
           {text: '3%', num: 3, checked: false}, 
@@ -97,8 +98,15 @@
         })
       },
       pay () {
-        // storage
-        // 跳转
+        let obj = {}
+        obj.taxRate = this.tax
+        obj.amount = this.amount
+        obj.orders = this.cart
+        // 提交服务器下单
+        let order = JSON.stringify(obj)
+        storage.setItem('order', order, () => {
+          jump('order.js')
+        })
       },
       help () {
         // 跳转

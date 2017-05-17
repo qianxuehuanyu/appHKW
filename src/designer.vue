@@ -9,7 +9,7 @@
         <!-- 设计师面板 -->
         <div class="designer-top">
           <img :src="picRoot+'left.png'" class="left-btn" />
-          <img :src="picRoot+'more.png'" class="right-btn" />
+          <img :src="picRoot+'more.png'" class="right-btn" @click="toggleShare(true)"/>
           <img :src="designerData.avatar" class="avatar" style="width: 100px; height: 100px;"/>
           <img :src="picRoot+'male.png'" class="sex" v-if="designerData.sex === 0"/>
           <img :src="picRoot+'female.png'" class="sex" v-if="designerData.sex === 1"/>
@@ -117,6 +117,7 @@
       </div>
     </div>
     <buy-footer :cart="cart" v-if="tabIndex === 1 && cart.length"></buy-footer>
+    <share v-if="showShare" @cancelShare="toggleShare(false)"></share>
   </div>
 </template>
 
@@ -125,6 +126,7 @@
   import momentList from './components/moment-list.vue'
   import buyList from './components/buy-list.vue'
   import tab from './components/tab.vue'
+  import share from './components/share.vue'
   import buyFooter from './components/buy-footer.vue'
 
   import {getBaseUrl, jump} from './common/util.js'
@@ -157,7 +159,8 @@
           {src: config.picRoot + '', name: '关注', url: ''},
           {src: config.picRoot + '', name: '喜欢', url: ''}
         ],
-        cart: []
+        cart: [],
+        showShare: false
       }
     },
     computed: {
@@ -251,13 +254,16 @@
       },
       getCart (cart) {
         this.cart = cart
+      },
+      toggleShare (value) {
+        this.showShare = value
       }
     },
     mounted () {
       this.onrefresh()
     },
     components: {
-      subHeader, momentList, tab, buyList, buyFooter
+      subHeader, momentList, tab, buyList, buyFooter, share
     }
   }
 </script>

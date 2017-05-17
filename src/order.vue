@@ -1,0 +1,126 @@
+<template>
+  <div>
+    <scroller class="main">
+      <div class="orders">
+        <div class="order" v-for="order in data.orders">
+          <text class="title">{{order.title}}</text>
+          <text class="desc">{{order.desc}}</text>
+          <div style="justify-content: space-between;flex-direction: row;">
+            <text></text>
+            <text class="price">{{order.price}}元/{{order.unit}} × {{order.num}}</text>
+          </div>
+        </div>
+        <div class="item">
+          <text class="left">税率</text>
+          <text class="right">{{data.taxRate}}% (￥{{tax}})</text>
+        </div>
+        <div class="item">
+          <text class="left">总计</text>
+          <text class="right" style="color: red;">￥{{data.amount}}</text>
+        </div>
+      </div>
+      <div class="types">
+        <div class="item" v-for="pay in types">
+          <img :src="pay.img" />
+          <text>{{pay.text}}</text>
+        </div>
+      </div>
+    </scroller>
+    <sub-header title="确认订单"></sub-header>
+    <div class="pay">
+      
+    </div>
+  </div>
+</template>
+
+<script>
+  import subHeader from './components/sub-header.vue'
+
+  import {getBaseUrl, jump} from './common/util.js'
+  import config from './common/config.js'
+
+  const storage = weex.requireModule('storage')
+  const animation = weex.requireModule('animation')
+
+  export default {
+    data () {
+      return {
+        picRoot: config.picRoot,
+        data: {},
+        types: [
+          {checked: false, img: config.picRoot+'alipay.png', text: "支付宝"},
+          {checked: false, img: config.picRoot+'wepay.png', text: "微信支付"}
+        ]
+      }
+    },
+    computed: {
+      tax () {
+        let tax = this.data.amount * this.data.taxRate
+        return Math.round(tax) / 100
+      }
+    },
+    methods: {
+      initData () {
+        storage.getItem('order', e => {
+          this.data = JSON.parse(e.data)
+        })
+      }
+    },
+    created () {
+      this.initData()
+    },
+    components: {
+      subHeader
+    }
+  }
+</script>
+
+<style scoped>
+  .main{
+    position: fixed;
+    top: 80px;
+    bottom: 100px;
+    left: 0;
+    width: 750px;
+    background-color: #f2f2f2;
+  }
+  .orders{
+    margin-top: 20px;
+    margin-bottom: 40px;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+  }
+  .order, .item{
+    width: 700px;
+    border-bottom-width: 2px;
+    border-bottom-color: #f2f2f2;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .title{
+    font-size: 35px;
+    color: #000;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+  .desc{
+    font-size: 25px;
+    color: grey;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: 10px;
+  }
+  .price{
+    font-size: 25px;
+    color: #000;
+  }
+  .item{
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .left, .right{
+    font-size: 25px;
+  }
+</style>

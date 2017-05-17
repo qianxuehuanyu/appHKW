@@ -14,7 +14,10 @@
   export default {
     props: {
       title: String,
-      src: String
+      src: {
+        type: String,
+        default: ''
+      }
     },
     data () {
       return {

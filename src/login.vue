@@ -2,11 +2,9 @@
   <div class="login">
     <input class="username" placeholder="请输入用户名" type="text" v-model="username"/>
     <input class="password" placeholder="请输入密码" type="password" v-model="password"/>
-    <input class="text" type="text" v-model="gotoUrl" />
-    <text>{{bundleUrl}}</text>
-    <text>{{baseUrl}}</text>
-    <text>{{gotoUrl}}</text>
-    <button class="btn" @click="login">登陆</button>
+    <div class="btn" @click="login">
+      <text class="btn-text">登陆</text>
+    </div>
   </div>
 </template>
 
@@ -50,16 +48,18 @@
     margin-bottom: 20px; 
   }
   .password{
-    margin-bottom: 300px;
+    
   }
   .btn{
-    width: 300px;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    background: #abcdef;
-    color: #fff;
+    margin-top: 400px;
+    width: 500px;
+    height: 100px;
+    background-color: #3e9bd7;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn-text{
     font-size: 30px;
-    margin-top: 50px;
+    color: #fff;
   }
 </style>
