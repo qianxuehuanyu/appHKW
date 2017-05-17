@@ -3,9 +3,9 @@
     <div class="mask"></div>
     <div class="container">
       <div class="header">
-        <img src="" />
+        <img :src="picRoot+''" />
         <text>付款详情</text>
-        <img src="" />
+        <img :src="picRoot+'help.png'" />
       </div>
       <div class="main">
         
