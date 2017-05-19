@@ -42,8 +42,8 @@
       <!-- 背景图片 -->
       <img ref="bg" :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 325px;" resize="stretch"/>
       <!-- 顶部地址及按钮 -->
-      <div class="header-top" @click="locate">
-        <div class="location">
+      <div class="header-top" >
+        <div class="location" @click="locate">
           <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
           <text class="location-text">&nbsp;滨江区长河路351...</text>
         </div>

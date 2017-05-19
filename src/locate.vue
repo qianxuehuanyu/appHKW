@@ -1,7 +1,7 @@
 <template>
   <div>
     <scroller class="main">
-      <div class="locate" @click="selectCity">
+      <div class="locate" >
         <img :src="picRoot+'locate.png'" style="width: 40px;height: 40px;margin-right: 20px;"/>
         <text style="color: #409ad6;">定位当前位置</text>
       </div>
@@ -30,7 +30,7 @@
     </scroller>
     <div class="locate-header">
       <img :src="picRoot+'left.png'" class="back" @click="goBack"/>
-      <div class="select-city">
+      <div class="select-city" @click="selectCity">
         <text>杭州</text>
         <img :src="picRoot+'down.png'" style="width: 40px; height: 40px;margin-top:10px;"/>
       </div>

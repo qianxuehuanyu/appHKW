@@ -2,7 +2,9 @@
   <div class="sub-header">
     <img :src="picRoot+'left.png'" class="back" @click="goBack"/>
     <text>{{title}}</text>
-    <img v-if="!!src" :src="picRoot+src" class="right" @click="clickRight"/>
+    <div class="right">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -13,11 +15,7 @@
 
   export default {
     props: {
-      title: String,
-      src: {
-        type: String,
-        default: ''
-      }
+      title: String
     },
     data () {
       return {
@@ -27,10 +25,7 @@
     methods: {
       goBack () {
         navigator.pop()
-      },
-      clickRight () {
-        this.$emit('clickBtn')
-      },
+      }
     }
   }
   
@@ -58,7 +53,5 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    width: 50px;
-    height: 50px;
   }
 </style>
