@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- 设计师列表 -->
+    <!-- 正文：设计师列表 -->
     <list class="main" @loadmore="onloading" loadmoreoffset="10">
       <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
@@ -42,12 +42,14 @@
       <!-- 背景图片 -->
       <img ref="bg" :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 325px;" resize="stretch"/>
       <!-- 顶部地址及按钮 -->
-      <div class="header-top">
-        <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
-        <text class="location">&nbsp;滨江区长河路351...</text>
+      <div class="header-top" @click="locate">
+        <div class="location">
+          <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
+          <text class="location-text">&nbsp;滨江区长河路351...</text>
+        </div>
         <div class="more">
           <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" @click="search"/>
-          <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
+          <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" @click="certificate"/>
         </div>
       </div>
       <div class="header-main" >
@@ -238,6 +240,12 @@
       },
       search () {
         jump('search.js')
+      },
+      locate () {
+        jump('locate.js')
+      },
+      certificate () {
+        jump('home_certificate.js')
       }
     },
     components: {
@@ -270,8 +278,13 @@
     align-items: center;
   }
   .location{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .location-text{
     color: #fff;
-    font-size: 40px;
+    font-size: 30px;
   }
   .icon-location{
     color: #fff;
