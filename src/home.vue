@@ -46,7 +46,7 @@
         <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
         <text class="location">&nbsp;滨江区长河路351...</text>
         <div class="more">
-          <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
+          <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" @click="search"/>
           <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" />
         </div>
       </div>
@@ -235,6 +235,9 @@
       },
       addFilter () {
         jump('home_add.js')
+      },
+      search () {
+        jump('search.js')
       }
     },
     components: {
