@@ -65,8 +65,8 @@
         </div>
         <!-- 筛选：各种类型 -->
         <div class="header-filters" ref="filters">
-          <div v-for="(filter,index) in filterItems" class="item" v-if="index <5 || showMoreFilter">
-            <div v-if="filter.selected" class="circle" style="background-color: #3e9bd7; border-color: #3e9bd7;" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
+          <div v-for="(filter,index) in filterItems" class="item" v-if="index <5 || showMoreFilter" @click="selectFilter(index)">
+            <div v-if="filter.selected" class="circle" style="background-color: #3e9bd7; border-color: #3e9bd7;"  :key="'filter'+ filter.selected + index">
               <img :src="picRoot + filter.src" style="width:50px; height: 50px;" />
             </div>
             <div v-if="!filter.selected" class="circle" @click="selectFilter(index)" :key="'filter'+ filter.selected + index">
@@ -78,7 +78,7 @@
           </div>
         </div>
         <div class="header-add">
-          <div class="add item">
+          <div class="add item" @click="addFilter">
             <div class="circle"><img :src="picRoot + 'plus-white.png'" style="width:50px; height: 50px;" /></div>
             <div class="text"><text style="font-size: 18px; text-align: center;color: #fff;line-height: 60px;">添加</text></div>
           </div>
@@ -232,6 +232,9 @@
       },
       goToDesigner (designerid) {
         jump ('designer.js', {'id': designerid})
+      },
+      addFilter () {
+        jump('home_add.js')
       }
     },
     components: {

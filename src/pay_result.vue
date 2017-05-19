@@ -17,6 +17,8 @@
   import {jump, urlParse} from './common/util.js'
   import config from './common/config.js'
 
+  const navigator = weex.requireModule('navigator')
+
   export default {
     data () {
       return {
@@ -44,9 +46,7 @@
     },
     methods: {
       back () {
-        jump('designer.js', {
-          id: this.designerid
-        })
+        navigator.pop()
       },
       go () {
         if (this.pay === 'success') {

@@ -46,6 +46,7 @@
 
   const storage = weex.requireModule('storage')
   const animation = weex.requireModule('animation')
+  const navigator = weex.requireModule('navigator')
 
   export default {
     data () {
@@ -69,7 +70,12 @@
     methods: {
       initData () {
         storage.getItem('order', e => {
-          this.data = JSON.parse(e.data)
+          console.log(e)
+          if (e.result === 'success') {
+            this.data = JSON.parse(e.data)
+          } else {
+            navigator.pop()
+          }
         })
       },
       selectType (index) {
@@ -84,9 +90,12 @@
       },
       confirmPay () {
         // 发送支付请求
-        jump('pay_result.js', {
-          id: this.data.designerid,
-          pay: 'success'
+        // success
+        storage.removeItem('order', () => {
+          jump('pay_result.js', {
+            id: this.data.designerid,
+            pay: 'success'
+          })
         })
       }
     },
