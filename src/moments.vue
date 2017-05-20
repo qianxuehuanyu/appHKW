@@ -63,7 +63,7 @@
             num: '45',
             width: '45px',
             bgColor: '#f4c021',
-            url: ''
+            url: 'moments_requires.js'
           },
           {
             name: '贴子',
@@ -71,7 +71,7 @@
             num: '123',
             width: '45px',
             bgColor: '#3dc077',
-            url: ''
+            url: 'moments_posts.js'
           },
           {
             name: '作品',
@@ -79,7 +79,7 @@
             num: '56',
             width: '45px',
             bgColor: '#409ad6',
-            url: ''
+            url: 'moments_works.js'
           },
           {
             name: '活动',
@@ -87,7 +87,7 @@
             num: '11',
             width: '45px',
             bgColor: '#31408f',
-            url: ''
+            url: 'moments_activities.js'
           }
         ],
         momentsData: []

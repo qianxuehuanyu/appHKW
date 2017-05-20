@@ -53,5 +53,6 @@
     position: absolute;
     right: 10px;
     top: 10px;
+    flex-direction: row;
   }
 </style>

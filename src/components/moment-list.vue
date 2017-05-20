@@ -10,13 +10,15 @@
             <img v-if="data.sex === 0" :src="picRoot + 'male.png'" style="width: 30px; height: 30px;"/>
             <img v-if="data.sex === 1" :src="picRoot + 'female.png'" style="width: 30px; height: 30px;"/>
           </div>
-          <text class="job" style="fontSize: 20px;color: #999;">{{data.job}} {{data.corp}}</text>  
+          <text class="job" style="fontSize: 20px;color: #999;" v-if="type === 'require'">{{data.tag}}</text> 
+          <text class="job" style="fontSize: 20px;color: #999;" v-else>{{data.job}} {{data.corp}}</text> 
         </div>
         <div class="person-location" v-if="data.city">
           <text class="icon icon-location" style="color: #999; font-size: 25px;"></text>
           <text style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{data.city}}</text>
         </div>
       </div>
+      <div class="line" v-if="type === 'require'"></div>
       <div class="person-main" :style="{'padding-left': mainLeft}">
         <!-- 消息内容 -->
         <div class="person-saying">
@@ -31,7 +33,13 @@
         </div>
         <!-- 时间、按钮 -->
         <div class="vote-header">
-          <text class="grey small">{{formtime(data.time)}}</text>
+          <div class="left" v-if="type === 'require'">
+            <img :src="picRoot+'clock.png'" style="width: 25px; height: 25px;"/>
+            <text class="grey small">{{formtime(data.time)}}</text>
+            <img :src="picRoot+'show.png'" style="width: 25px; height: 25px;margin-left: 20px;"/>
+            <text class="grey small">{{data.read}}</text>
+          </div>
+          <text class="grey small" v-else>{{formtime(data.time)}}</text>
           <div class="right-btns">
             <img v-if="data.ilike" :src="picRoot + 'heart-fill-blue.png'" @click="togglelike(index)" style="width: 20px; height: 20px;" :key="'like'+index"/>
             <img v-if="!data.ilike" :src="picRoot + 'heart.png'" @click="togglelike(index)" style="width: 20px; height: 20px;" :key="'dislike'+index"/>
@@ -82,7 +90,7 @@
     },
     computed: {
       mainLeft () {
-        if (this.type === 'moment') return '0px'
+        if (this.type === 'moment' || this.type === 'require') return '0px'
         return '80px'
       }
     },
@@ -160,6 +168,11 @@
     margin-right: 20px;
     margin-top: 20px;
   } 
+  .left{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
   /* 评论 */
   .vote-header{
     border-bottom-width: 1px;
@@ -211,5 +224,14 @@
   }
   .grey{
     color: #999;
+  }
+  /* type === require 项目需求 */
+  .line{
+    width: 750px;
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+    border-bottom-color: #eee;
+    padding-top: 10px;
+    margin-bottom: 10px;
   }
 </style>

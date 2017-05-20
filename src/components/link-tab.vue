@@ -1,6 +1,6 @@
 <template>
   <div class="tab-nav">
-    <div class="tab-item" v-for="item in items" @click="jump(item.url)">
+    <div class="tab-item" v-for="item in items" @click="goTo(item.url)">
       <div style="position: relative;">
         <div :style="{
             'background-color': item.bgColor,
@@ -54,6 +54,9 @@
       }
     },
     methods: {
+      goTo (url) {
+        jump(url)
+      }
     }
   }
 </script>
