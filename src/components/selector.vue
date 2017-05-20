@@ -1,8 +1,8 @@
 <template>
   <div class="selector" >
     <div class="header">
-      <text>取消</text>
-      <text>确定</text>
+      <text @click="cancelSelect">取消</text>
+      <text @click="confirmSelect">确定</text>
     </div>
     <div class="main" :class="{'dragging': dragging}" @panstart="_onTouchStart">
       <div class="wrapper" ref="wrapper" :style="{
@@ -29,10 +29,12 @@
   const navigator = weex.requireModule('navigator')
 
   export default {
+    props: {
+      items: Array
+    },
     data () {
       return {
         picRoot: config.picRoot,
-        items: ['高中', '大专', '本科', '硕士', '博士','硕士', '博士','硕士', '博士'],
         speed: 500,
         currentItem: 2,
         lastItem: 2,
@@ -107,6 +109,12 @@
       },
       _setItem (item) {
         this.translateY = -(this.currentItem - 2) * 55
+      },
+      cancelSelect () {
+        this.$emit('cancelSelect')
+      },
+      confirmSelect () {
+        this.$emit('confirmSelect', this.items[this.currentItem])
       }
     },
     components: {

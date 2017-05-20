@@ -30,7 +30,7 @@
               <text>性&emsp;&emsp;别</text>
             </div>
             <div class="right">
-              <div class="sex" v-for="(sex,index) in sexs">
+              <div class="sex" v-for="(sex,index) in sexs" @click="toggleSex(index)">
                 <div class="circle" >
                   <div class="check-circle" :key="'checked'+index" v-if="sex.checked" style="background-color: #000;"></div>
                 </div>
@@ -38,20 +38,22 @@
               </div>
             </div>
           </div>
-          <div class="exp">
+          <div class="exp" @click="selectExp">
             <div class="left">
               <text>工作年限</text>
             </div>
-            <div class="right">
-              <input type="text" />
+            <div class="right" >
+              <text>{{exp}}</text>
+              <img :src="picRoot+'edit.png'" class="edit-img" />
             </div>
           </div>
-          <div class="education">
+          <div class="education" @click="selectEducation">
             <div class="left">
               <text>最高学历</text>
             </div>
-            <div class="right">
-              <input type="text" />
+            <div class="right" >
+              <text>{{education}}</text>
+              <img :src="picRoot+'edit.png'" class="edit-img" />
             </div>
           </div>
         </div>
@@ -59,7 +61,7 @@
       <div class="field-of-training">
         <div class="field-header">
           <text>擅长领域</text>
-          <text>选择领域</text>
+          <text @click="selectField">选择领域</text>
         </div>
         <div class="fields">
           <div class="field" v-for="field in fields">
@@ -77,7 +79,8 @@
     <sub-header title="认证设计师">
       <text class="submit" @click="submit">提交</text>
     </sub-header>
-    <selector></selector>
+    <selector v-if="showExp" :items="expItems" @cancelSelect="cancelExp" @confirmSelect="confirmExp"></selector>
+    <selector v-if="showEducation" :items="educationItems" @cancelSelect="cancelEducation" @confirmSelect="confirmEducation"></selector>
   </div>
 </template>
 
@@ -110,7 +113,11 @@
         ],
         sexIndex: 0,
         exp: '',
+        expItems: ['1年', '2年', '3年', '4年', '5年'],
+        showExp: false,
         education: '',
+        educationItems: ['高中', '大专', '本科', '硕士', '博士'],
+        showEducation: false,
         fields: [],
         works: [
           {title: '作品一', src: ''},
@@ -122,8 +129,16 @@
         ]
       }
     },
+    mounted () {
+      storage.getItem('fields', e => {
+        this.fields = JSON.parse(e.data)
+      })
+    },
     methods: {
       submit () {
+        jump('submit-result.js', {
+          submit: 'success'
+        })
       },
       toggleType (index) {
         if (index === this.typeIndex) return false
@@ -133,6 +148,37 @@
         type.checked = true
         this.typeIndex = index
       },
+      toggleSex (index) {
+        if (index === this.sexIndex) return false
+        let sex = this.sexs[index]
+        this.sexs[0].checked = false
+        this.sexs[1].checked = false
+        sex.checked = true
+        this.sexIndex = index
+      },
+      selectExp () {
+        this.showExp = true
+      },
+      selectEducation () {
+        this.showEducation = true
+      },
+      cancelExp () {
+        this.showExp = false
+      },
+      cancelEducation () {
+        this.showEducation = false
+      },
+      confirmExp (exp) {
+        this.exp = exp
+        this.showExp = false
+      },
+      confirmEducation (education) {
+        this.education = education
+        this.showEducation = false
+      },
+      selectField () {
+        jump('select-field.js')
+      }
     },
     components: {
       subHeader, selector
@@ -244,18 +290,22 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 200px;
+    justify-content: flex-start;
   }
   .exp{
     flex-direction: row;
     border-bottom-width: 1px;
     padding-top: 20px;
     padding-bottom: 20px;
+    position: relative;
   }
   .education{
     flex-direction: row;
     border-bottom-width: 1px;
     padding-top: 20px;
     padding-bottom: 20px;
+    position: relative;
   }
   .left{
     width: 200px;
@@ -264,6 +314,13 @@
   }
   .right{
     flex-direction: row;
+    flex: 1;
+  }
+  .edit-img{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 20px;
   }
   /* 擅长领域 */
   .field-of-training{
