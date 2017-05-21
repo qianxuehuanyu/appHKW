@@ -94,7 +94,7 @@
             title: '一句话发需求',
             desc: '智能匹配最合适的设计师',
             src: config.picRoot + 'faxvqiu.png',
-            url: ''
+            url: 'new-require.js'
           },
           {
             title: '秀作品',
@@ -106,7 +106,7 @@
             title: '云报价',
             desc: '一键合同，分享支付，快速订单',
             src: config.picRoot + 'yunbaojia.png',
-            url: ''
+            url: 'price.js'
           }
         ]
       }
