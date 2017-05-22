@@ -6,6 +6,7 @@
           <div class="check-circle" :key="'checked'+index" v-if="li.checked" style="background-color: #000;"></div>
         </div>
         <text class="title">{{li.title}}</text>
+        <text v-if="type === 'price'" class="edit" @click="edit(index)">编辑</text>
       </div>
       <div class="li-main">
         <text class="desc">{{li.desc}}</text>
@@ -25,7 +26,8 @@
 <script>
   export default {
     props: {
-      listdata: Array
+      listdata: Array,
+      type: String
     },
     computed: {
       cart () {
@@ -54,6 +56,9 @@
         let li = this.listdata[index]
         li.num++
         this.$emit('sendCart', this.cart)
+      },
+      edit (index) {
+        this.$emit('edit', index)
       }
     }
   }
@@ -61,7 +66,7 @@
 
 <style scoped>
   .ul{
-    padding-bottom: 200px;
+    padding-bottom: 50px;
   }
   .li{
     margin-top: 10px;
@@ -76,6 +81,7 @@
     border-bottom-color: grey;
     padding-top: 10px;
     padding-bottom: 10px;
+    position: relative;
   }
   .circle{
     width: 25px;
@@ -141,5 +147,10 @@
     justify-content: center;
     align-items: center;
     font-size: 22px;
+  }
+  .edit{
+    position: absolute;
+    right: 20px;
+    font-size: 25px;
   }
 </style>

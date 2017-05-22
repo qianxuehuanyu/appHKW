@@ -86,7 +86,7 @@
         <!-- 服务 -->
         <div v-if="tabIndex === 1">
           <div class="services">
-            <buy-list :listdata="designerData.services" @sendCart="getCart"></buy-list>  
+            <buy-list :listdata="designerData.services" type="designer" @sendCart="getCart"></buy-list>  
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    <buy-footer :cart="cart" :designerid="designerid" v-if="tabIndex === 1 && cart.length"></buy-footer>
+    <buy-footer :cart="cart" :designerid="designerid" type="designer" v-if="tabIndex === 1 && cart.length"></buy-footer>
     <share v-if="showShare" @cancelShare="toggleShare(false)"></share>
   </div>
 </template>

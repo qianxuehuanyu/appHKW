@@ -24,8 +24,11 @@
       <div class="amount">
         <text class="amount-text">合计：￥{{amount}}</text>
       </div>
-      <div class="pay-btn" @click="pay">
+      <div class="pay-btn" @click="pay" v-if="type === 'designer'">
         <text >购买</text>
+      </div>
+      <div class="pay-btn" @click="generate" v-if="type === 'price'">
+        <text style="color: #fff;">生成报价单</text>
       </div>
     </div>
   </div>
@@ -41,7 +44,8 @@
   export default {
     props: {
       cart: Array,
-      designerid: null
+      designerid: null,
+      type: String
     },
     computed: {
       amount () {
@@ -98,6 +102,7 @@
           })
         })
       },
+      // 支付
       pay () {
         let obj = {}
         obj.taxRate = this.tax
@@ -109,6 +114,20 @@
         // 本地存储
         storage.setItem('order', order, () => {
           jump('pay_order.js')
+        })
+      },
+      // 生成报价单
+      generate () {
+        let obj = {}
+        obj.taxRate = this.tax
+        obj.amount = this.amount
+        obj.orders = this.cart
+        obj.designerid = this.designerid
+        // 提交服务器下单
+        let price = JSON.stringify(obj)
+        // 本地存储
+        storage.setItem('price', price, () => {
+          jump('price_detail.js')
         })
       },
       help () {

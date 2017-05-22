@@ -15,7 +15,10 @@
   export default {
     props: {
       tabItems: Array,
-      tabIndex: Number
+      tabIndex: {
+        type: Number,
+        default: 0
+      }
     },
     methods: {
       selectTab (index) {
@@ -29,6 +32,7 @@
 <style scoped>
   .tab-nav{
     width: 750px;
+    height: 80px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
