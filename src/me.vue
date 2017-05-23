@@ -72,7 +72,7 @@
           },
           {
             'name': '客户',
-            'url': '' 
+            'url': 'me_customer.js' 
           },
           {
             'name': '收藏',
@@ -112,6 +112,9 @@
       }
     },
     methods: {
+      goTo (url) {
+        jump(url)
+      }
     },
     components: {
       mainTab
