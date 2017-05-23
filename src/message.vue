@@ -1,38 +1,40 @@
 <template>
   <div>
     <scroller class="main">
+      <!-- refresh -->
+      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
+        <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
+      </refresh>
       <div class="links">
         <div class="link" style="border-bottom-width: 1px;">
           <img class="avatar" src="" />
           <text class="link-title">我的客户</text>
-          <text class="link-info">张兰/张凡/杨雷（25）</text>
+          <text class="link-info">{{customers}}（{{customer.length}}）</text>
           <text class="tip">新增</text>
         </div>
         <div class="link" style="border-bottom-width: 1px;">
           <img class="avatar" src="" />
           <text class="link-title">留言/评价</text>
-          <text class="link-info">作品真不错，我会关注你啦哦！</text>
-          <text class="tip">新增</text>
+          <text class="link-info">{{message}}</text>
         </div>
         <div class="link">
           <img class="avatar" src="" />
           <text class="link-title">系统消息</text>
-          <text class="link-info">6人喜欢我 25人看过我 12新用户推荐</text>
-          <text class="tip">新增</text>
+          <text class="link-info">{{notice.likes}}人喜欢我 {{notice.reads}}人看过我 {{notice.recommends}}新用户推荐</text>
         </div>
       </div>
       <div class="subtitle">
         <text style="font-size: 20px;padding-left: 30px;color: grey;">最近联系人</text>
       </div>
       <div class="contacts">
-        <div class="contact link" v-for="(contact,index) in 30" :style="{'border-bottom-width': index===30-1?'0px':'1px'}">
-          <img class="avatar" src="" />
+        <div class="contact link" v-for="(contact,index) in contacts" :style="{'border-bottom-width': index===30-1?'0px':'1px'}">
+          <img class="avatar" :src="contact.avatar" />
           <div class="num">
-            <text style="color: #fff;">4</text>
+            <text style="color: #fff;">{{contact.num}}</text>
           </div>
-          <text class="link-title">MiaZhang</text>
-          <text class="link-info">你好，在吗？</text>
-          <text class="tip">16:12</text>
+          <text class="link-title">{{contact.name}}</text>
+          <text class="link-info">{{contact.msg}}</text>
+          <text class="tip">{{formTime(contact.time)}}</text>
         </div>
       </div>
     </scroller>
@@ -44,22 +46,56 @@
 </template>
 
 <script>
-  import {getBaseUrl, jump} from './common/util.js'
   import mainTab from './components/main-tab.vue'
+
+  import {getBaseUrl, jump, formatDate} from './common/util.js'
+  import config from './common/config.js'
+  import {getData} from './common/api.js'
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
 
-  const baseUrl = getBaseUrl()
-
   export default {
     data () {
-        return {
-         
-        }
+      return {
+        refreshing: 'hide',
+        picRoot: config.picRoot,
+        customer: [],
+        message: '',
+        notice: {likes:0, reads: 0, recommends: 0},
+        contacts: []
+      }
+    },
+    computed: {
+      customers () {
+        let length = this.customer.length
+        if (length === 1) return this.customer[0] 
+        if (length === 2) return this.customer.join('/')
+        return this.customer.slice(0,3).join('/')
+      }
     },
     methods: {
-      
+      fetchData () {
+        return getData('getContactsData', {
+          id: 1
+        })
+      },
+      onrefresh () {
+        this.refreshing = 'show'
+        this.fetchData().then((res) => {
+          this.customer = res.data.customer
+          this.message = res.data.message
+          this.notice = res.data.notice
+          this.contacts = res.data.contacts
+          this.refreshing = 'hide'
+        })
+      },
+      formTime (time) {
+        return formatDate (time, 'hh:mm')
+      }
+    },
+    mounted () {
+      this.onrefresh()
     },
     components: {
       mainTab
@@ -108,10 +144,14 @@
   .link-title{
     font-size: 30px;
     padding-bottom: 10px;
+    font-weight: bold;
   }
   .link-info{
     color: grey;
     font-size: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .tip{
     position: absolute;
