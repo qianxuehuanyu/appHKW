@@ -5,7 +5,7 @@
       <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
       </refresh>
-
+      
     </scroller>
     <sub-header title=""></sub-header>
   </div>
@@ -32,9 +32,9 @@
     },
     methods: {
       fetchData () {
-        return getData('getMomentsList', {
-          id: 1, page: 1, perpage: 5
-        })
+        // return getData('getMomentsList', {
+        //   id: 1, page: 1, perpage: 5
+        // })
       },
       onrefresh () {
         this.refreshing = 'show'
@@ -66,11 +66,5 @@
 </script>
 
 <style scoped>
-  .main{
-    position: fixed;
-    width: 750px;
-    top: 80px;
-    left: 0;
-    bottom: 0;
-  }
+  
 </style>

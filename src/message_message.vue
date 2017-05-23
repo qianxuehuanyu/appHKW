@@ -5,7 +5,7 @@
       <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
       </refresh>
-
+      
     </scroller>
     <sub-header title=""></sub-header>
   </div>

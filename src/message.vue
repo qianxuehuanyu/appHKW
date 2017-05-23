@@ -6,18 +6,18 @@
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
       </refresh>
       <div class="links">
-        <div class="link" style="border-bottom-width: 1px;">
+        <div class="link" style="border-bottom-width: 1px;" @click="goToCustomer">
           <img class="avatar" src="" />
           <text class="link-title">我的客户</text>
           <text class="link-info">{{customers}}（{{customer.length}}）</text>
-          <text class="tip">新增</text>
+          <text class="tip" @click="addCustomer">新增</text>
         </div>
-        <div class="link" style="border-bottom-width: 1px;">
+        <div class="link" style="border-bottom-width: 1px;" @click="goToMessage">
           <img class="avatar" src="" />
           <text class="link-title">留言/评价</text>
           <text class="link-info">{{message}}</text>
         </div>
-        <div class="link">
+        <div class="link" @click="goToNotice">
           <img class="avatar" src="" />
           <text class="link-title">系统消息</text>
           <text class="link-info">{{notice.likes}}人喜欢我 {{notice.reads}}人看过我 {{notice.recommends}}新用户推荐</text>
@@ -27,7 +27,7 @@
         <text style="font-size: 20px;padding-left: 30px;color: grey;">最近联系人</text>
       </div>
       <div class="contacts">
-        <div class="contact link" v-for="(contact,index) in contacts" :style="{'border-bottom-width': index===30-1?'0px':'1px'}">
+        <div class="contact link" v-for="(contact,index) in contacts" :style="{'border-bottom-width': index===30-1?'0px':'1px'}" @click="goToContact(contact.contactid)">
           <img class="avatar" :src="contact.avatar" />
           <div class="num">
             <text style="color: #fff;">{{contact.num}}</text>
@@ -92,6 +92,21 @@
       },
       formTime (time) {
         return formatDate (time, 'hh:mm')
+      },
+      goToCustomer () {
+        jump('me_customer.js')
+      },
+      goToMessage () {
+        jump('message_message.js')
+      },
+      goToNotice () {
+        jump('message_notice.js')
+      },
+      goToContact (id) {
+        jump('message_contact.js', {contactid: id})
+      },
+      addCustomer () {
+        jump('me_add-customer.js')
       }
     },
     mounted () {
@@ -155,9 +170,14 @@
   }
   .tip{
     position: absolute;
-    right: 20px;
+    right: 0;
+    top: 0;
     color: grey;
     font-size: 22px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
   }
   /* 最近联系人 */
   .subtitle{
