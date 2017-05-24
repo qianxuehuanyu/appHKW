@@ -14,6 +14,7 @@
 
   const navigator = weex.requireModule('navigator')
   const event = weex.requireModule('event')
+  const storage = weex.requireModule('storage')
 
   export default {
     data: {
@@ -21,11 +22,17 @@
       baseUrl: getBaseUrl(),
       username: '',
       password: '',
-      gotoUrl: 'home.js'
+      user: {}
     },
     methods: {
       login () {
-        jump(this.gotoUrl)
+        // 发送登录请求，username，password
+        // 返回用户id，avatar等数据
+        this.user.id = 123
+        this.user.avatar = 'http://img.duoziwang.com/2017/04/13/B0660.jpg'
+        storage.setItem('user', JSON.stringify(this.user), function () {
+          jump('home.js')
+        })
       }
     }
   }

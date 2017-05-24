@@ -18,7 +18,7 @@
             </div>
             <div class="msg-main">
               <text class="num">{{msg.job}} | {{msg.exp}}年 | {{msg.works}}件作品</text>
-              <img :src="picRoot+msg.action+'.png'" class="action-img">
+              <img :src="picRoot+msg.action+'.png'" class="action-img"/>
             </div>
             <div class="msg-footer">
               <text class="action">{{actionText(msg.action)}}</text>
