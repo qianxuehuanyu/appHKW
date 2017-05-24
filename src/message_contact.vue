@@ -65,7 +65,7 @@
       </div>
     </scroller>
     <sub-header title="Mia Zhang">
-      <img :src="picRoot+'more.png'" class="menu" />
+      <img :src="picRoot+'more.png'" class="menu" @click="setting"/>
     </sub-header>
     <dialog-footer></dialog-footer>
   </div>
@@ -88,7 +88,7 @@
       return {
         picRoot: config.picRoot,
         cardData: {},
-        designerid: urlParse().contactid,
+        contactid: urlParse().contactid,
         user: {},
         talkData: [
           {
@@ -148,7 +148,7 @@
     methods: {
       fetchData () {
         return getData('getContact', {
-          designerid: this.designerid
+          id: this.contactid
         })
       },
       onrefresh () {
@@ -158,6 +158,11 @@
         })
         // 本地获取对话
         // 
+      },
+      setting () {
+        jump('message_setting-contact.js', {
+          contactid: this.contactid
+        })
       }
     },
     mounted () {

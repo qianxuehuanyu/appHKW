@@ -9,7 +9,7 @@
       <div class="messages">
         <div class="message" v-for="msg in msgData">
           <div class="avatar">
-            <img :src="msg.avatar" class="avatar-img">
+            <img :src="msg.avatar" class="avatar-img" />
           </div>
           <div class="content">
             <div class="msg-header">
@@ -18,7 +18,7 @@
             </div>
             <div class="msg-main">
               <text class="num">{{msg.job}} | {{msg.exp}}年 | {{msg.works}}件作品</text>
-              <img :src="picRoot+msg.action+'.png'" class="action-img">
+              <img :src="picRoot+msg.action+'.png'" class="action-img" />
             </div>
             <div class="msg-footer">
               <text class="action">{{actionText(msg.action)}}</text>

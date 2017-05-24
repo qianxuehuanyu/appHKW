@@ -2,7 +2,7 @@
   <div class="dialog-footer">
     <div class="toggle" v-if="isInput">
       <img :src="picRoot+'voice.png'" class="voice" @click="toggleInput"/>
-      <input type="text" class="input">
+      <input type="text" class="input" />
     </div>
     <div class="toggle" v-if="!isInput">
       <img :src="picRoot+'keyboard.png'" class="keyboard" @click="toggleInput"/>

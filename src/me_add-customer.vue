@@ -3,7 +3,7 @@
     <scroller class="main">
       <div class="content">
         <div class="header">
-          <img src="" class="avatar">
+          <img src="" class="avatar" />
           <text class="li-title">姓名</text>
           <input type="text" class="input" v-model="name"/>
         </div>

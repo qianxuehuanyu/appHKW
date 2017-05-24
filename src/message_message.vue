@@ -9,7 +9,7 @@
       <div class="messages">
         <div class="message" v-for="msg in msgData">
           <div class="avatar">
-            <img :src="msg.avatar" class="avatar-img">
+            <img :src="msg.avatar" class="avatar-img" />
           </div>
           <div class="content">
             <div class="msg-header">
