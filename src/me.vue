@@ -5,7 +5,7 @@
         <!-- 头像 -->
         <div class="avatar" style="justify-content: center; align-items: center;">
           <img :src="user.avatar" style="border-width: 1px; border-radius: 50px; width: 100px;
-          height: 100px; background-color: #fff;"/>
+          height: 100px; background-color: #fff;" @click="goTo('me_edit.js')"/>
           <text style="padding-top: 10px;font-size: 25px;">{{user.name}}</text>
         </div>
         <!-- 设置 -->

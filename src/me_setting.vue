@@ -2,9 +2,9 @@
   <div>
     <scroller class="main">
       <div class="ul">
-        <div class="li">
+        <div class="li" @click="goTo('')">
           <text>修改密码</text>
-          <img :src="picRoot+'right.png'" class="right" @click="goTo('')"/>
+          <img :src="picRoot+'right.png'" class="right" />
         </div>
       </div>
       <div class="ul">
