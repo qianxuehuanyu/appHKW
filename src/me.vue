@@ -75,7 +75,7 @@
           },
           {
             'name': '账户',
-            'url': '' 
+            'url': 'me_account.js' 
           },
           {
             'name': '客户',
