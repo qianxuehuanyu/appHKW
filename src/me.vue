@@ -2,13 +2,16 @@
   <div>
     <scroller class="main">
       <div class="header">
+        <!-- 头像 -->
         <div class="avatar" style="justify-content: center; align-items: center;">
           <img :src="user.avatar" style="border-width: 1px; border-radius: 50px; width: 100px;
           height: 100px; background-color: #fff;"/>
           <text style="padding-top: 10px;font-size: 25px;">{{user.name}}</text>
         </div>
-        <img class="setting" :src="picRoot+'setting.png'"/>
+        <!-- 设置 -->
+        <img class="setting" :src="picRoot+'setting.png'" @click="goTo('me_setting.js')"/>
       </div>
+      <!-- 我的动态、账户、客户、收藏、报价单、订单 -->
       <div class="ul">
         <div class="li" v-for="(li,index) in ul1" :style="{'border-bottom-width': index === ul1.length-1?'0px':'1px'}" @click="goTo(li.url)">
           <div class="left">
@@ -19,6 +22,7 @@
           </div>
         </div>
       </div>
+      <!-- 我是设计师 -->
       <div class="ul">
         <div class="li" v-for="(li,index) in ul2" @click="goTo(li.url)">
           <div class="left">
@@ -31,6 +35,7 @@
           </div>
         </div>
       </div>
+      <!-- 我的常用地址、黑名单、联系客服 -->
       <div class="ul">
         <div class="li" v-for="(li,index) in ul3" :style="{'border-bottom-width': index === ul3.length-1?'0px':'1px'}" @click="goTo(li.url)">
           <div class="left">
