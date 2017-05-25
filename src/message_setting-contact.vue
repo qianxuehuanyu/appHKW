@@ -5,7 +5,7 @@
         <div class="li">
           <text class="left">加入黑名单</text>
           <div class="right">
-            <switch class="block"></switch>
+            <switch class="block" @change="toggle('block')"></switch>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div class="li">
           <text class="left">关注他</text>
           <div class="right">
-            <switch class="watch"></switch>
+            <switch class="watch" :checked="watch" @change="toggle('watch')"></switch>
           </div>
         </div>
         <div class="li">
@@ -49,7 +49,9 @@
     data () {
       return {
         picRoot: config.picRoot,
-        contactid: urlParse().contactid
+        contactid: urlParse().contactid,
+        block: true,
+        watch: false
       }
     },
     methods: {
@@ -62,6 +64,9 @@
         // this.fetchData().then((res) => {
           
         // })
+      },
+      toggle (key) {
+        this[key] = !this[key]
       }
     },
     mounted () {

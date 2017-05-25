@@ -29,6 +29,7 @@
         // 发送登录请求，username，password
         // 返回用户id，avatar等数据
         this.user.id = 123
+        this.user.name = '自信人生'
         this.user.avatar = 'http://img.duoziwang.com/2017/04/13/B0660.jpg'
         storage.setItem('user', JSON.stringify(this.user), function () {
           jump('home.js')

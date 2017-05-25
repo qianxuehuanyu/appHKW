@@ -39,7 +39,6 @@
       onrefresh () {
         this.refreshing = 'show'
         this.fetchData().then((res) => {
-          this.formData(res.data)
           this.momentsData = []
           this.momentsData = res.data
           this.refreshing = 'hide'
@@ -48,7 +47,6 @@
       onloading () {
         this.showloading = 'show'
         this.fetchData().then((res) => {
-          this.formData(res.data)
           res.data.forEach((moment) => {
             this.momentsData.push(moment)
           })

@@ -3,9 +3,9 @@
     <scroller class="main">
       <div class="header">
         <div class="avatar" style="justify-content: center; align-items: center;">
-          <img src="" style="border-width: 1px; border-radius: 50px; width: 100px;
+          <img :src="user.avatar" style="border-width: 1px; border-radius: 50px; width: 100px;
           height: 100px; background-color: #fff;"/>
-          <text style="padding-top: 10px;font-size: 25px;">自信人生</text>
+          <text style="padding-top: 10px;font-size: 25px;">{{user.name}}</text>
         </div>
         <img class="setting" :src="picRoot+'setting.png'"/>
       </div>
@@ -55,16 +55,18 @@
 
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
+  const storage = weex.requireModule('storage')
 
   export default {
     data () {
       return {
         baseUrl: getBaseUrl(),
         picRoot: config.picRoot,
+        user: {},
         ul1: [
           {
             'name': '我的动态',
-            'url': '' 
+            'url': 'me_dynamics.js' 
           },
           {
             'name': '账户',
@@ -115,6 +117,11 @@
       goTo (url) {
         jump(url)
       }
+    },
+    mounted () {
+      storage.getItem('user', e => {
+        this.user = JSON.parse(e.data)
+      })
     },
     components: {
       mainTab
