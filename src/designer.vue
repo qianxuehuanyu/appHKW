@@ -118,7 +118,17 @@
     </div>
     <buy-footer :cart="cart" :designerid="designerid" type="designer" v-if="!self && tabIndex === 1 && cart.length"></buy-footer>
     <share v-if="!self && showShare" @cancelShare="toggleShare(false)"></share>
-    share2
+    <div class="share2" v-if="self && showShare">
+      <div class="share-mask"></div>
+      <div class="share-box">
+        <text class="share-item">分享</text>
+        <text class="share-item" @click="goTo('me_certificate.js')">修改资料</text>
+        <text class="share-item">关闭公开展示</text>
+      </div>
+      <div class="share-cancel" @click="toggleShare(false)">
+        <text class="share-item">取消</text>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -268,6 +278,9 @@
       },
       toggleShare (value) {
         this.showShare = value
+      },
+      goTo (url) {
+        jump(url)
       }
     },
     mounted () {
@@ -503,5 +516,49 @@
   .link2{
     background-color: #1a68ac;
     margin-left: 1px;
+  }
+  /* 我是设计师 分享 share2 */
+  .share2{
+  }
+  .share-mask{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.3);
+  }
+  .share-box{
+    position: fixed;
+    bottom: 100px;
+    left: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 730px;
+    background-color: #fff;
+    border-radius: 8px;
+    border-color: grey;
+    border-width: 1px;
+  }
+  .share-cancel{
+    position: fixed;
+    bottom: 0;
+    left: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 730px;
+    background-color: #fff;
+    border-radius: 8px;
+    border-color: grey;
+    border-width: 1px;
+  }
+  .share-item{
+    height: 90px;
+    width: 730px;
+    text-align: center;
+    line-height: 90px;
+    border-bottom-width: 1px;
+    border-bottom-color: grey;
+    font-size: 25px;
   }
 </style>
