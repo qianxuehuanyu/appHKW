@@ -114,7 +114,7 @@
         this.$emit('cancelSelect')
       },
       confirmSelect () {
-        this.$emit('confirmSelect', this.items[this.currentItem])
+        this.$emit('confirmSelect', this.currentItem)
       }
     },
     components: {

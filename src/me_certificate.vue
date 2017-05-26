@@ -3,15 +3,15 @@
     <scroller class="main">
       <div class="header">
         <div class="avatar">
-          <img :src="avatar" class="avatar-img" />
-          <text class="avatar-text" v-if="noavatar">编辑头像</text>
+          <img :src="certificateData.avatar" class="avatar-img" />
+          <text class="avatar-text" v-if="!certificateData.avatar">编辑头像</text>
         </div>
         <div class="types">
           <div class="type" v-for="(type,index) in types" @click="toggleType(index)">
             <div class="circle" >
-              <div class="check-circle" :key="'checked'+index" v-if="type.checked" style="background-color: #000;"></div>
+              <div class="check-circle" :key="'checked'+index" v-if="index === certificateData.type" style="background-color: #000;"></div>
             </div>
-            <text>{{type.text}}</text>
+            <text>{{types[index]}}</text>
           </div>
         </div>
       </div>
@@ -22,7 +22,7 @@
               <text>昵&emsp;&emsp;称</text>
             </div>
             <div class="right">
-              <text>冯绍峰</text>
+              <text>{{certificateData.name}}</text>
             </div>
           </div>
           <div class="gender">
@@ -32,9 +32,9 @@
             <div class="right">
               <div class="sex" v-for="(sex,index) in sexs" @click="toggleSex(index)">
                 <div class="circle" >
-                  <div class="check-circle" :key="'checked'+index" v-if="sex.checked" style="background-color: #000;"></div>
+                  <div class="check-circle" :key="'checked'+index" v-if="certificateData.sex === index" style="background-color: #000;"></div>
                 </div>
-                <text>{{sex.text}}</text>
+                <text>{{sexs[index]}}</text>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
               <text>工作年限</text>
             </div>
             <div class="right" >
-              <text>{{exp}}</text>
+              <text>{{expItems[certificateData.exp]}}</text>
               <img :src="picRoot+'edit.png'" class="edit-img" />
             </div>
           </div>
@@ -52,7 +52,7 @@
               <text>最高学历</text>
             </div>
             <div class="right" >
-              <text>{{education}}</text>
+              <text>{{educationItems[certificateData.education]}}</text>
               <img :src="picRoot+'edit.png'" class="edit-img" />
             </div>
           </div>
@@ -64,15 +64,15 @@
           <text @click="selectField">选择领域</text>
         </div>
         <div class="fields">
-          <div class="field" v-for="field in fields">
+          <div class="field" v-for="field in certificateData.fields">
             <text class="field-text">{{field}}</text>
           </div>
         </div>
       </div>
       <div class="works">
-        <div class="work" v-for="work in works">
+        <div class="work" v-for="work in certificateData.works" @click="goToWork(work.workid)">
           <text class="work-title">{{work.title}}</text>
-          <img :src="work.src" class="work-img" />
+          <img :src="work.pic" class="work-img" />
         </div>
       </div>
     </scroller>  
@@ -90,6 +90,7 @@
 
   import {getBaseUrl, jump} from './common/util.js'
   import config from './common/config.js'
+  import {getData} from './common/api.js'
 
   const storage = weex.requireModule('storage')
   const animation = weex.requireModule('animation')
@@ -99,62 +100,53 @@
     data () {
       return {
         picRoot: config.picRoot,
-        avatar: '',
-        noavatar: true,
-        types: [
-          {checked: true, text: '设计师'},
-          {checked: false, text: '工作室/机构'}
-        ],
-        typeIndex: 0,
-        name: '',
-        sexs: [
-          {checked: true, text: '男'},
-          {checked: false, text: '女'}
-        ],
-        sexIndex: 0,
-        exp: '',
-        expItems: ['1年', '2年', '3年', '4年', '5年'],
+        types: ['设计师','工作室/机构'],
+        sexs: ['男','女'],
+        user: {},
+        expItems: ['1年', '2年', '3年', '4年', '5年', '6年', '7年', '8年', '9年', '10年以上'],
         showExp: false,
-        education: '',
         educationItems: ['高中', '大专', '本科', '硕士', '博士'],
         showEducation: false,
-        fields: [],
-        works: [
-          {title: '作品一', src: ''},
-          {title: '作品二', src: ''},
-          {title: '作品三', src: ''},
-          {title: '作品四', src: ''},
-          {title: '作品五', src: ''},
-          {title: '作品六', src: ''}
-        ]
+        certificateData: {}
       }
     },
     mounted () {
-      storage.getItem('fields', e => {
-        this.fields = JSON.parse(e.data)
+      storage.getItem('user', e => {
+        this.user = JSON.parse(e.data)
+        this.fetchData()
       })
     },
     methods: {
+      fetchData () {
+        getData('getCertificate', {
+          id: this.user.id
+        }).then(res => {
+          this.certificateData = res.data
+          storage.getItem('fields', e => {
+            if (e.result === 'failed') return false
+            this.certificateData.fields = JSON.parse(e.data)
+          })
+        })
+      },
       submit () {
-        jump('submit-result.js', {
-          submit: 'success'
+        // 提交服务器
+        // 提交成功
+        // 
+        // 假设审核马上通过
+        this.user.certificated = true
+        storage.setItem('user', JSON.stringify(this.user), e => {
+          jump('submit-result.js', {
+            submit: 'success'
+          })
         })
       },
       toggleType (index) {
-        if (index === this.typeIndex) return false
-        let type = this.types[index]
-        this.types[0].checked = false
-        this.types[1].checked = false
-        type.checked = true
-        this.typeIndex = index
+        if (index === this.certificateData.type) return false
+        this.certificateData.type = index
       },
       toggleSex (index) {
-        if (index === this.sexIndex) return false
-        let sex = this.sexs[index]
-        this.sexs[0].checked = false
-        this.sexs[1].checked = false
-        sex.checked = true
-        this.sexIndex = index
+        if (index === this.certificateData.sex) return false
+        this.certificateData.sex = index
       },
       selectExp () {
         this.showExp = true
@@ -168,16 +160,19 @@
       cancelEducation () {
         this.showEducation = false
       },
-      confirmExp (exp) {
-        this.exp = exp
+      confirmExp (index) {
+        this.certificateData.exp = index
         this.showExp = false
       },
-      confirmEducation (education) {
-        this.education = education
+      confirmEducation (index) {
+        this.certificateData.education = index
         this.showEducation = false
       },
       selectField () {
         jump('select-field.js')
+      },
+      goToWork (workid) {
+        // jump
       }
     },
     components: {

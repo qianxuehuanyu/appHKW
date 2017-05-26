@@ -1,6 +1,6 @@
 <template>
   <div>
-    <scroller class="main" @loadmore="onloading" loadmoreoffset="10" @scroll="onscroll">
+    <scroller class="main" @loadmore="onloading" loadmoreoffset="10" @scroll="onscroll" :style="{'bottom': Bottom}">
       <!-- refresh -->
       <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
@@ -92,7 +92,7 @@
       </div>
     </scroller>
     <sub-header title="设计师主页" v-if="showHeader"></sub-header>
-    <div class="nav" ref="nav">
+    <div class="nav" ref="nav" v-if="!self">
       <div class="nav1">
         <div class="ul1">
           <div class="link1" v-for="link in nav1" :style="{'background-color': link.bgColor}">
@@ -116,8 +116,9 @@
         </div>
       </div>
     </div>
-    <buy-footer :cart="cart" :designerid="designerid" type="designer" v-if="tabIndex === 1 && cart.length"></buy-footer>
-    <share v-if="showShare" @cancelShare="toggleShare(false)"></share>
+    <buy-footer :cart="cart" :designerid="designerid" type="designer" v-if="!self && tabIndex === 1 && cart.length"></buy-footer>
+    <share v-if="!self && showShare" @cancelShare="toggleShare(false)"></share>
+    share2
   </div>
 </template>
 
@@ -136,11 +137,13 @@
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
   const animation = weex.requireModule('animation')
+  const storage = weex.requireModule('storage')
 
   export default {
     data () {
       return {
         designerid: urlParse().id,
+        self: urlParse().self,
         refreshing: 'hide',
         showloading: 'hide',
         baseUrl: getBaseUrl(),
@@ -190,6 +193,10 @@
         }
         console.log(arr)
         return arr
+      },
+      Bottom () {
+        if (this.self) return 0
+        return '100px'
       }
     },
     methods: {
@@ -264,7 +271,16 @@
       }
     },
     mounted () {
-      this.onrefresh()
+      if (this.self) {
+        storage.getItem('user', e => {
+          let user = JSON.parse(e.data)
+          this.designerid = user.id
+          this.onrefresh()
+        })
+      } else {
+        this.onrefresh()
+      }
+      
     },
     components: {
       subHeader, momentList, tab, buyList, buyFooter, share
@@ -276,7 +292,6 @@
   .main{
     position: fixed;
     top: 0;
-    bottom: 100px;
     left: 0;
     width: 750px;
   }
@@ -447,6 +462,7 @@
     width: 1500px;
     height: 100px;
     flex-direction: row;
+    background-color: #fff;
   }
   .nav1, .nav2{
     flex-direction: row;

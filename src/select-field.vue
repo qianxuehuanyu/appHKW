@@ -93,6 +93,19 @@
         storage.setItem('fields', JSON.stringify(this.selectedFields))
       }
     },
+    mounted () {
+      storage.getItem('fields', e => {
+        if (e.result === 'failed') return false
+        let data = JSON.parse(e.data)
+        this.fieldTypes.forEach(type => {
+          type.fields.forEach(field => {
+            data.forEach(item => {
+              if (item === field.name) field.checked = true
+            })
+          })
+        })
+      })
+    },
     components: {
       subHeader
     }

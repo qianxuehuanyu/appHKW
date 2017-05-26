@@ -1,5 +1,5 @@
 <template v-if="listdata">
-  <div>
+  <div class="lists">
     <div v-for="(data,index) in listdata" class="person" key="index">
       <!-- 头像、位置信息 -->
       <div class="person-header">
@@ -129,6 +129,8 @@
 </script>
 
 <style scoped>
+  .lists{
+  }
   .person{
     padding-top: 30px;
     padding-left: 10px;

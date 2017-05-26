@@ -20,7 +20,6 @@
   export default {
     data () {
       return {
-        designerid: urlParse().id,
         submit: urlParse().submit,
         picRoot: config.picRoot
       }

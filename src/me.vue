@@ -24,13 +24,13 @@
       </div>
       <!-- 我是设计师 -->
       <div class="ul">
-        <div class="li" v-for="(li,index) in ul2" @click="goTo(li.url)">
+        <div class="li" @click="goToDesigner">
           <div class="left">
-            <text>{{li.name}}</text>
+            <text>我是设计师</text>
           </div>
           <div class="right">
-            <text v-if="li.certificated" style="color: #409ad6;font-size: 25px;">已认证&emsp;&emsp;</text>
-            <text v-if="!li.certificated" style="color: grey;font-size: 25px;">未认证&emsp;&emsp;</text>
+            <text v-if="user.certificated" style="color: #409ad6;font-size: 25px;">已认证&emsp;&emsp;</text>
+            <text v-if="!user.certificated" style="color: grey;font-size: 25px;">未认证&emsp;&emsp;</text>
             <img class="arrow" :src="picRoot + 'right.png'" />
           </div>
         </div>
@@ -94,13 +94,6 @@
             'url': 'me_order.js' 
           }
         ],
-        ul2: [
-          {
-            'name': '我是设计师',
-            'url': '',
-            'certificated': false
-          }
-        ],
         ul3: [
           {
             'name': '我的常用地址',
@@ -121,12 +114,22 @@
     methods: {
       goTo (url) {
         jump(url)
+      },
+      goToDesigner () {
+        if (this.user.certificated) {
+          jump('designer.js', {
+            self: true
+          })
+        } else {
+          jump('me_certificate.js')
+        }
       }
     },
     mounted () {
       storage.getItem('user', e => {
         this.user = JSON.parse(e.data)
       })
+      storage.removeItem('fields')
     },
     components: {
       mainTab

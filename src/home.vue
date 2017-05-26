@@ -48,7 +48,9 @@
           <text class="location-text">&nbsp;滨江区长河路351...</text>
         </div>
         <div class="more">
+          <!-- 搜索 -->
           <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" @click="search"/>
+          <!-- 认证 -->
           <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" @click="certificate"/>
         </div>
       </div>
@@ -99,6 +101,7 @@
   import config from './common/config.js'
   import {getData} from './common/api.js'
 
+  const storage = weex.requireModule('storage')
   const modal = weex.requireModule('modal')
   const navigator = weex.requireModule('navigator')
   const animation = weex.requireModule('animation')
@@ -114,6 +117,7 @@
         picRoot: config.picRoot,
         sort: '距离',
         showSort: false,
+        user: {},
         sortItems: [
           {name: '距离', class: '', state: 1},
           {name: '最新', class: '', state: 2}, 
@@ -171,6 +175,10 @@
     },
     mounted () {
       this.onrefresh()
+      storage.removeItem('fields')
+      storage.getItem('user', e => {
+        this.user = JSON.parse(e.data)
+      })
     },
     methods: {
       fetchData () {
@@ -245,7 +253,13 @@
         jump('locate.js')
       },
       certificate () {
-        jump('home_certificate.js')
+        if (this.user.certificated) {
+          jump('designer.js', {
+            self: true
+          })
+        } else {
+          jump('me_certificate.js')
+        }
       }
     },
     components: {
