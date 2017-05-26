@@ -29,7 +29,7 @@
             <text>{{li.name}}</text>
           </div>
           <div class="right">
-            <text v-if="li.certificated" style="color: grey;font-size: 25px;">已认证&emsp;&emsp;</text>
+            <text v-if="li.certificated" style="color: #409ad6;font-size: 25px;">已认证&emsp;&emsp;</text>
             <text v-if="!li.certificated" style="color: grey;font-size: 25px;">未认证&emsp;&emsp;</text>
             <img class="arrow" :src="picRoot + 'right.png'" />
           </div>
@@ -83,15 +83,15 @@
           },
           {
             'name': '收藏',
-            'url': '' 
+            'url': 'me_collect.js' 
           },
           {
             'name': '报价单',
-            'url': '' 
+            'url': 'me_price.js' 
           },
           {
             'name': '订单',
-            'url': '' 
+            'url': 'me_order.js' 
           }
         ],
         ul2: [

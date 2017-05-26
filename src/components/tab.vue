@@ -1,8 +1,8 @@
 <template>
   <div class="tab-nav">
     <template v-for="(item,index) in tabItems">
-      <div class="tab-item" v-if="index === tabIndex" :style="{'border-bottom-width': '5px'}" @click="selectTab(index)">
-        <text class="item-text" style="color: #000;font-weight: bold;">{{item}}</text>
+      <div class="tab-item" v-if="index === tabIndex" :style="{'border-bottom-width': '5px', 'border-bottom-color': color}" @click="selectTab(index)">
+        <text class="item-text" :style="{'color': color, 'font-weight': 'bold'}">{{item}}</text>
       </div>
       <div class="tab-item" v-else @click="selectTab(index)">
         <text class="item-text" style="color: grey;">{{item}}</text>
@@ -18,6 +18,10 @@
       tabIndex: {
         type: Number,
         default: 0
+      },
+      color: {
+        type: String,
+        default: 'black'
       }
     },
     methods: {
