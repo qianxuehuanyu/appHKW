@@ -14,7 +14,7 @@
               <text class="name">{{price.name}}</text>
             </div>
             <div class="header-right">
-              <text class="date">{{price.date}}</text>
+              <text class="date">{{price.date.slice(0,10)}}</text>
             </div>
           </div>
           <div class="price-main">
@@ -37,26 +37,29 @@
             <div v-if="tabIndex === 0 && price.state === 0" class="price-state-bar">
               <text class="price-action" style="color: green;">等待客户处理</text>
               <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="cancelPrice(price.priceid, index)">
+                  <text class="btn-text">取消</text>
+                </div>
+                <div class="btn" @click="editPrice(price.priceid, index)">
                   <text class="btn-text">再次编辑</text>
                 </div>
               </div>
             </div>
             <div v-if="tabIndex === 0 && price.state === 1" class="price-state-bar">
-              <text class="price-action" style="color: blue;">客户已通过</text>
+              <text class="price-action" style="color: #03bfdd;">客户已通过</text>
               <div class="btns">
-                <div class="btn">
-                  <text class="btn-text">删除</text>
+                <div class="btn" @click="cancelPrice(price.priceid, index)">
+                  <text class="btn-text">取消</text>
                 </div>
               </div>
             </div>
             <div v-if="tabIndex === 0 && price.state === 2" class="price-state-bar">
               <text class="price-action" style="color: #ffa142;">客户不满意</text>
               <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="delPrice(price.priceid, index)">
                   <text class="btn-text">删除</text>
                 </div>
-                <div class="btn">
+                <div class="btn" @click="editPrice(price.priceid, index)">
                   <text class="btn-text">再次编辑</text>
                 </div>
               </div>
@@ -64,10 +67,10 @@
             <div v-if="tabIndex === 0 && price.state === 3" class="price-state-bar">
               <text class="price-action" style="color: red;">您已取消</text>
               <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="delPrice(price.priceid, index)">
                   <text class="btn-text">删除</text>
                 </div>
-                <div class="btn">
+                <div class="btn" @click="editPrice(price.priceid, index)">
                   <text class="btn-text">再次编辑</text>
                 </div>
               </div>
@@ -76,18 +79,18 @@
             <div v-if="tabIndex === 1 && price.state === 0" class="price-state-bar">
               <text class="price-action" style="color: green;">待处理</text>
               <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="agreePrice(price.priceid, index)">
                   <text class="btn-text">同意合作</text>
                 </div>
-                <div class="btn">
+                <div class="btn" @click="refusePrice(price.priceid, index)">
                   <text class="btn-text">不满意</text>
                 </div>
               </div>
             </div>
             <div v-if="tabIndex === 1 && price.state === 1" class="price-state-bar">
-              <text class="price-action" style="color: blue;">已同意</text>
+              <text class="price-action" style="color: #03bfdd;">已同意</text>
               <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="delPrice(price.priceid, index)">
                   <text class="btn-text">删除</text>
                 </div>
               </div>
@@ -95,7 +98,7 @@
             <div v-if="tabIndex === 1 && price.state === 2" class="price-state-bar">
               <text class="price-action" style="color: #ffa142;">您已拒绝</text>
               <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="delPrice(price.priceid, index)">
                   <text class="btn-text">删除</text>
                 </div>
               </div>
@@ -103,7 +106,7 @@
             <div v-if="tabIndex === 1 && price.state === 3" class="price-state-bar">
               <text class="price-action" style="color: red;">设计师已取消</text>
               <div class="btns">
-                <div class="btn">
+                <div class="btn" @click="delPrice(price.priceid, index)">
                   <text class="btn-text">删除</text>
                 </div>
               </div>
@@ -177,6 +180,21 @@
           amount += item.price * item.num
         })
         return amount
+      },
+      editPrice (priceid, index) {
+
+      },
+      delPrice (priceid, index) {
+
+      },
+      cancelPrice (priceid, index) {
+
+      },
+      agreePrice (priceid, index) {
+
+      },
+      refusePrice (priceid, index) {
+
       }
     },
     mounted () {
