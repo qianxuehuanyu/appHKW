@@ -146,7 +146,7 @@
   /* 头部标题 */
   .header{
     position: fixed;
-    height: 80px;
+    height: 100px;
     width: 750px;
     top: 0;
     left: 0;
@@ -159,7 +159,7 @@
 
   .main{
     position: fixed;
-    top: 80px;
+    top: 100px;
     bottom: 100px;
     left: 0;
     width: 750px;

@@ -37,7 +37,7 @@
     bottom: 0;
     left: 0;
     width: 750px;
-    height: 80px;
+    height: 100px;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
@@ -60,6 +60,7 @@
     border-bottom-width: 1px;
     padding-left: 10px;
     padding-right: 10px;
+    font-size: 30px;
   }
   .say{
     text-align: center;

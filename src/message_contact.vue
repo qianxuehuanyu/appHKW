@@ -37,9 +37,12 @@
           <div class="time" v-if="talk.type === 'time'">
             <text class="time-text">{{talk.text}}</text>
           </div>
-          <div class="say" v-if="talk.type === 'talk'">
-            <div :class="talk.from+'-avatar'">
-              <img :src="talk.from === 'me' ? user.avatar : cardData.avatar" class="say-avatar-img" />
+          <!-- <div class="say" v-else>
+            <div class="me-avatar" v-if="talk.from === 'me'">
+              <img :src="user.avatar" class="say-avatar-img" />
+            </div>
+            <div class="opposite-avatar" v-if="talk.from === 'opposite'">
+              <img :src="cardData.avatar" class="say-avatar-img" />
             </div>
             <div :class="talk.from+'-content'">
               <div :class="talk.from+'-container'">
@@ -60,7 +63,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </scroller>

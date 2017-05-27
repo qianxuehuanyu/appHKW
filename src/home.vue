@@ -56,15 +56,15 @@
       </div>
       <div class="header-main" >
         <!-- 排序： 距离/最新/最热 -->
-        <div class="header-sort" style="position: relative;">
-          <div class="sort" style="position: absolute; top: 0;justify-content: center;">
+        <div class="header-sort" >
+          <div class="text" style="position: absolute; top: 80px; left: 11px; justify-content: center;align-items: center;" >
+            <img :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
+          </div>
+          <div class="sort" >
             <div v-for="(sort,index) in sortItems" v-if="index === 0 || showSort " class="circle" @click="selectSort(index)" style="background-color: #3e9bd7;border-color: #3e9bd7;">
               <text  style="color: #fff;font-size: 28px;" v-if="sort.name" >{{sort.name}}</text>
               <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
             </div> 
-          </div>
-          <div v-if="!showSort" class="text" style="margin-top: 100px;justify-content: flex-start;align-items: center;flex: 1;" >
-            <img :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
           </div>
         </div>
         <!-- 筛选：各种类型 -->
@@ -315,7 +315,8 @@
     justify-content: flex-start;
     align-items: center;
     width: 80px;
-    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 100px;
   }
   .header-filters{
     flex: 5;
@@ -332,9 +333,8 @@
     align-items: center;
   }
   .sort{
+    justify-content: center;
     position: relative;
-    transition: all 0.5s ease;
-    
   }
   .sort0{
     position: relative;
