@@ -23,14 +23,10 @@
     <div class="main-tab-nav">
       <div class="main-tab-link" v-for="(item,index) in items" :class="{'active-main-tab': index === selectedIndex}" @click="selectTab(index, item.url)">
         <template v-if="index === 2">
-          <div style="width: 80px; height: 80px; border-radius: 40px;border-width: 1px;justify-content: center; align-items: center;">
-            <img :src="item.src" style="width: 60px; height: 60px;"/>
-          </div>
+          <img :src="item.src" style="width: 80px; height: 80px; border-radius: 40px;border-width: 1px;justify-content: center; align-items: center;" />
         </template>
         <template v-else>
-          <div class="main-tab-circle" :class="{'active-main-tab-circle': index === selectedIndex}">
-            <img :src="index===selectedIndex?item.activeSrc:item.src" style="width: 40px; height: 40px;"/>
-          </div>
+          <img class="main-tab-circle" :class="{'active-main-tab-circle': index === selectedIndex}" :src="index===selectedIndex?item.activeSrc:item.src"/>
           <text class="main-tab-title" :class="{'active-main-tab-text': index === selectedIndex}">{{item.title}}</text> 
         </template>
       </div>  

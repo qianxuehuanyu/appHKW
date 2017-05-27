@@ -1,7 +1,7 @@
 <template>
   <div class="tab-nav">
     <div class="tab-item" v-for="item in items" @click="goTo(item.url)">
-      <div style="position: relative;">
+      <div class="tab" style="position: relative;">
         <div :style="{
             'background-color': item.bgColor,
             'border-radius': radius,
@@ -68,10 +68,15 @@
     align-items: center;
     width: 750px;
   }
+  .tab{
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
   .tab-num{
     position: absolute; 
-    top: 5px; 
-    right: -10px; 
+    top: 10px; 
+    right: 30px; 
     border-radius: 16px;
     background-color: #f00;
     padding-top: 5px;

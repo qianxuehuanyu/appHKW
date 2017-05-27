@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- 正文：设计师列表 -->
+    <!-- 设计师列表 -->
     <list class="main" @loadmore="onloading" loadmoreoffset="10">
       <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
@@ -37,21 +37,21 @@
         <text style="font-size: 30px;padding-bottom: 20px;">正在加载数据...</text>
       </loading>
     </list>
-    <!-- header， 比main层级高，放下面 -->
+    <!-- 顶部区域 -->
     <div class="header" >
       <!-- 背景图片 -->
       <img ref="bg" :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 325px;" resize="stretch"/>
       <!-- 顶部地址及按钮 -->
       <div class="header-top" >
         <div class="location" @click="locate">
-          <img :src="picRoot + 'location-white.png'" style="width:30px; height: 30px;" />
+          <img :src="picRoot + 'location-white.png'" style="width:40px; height: 40px;" />
           <text class="location-text">&nbsp;滨江区长河路351...</text>
         </div>
         <div class="more">
           <!-- 搜索 -->
-          <img :src="picRoot + 'search-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" @click="search"/>
+          <img :src="picRoot + 'search-white.png'" style="width:50px; height: 50px;border-radius: 25px;border-color: blue;border-width: 1px;" @click="search"/>
           <!-- 认证 -->
-          <img :src="picRoot + 'user-white.png'" style="width:30px; height: 30px;border-radius: 15px;border-color: blue;border-width: 1px;" @click="certificate"/>
+          <img :src="picRoot + 'user-white.png'" style="width:50px; height: 50px;border-radius: 25px;border-color: blue;border-width: 1px;" @click="certificate"/>
         </div>
       </div>
       <div class="header-main" >
@@ -63,7 +63,8 @@
               <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
             </div> 
           </div>
-          <div v-if="!showSort" class="text" style="margin-top: 100px;justify-content: flex-start;align-items: center;" @click="toggleFilters">
+          <!-- 展开/收起 -->
+          <div v-if="!showSort" class="text" style="margin-top: 100px;justify-content: flex-start;align-items: center;flex: 1;" @click="toggleFilters">
             <img ref="arrow" :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
           </div>
         </div>
