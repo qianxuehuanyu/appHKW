@@ -64,9 +64,9 @@
 <style scoped>
   .back{
     width: 750px;
-    height: 80px;
-    padding-left: 10px;
-    padding-top: 10px;
+    height: 100px;
+    padding-left: 20px;
+    padding-top: 20px;
   }
   .back-btn{
     width: 50px;

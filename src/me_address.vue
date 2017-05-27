@@ -79,7 +79,7 @@
   .main{
     position: fixed;
     width: 750px;
-    top: 80px;
+    top: 100px;
     left: 0;
     bottom: 0;
     background-color: #f2f2f2;
@@ -105,8 +105,8 @@
     border-bottom-color: grey;
   }
   .address-footer{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
     justify-content: center;

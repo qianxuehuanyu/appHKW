@@ -68,7 +68,7 @@
 <style scoped>
   .main{
     position: fixed;
-    top: 80px;
+    top: 100px;
     left: 0;
     bottom: 0;
     width: 750px;

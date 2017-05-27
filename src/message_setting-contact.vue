@@ -82,7 +82,7 @@
   .main{
     position: fixed;
     width: 750px;
-    top: 80px;
+    top: 100px;
     left: 0;
     bottom: 0;
     background-color: #f2f2f2;

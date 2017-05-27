@@ -146,11 +146,11 @@
 <style scoped>
   .nav{
     position: fixed; 
-    top: 80px;
+    top: 100px;
   }
   .main{
     position: fixed;
-    top: 160px;
+    top: 200px;
     bottom: 0;
     left: 0;
     width: 750px;

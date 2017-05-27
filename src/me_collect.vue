@@ -109,15 +109,15 @@
   .main{
     position: fixed;
     width: 750px;
-    top: 160px;
+    top: 200px;
     left: 0;
     bottom: 0;
     background-color: #f2f2f2;
   }
   .tab{
     position: fixed;
-    top:80px;
-    height: 80px;
+    top: 100px;
+    height: 100px;
     width: 750px;
     left: 0;
   }

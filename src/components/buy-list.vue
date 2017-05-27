@@ -1,7 +1,7 @@
 <template>
   <div class="ul" v-if="listdata">
-    <div v-for="(li, index) in listdata" class="li" @click="toggleSelected(index)">
-      <div class="li-header">
+    <div v-for="(li, index) in listdata" class="li">
+      <div class="li-header" @click="toggleSelected(index)">
         <div class="circle" >
           <div class="check-circle" :key="'checked'+index" v-if="li.checked" style="background-color: #000;"></div>
         </div>

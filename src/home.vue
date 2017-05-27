@@ -17,11 +17,11 @@
             <text class="num" style="fontSize: 25px;margin-top: 5px;">{{designer.exp}}年经验|{{designer.works}}作品|{{designer.likes}}人喜欢</text>  
           </div>
           <div class="designer-sort">
-            <img v-if="sortState === 1" :src="picRoot+'location.png'" style="width:20px; height: 20px;" />
-            <img v-if="sortState === 2" :src="picRoot+'hot.png'" style="width:20px; height: 20px;" />
-            <img v-if="sortState === 3" :src="picRoot+'clock.png'" style="width:20px; height: 20px;" />
+            <img v-if="sortState === 1" :src="picRoot+'location.png'" key="location" style="width:20px; height: 20px;" />
+            <img v-if="sortState === 2" :src="picRoot+'clock.png'" key="new" style="width:20px; height: 20px;" />
+            <img v-if="sortState === 3" :src="picRoot+'hot.png'" key="hot" style="width:20px; height: 20px;" />
             <text v-if="sortState === 1" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;距离：{{designer.distance}}</text>
-            <text v-if="sortState === 2" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{designer.new}}</text>
+            <text v-if="sortState === 2" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{formTime(designer.new)}}</text>
             <text v-if="sortState === 3" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{designer.hot}}</text>
           </div>
         </div>
@@ -40,7 +40,7 @@
     <!-- 顶部区域 -->
     <div class="header" >
       <!-- 背景图片 -->
-      <img ref="bg" :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 325px;" resize="stretch"/>
+      <img :src="picRoot+'bg.png'" style="position: absolute; top: 0; left: 0;width: 750px; height: 325px;" resize="stretch"/>
       <!-- 顶部地址及按钮 -->
       <div class="header-top" >
         <div class="location" @click="locate">
@@ -49,9 +49,9 @@
         </div>
         <div class="more">
           <!-- 搜索 -->
-          <img :src="picRoot + 'search-white.png'" style="width:50px; height: 50px;border-radius: 25px;border-color: blue;border-width: 1px;" @click="search"/>
+          <img :src="picRoot + 'search-white.png'" style="width:50px; height: 50px;border-radius: 25px;border-color: #3e9bd7;border-width: 1px;margin-right: 20px;" @click="search"/>
           <!-- 认证 -->
-          <img :src="picRoot + 'user-white.png'" style="width:50px; height: 50px;border-radius: 25px;border-color: blue;border-width: 1px;" @click="certificate"/>
+          <img :src="picRoot + 'user-white.png'" style="width:50px; height: 50px;border-radius: 25px;border-color: #3e9bd7;border-width: 1px;" @click="certificate"/>
         </div>
       </div>
       <div class="header-main" >
@@ -63,9 +63,8 @@
               <img v-if="!sort.name" :src="picRoot+'menu-white.png'" style="width:30px; height: 30px;"/>
             </div> 
           </div>
-          <!-- 展开/收起 -->
-          <div v-if="!showSort" class="text" style="margin-top: 100px;justify-content: flex-start;align-items: center;flex: 1;" @click="toggleFilters">
-            <img ref="arrow" :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
+          <div v-if="!showSort" class="text" style="margin-top: 100px;justify-content: flex-start;align-items: center;flex: 1;" >
+            <img :src="picRoot + 'double-down-white.png'" style="width: 30px; height: 30px;"/>
           </div>
         </div>
         <!-- 筛选：各种类型 -->
@@ -98,7 +97,7 @@
 <script>
   import mainTab from './components/main-tab.vue'
 
-  import {getBaseUrl, jump} from './common/util.js'
+  import {getBaseUrl, jump, formatDate} from './common/util.js'
   import config from './common/config.js'
   import {getData} from './common/api.js'
 
@@ -150,11 +149,6 @@
           {
             name: '室内设计',
             src: 'design-shinei-white.png',
-            selected: false
-          },
-          {
-            name: '互联网设计',
-            src: 'design-hulianwang-white.png',
             selected: false
           }
         ],
@@ -218,29 +212,6 @@
         filter.selected = !filter.selected
         this.onrefresh()
       },
-      toggleFilters () {
-        const bg = this.$refs.bg
-        const arrow = this.$refs.arrow
-        this.showMoreFilter = !this.showMoreFilter
-        let flag = this.showMoreFilter
-        animation.transition(bg, {
-          styles: {
-            height: flag ? '450px' : '325px'
-          },
-          duration: 200,
-          timingFunction: 'ease',
-          delay: 0
-        }, () => {
-          animation.transition(arrow, {
-            styles: {
-              transform: flag ? 'rotate(180deg)' : 'rotate(0deg)'
-            },
-            duration: 200,
-            timingFunction: 'ease',
-            delay: 0
-          })
-        })
-      },
       goToDesigner (designerid) {
         jump ('designer.js', {'id': designerid})
       },
@@ -261,6 +232,9 @@
         } else {
           jump('me_certificate.js')
         }
+      },
+      formTime (time) {
+        return formatDate(time, 'hh:mm')
       }
     },
     components: {

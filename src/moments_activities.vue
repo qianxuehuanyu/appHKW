@@ -126,7 +126,7 @@
     position: fixed;
     width: 750px;
     height: 60px;
-    top: 80px;
+    top: 100px;
     left: 0;
     justify-content: center;
     align-items: center;

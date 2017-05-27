@@ -70,7 +70,7 @@
   .main{
     position: fixed;
     width: 750px;
-    top: 80px;
+    top: 100px;
     left: 0;
     bottom: 0;
   }
@@ -88,8 +88,8 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     border-bottom-width: 2px;
     border-bottom-color: #eee;
   }

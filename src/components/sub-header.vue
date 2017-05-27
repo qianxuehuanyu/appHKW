@@ -36,7 +36,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 80px;
+    height: 100px;
     width: 750px;
     justify-content: center;
     align-items: center;
@@ -44,15 +44,15 @@
   }
   .back{
     position: absolute;
-    left: 10px;
-    top: 10px;
-    width: 50px;
-    height: 50px;
+    left: 20px;
+    top: 20px;
+    width: 60px;
+    height: 60px;
   }
   .right{
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 20px;
+    top: 20px;
     flex-direction: row;
   }
 </style>

@@ -5,7 +5,7 @@
       <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
       </refresh>
-      <div class="posts" v-if="tabIndex === 0">
+      <div class="posts" v-if="tabIndex === 0" key="tab0">
         <div class="post" v-for="(post,index) in data[0]">
           <div class="post-left" >
             <text class="post-left-text">{{new Date(post.date).getDate()}}</text>
@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-      <div class="requires" v-if="tabIndex === 1">
+      <div class="requires" v-if="tabIndex === 1" key="tab1">
         <div class="require" v-for="(require, index) in data[1]">
           <div class="require-header">
             <div class="require-header-left">
@@ -191,7 +191,7 @@
   .main{
     position: fixed;
     width: 750px;
-    top: 160px;
+    top: 200px;
     left: 0;
     bottom: 0;
     background-color: #f2f2f2;
@@ -204,10 +204,10 @@
   }
   .tab{
     position: fixed;
-    top: 80px;
+    top: 100px;
     left: 0;
     width: 750px;
-    height: 80px;
+    height: 100px;
   }
   /* 帖子 */
   .posts{}
