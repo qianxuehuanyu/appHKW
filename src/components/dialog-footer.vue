@@ -47,12 +47,9 @@
     flex-direction: row;
     flex: 1;
   }
-  .input, .say{
-    flex: 1;
-  }
   .voice, .keyboard, .emoji, .add{
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     margin-left: 10px;
     margin-right: 10px;
   }
@@ -61,10 +58,13 @@
     padding-left: 10px;
     padding-right: 10px;
     font-size: 30px;
+    height: 60px;
+    flex: 1;
   }
   .say{
     text-align: center;
     border-width: 1px;
     border-radius: 10px;
+    flex: 1;
   }
 </style>

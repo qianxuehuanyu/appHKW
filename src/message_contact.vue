@@ -1,6 +1,7 @@
 <template>
   <div>
     <scroller class="main">
+      <!-- 名片 -->
       <div class="card">
         <div class="card-header">
           <div class="avatar">
@@ -27,25 +28,48 @@
           </div>
         </div>
         <div class="card-main">
+          <!-- 标签 -->
           <div class="tags">
             <div class="tag" v-for="tag in cardData.tags"><text class="tag-text">{{tag}}</text></div>
           </div>
         </div>
       </div>
+      <!-- 对话 -->
       <div class="dialog">
         <div class="talk" v-for="talk in talkData">
           <div class="time" v-if="talk.type === 'time'">
             <text class="time-text">{{talk.text}}</text>
           </div>
-          <!-- <div class="say" v-else>
+          <div class="say" v-else>
+            <!-- 头像 -->
             <div class="me-avatar" v-if="talk.from === 'me'">
               <img :src="user.avatar" class="say-avatar-img" />
             </div>
             <div class="opposite-avatar" v-if="talk.from === 'opposite'">
               <img :src="cardData.avatar" class="say-avatar-img" />
             </div>
-            <div :class="talk.from+'-content'">
-              <div :class="talk.from+'-container'">
+            <!-- 内容 -->
+            <div class="me-content" v-if="talk.from === 'me'">
+              <div class="me-container">
+                <div class="msg" v-if="talk.data.type === 'text'">
+                  <text class="msg-text">{{talk.data.text}}</text>
+                </div>
+                <div class="request" v-if="talk.data.type === 'request'">
+                  <div class="request-header">
+                    <text class="request-header-text">您向对方发起了约见请求：</text>
+                  </div>
+                  <div class="request-main">
+                    <text class="request-text">{{talk.data.text}}</text>
+                  </div>
+                  <div class="request-footer">
+                    <text class="request-detail">查看详细</text>
+                    <text class="request-share">分享到</text>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="opposite-content" v-if="talk.from === 'opposite'">
+              <div class="opposite-container">
                 <div class="msg" v-if="talk.data.type === 'text'">
                   <text class="msg-text">{{talk.data.text}}</text>
                 </div>
@@ -63,13 +87,14 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
     </scroller>
     <sub-header title="Mia Zhang">
       <img :src="picRoot+'more.png'" class="menu" @click="setting"/>
     </sub-header>
+    <!-- 输入栏 -->
     <dialog-footer></dialog-footer>
   </div>
 </template>

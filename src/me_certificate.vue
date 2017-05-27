@@ -22,7 +22,7 @@
               <text>昵&emsp;&emsp;称</text>
             </div>
             <div class="right">
-              <text>{{certificateData.name}}</text>
+              <input type="text" :value="certificateData.name" />
             </div>
           </div>
           <div class="gender">
