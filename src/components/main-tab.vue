@@ -155,7 +155,7 @@
             })
           }
         } else {
-          jump(url)
+          jump(url, 'false')
         }
       },
       go (url) {

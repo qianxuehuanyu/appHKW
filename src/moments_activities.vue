@@ -125,7 +125,7 @@
   .tabs{
     position: fixed;
     width: 750px;
-    height: 60px;
+    height: 100px;
     top: 100px;
     left: 0;
     justify-content: center;
@@ -141,7 +141,7 @@
   }
   .li{
     width: 200px;
-    height: 40px;
+    height: 60px;
     justify-content: center;
     align-items: center;
     border-left-width: 1px;
@@ -155,7 +155,7 @@
   /* 内容 */
   .main{
     position: fixed;
-    top: 140px;
+    top: 200px;
     left: 0;
     bottom: 0;
     width: 750px;

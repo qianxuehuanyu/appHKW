@@ -66,7 +66,7 @@ export function formUrlParam (params) {
   return str
 }
 
-export function jump (url, params) {
+export function jump (url, animate, params) {
   if (url === '') return false
 
   const bundleUrl = weex.config.bundleUrl
@@ -75,9 +75,16 @@ export function jump (url, params) {
   let base = ''
   let query = ''
   let newUrl
+  let animated
 
   if (params) {
     query = formUrlParam(params)
+  }
+
+  if (animate) {
+    animated = animate
+  } else {
+    animated = "true"
   }
 
   if (bundleUrl.indexOf('file://') >= 0) {
@@ -90,7 +97,8 @@ export function jump (url, params) {
   newUrl = base + url
   // modal.toast({'message': newUrl, 'duration': 1})
   navigator.push({
-    url: newUrl
+    url: newUrl,
+    animated
   })
   // event.openURL(newUrl)
 }

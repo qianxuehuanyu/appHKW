@@ -213,7 +213,7 @@
         this.onrefresh()
       },
       goToDesigner (designerid) {
-        jump ('designer.js', {'id': designerid})
+        jump ('designer.js', 'true', {'id': designerid})
       },
       addFilter () {
         jump('home_add.js')
@@ -226,7 +226,7 @@
       },
       certificate () {
         if (this.user.certificated) {
-          jump('designer.js', {
+          jump('designer.js', 'true', {
             self: true
           })
         } else {
