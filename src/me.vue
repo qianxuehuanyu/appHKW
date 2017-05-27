@@ -97,11 +97,11 @@
         ul3: [
           {
             'name': '我的常用地址',
-            'url': '' 
+            'url': 'me_address.js' 
           },
           {
             'name': '黑名单',
-            'url': '' 
+            'url': 'me_blacklist.js' 
           },
           {
             'name': '联系客服',
@@ -143,7 +143,6 @@
     width: 750px;
     bottom: 100px;
     top: 0px;
-    padding-bottom: 100px;
     background-color: #f2f2f2;
   }
   .header{
@@ -169,8 +168,8 @@
   }
   .li{
     position: relative;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     border-bottom-color: grey;
   }
   .left{

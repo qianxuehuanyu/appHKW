@@ -53,16 +53,6 @@
           this.refreshing = 'hide'
         })
       },
-      onloading () {
-        this.showloading = 'show'
-        this.fetchData().then((res) => {
-          this.formData(res.data)
-          res.data.forEach((customer) => {
-            this.customersData.push(customer)
-          })
-          this.showloading = 'hide'
-        })
-      },
       addCustomer () {
         jump('me_add-customer.js')
       }
