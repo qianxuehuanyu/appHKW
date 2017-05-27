@@ -12,16 +12,14 @@
             <img :src="msg.avatar" class="avatar-img" />
           </div>
           <div class="content">
-            <div class="msg-header">
+            <div class="msg-left">
               <text class="name">{{msg.name}}</text>
-              <text class="time">{{formTime(msg.time)}}</text>
-            </div>
-            <div class="msg-main">
               <text class="num">{{msg.job}} | {{msg.exp}}年 | {{msg.works}}件作品</text>
-              <img :src="picRoot+msg.action+'.png'" class="action-img" />
-            </div>
-            <div class="msg-footer">
               <text class="action">{{actionText(msg.action)}}</text>
+            </div>
+            <div class="msg-right">
+              <text class="time">{{formTime(msg.time)}}</text>
+              <img :src="picRoot+msg.action+'.png'" class="action-img" />
             </div>
           </div>
         </div>
@@ -111,9 +109,9 @@
     bottom: 0;
   }
   .setting{
-    width: 30px;
-    height: 30px;
-    margin-top: 15px;
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
     margin-right: 20px;
   }
   /* 消息列表 */
@@ -144,40 +142,38 @@
     flex: 1;
     border-bottom-width: 1px;
     border-bottom-color: grey;
-    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
   }
-  .msg-header{
-    padding-bottom: 10px;
+  .msg-left{
   }
   .name{
     font-size: 30px;
     font-weight: bold;
-  }
-  .msg-main{
     padding-bottom: 10px;
   }
   .num{
     font-size: 25px;
     color: grey;
-  }
-  .msg-footer{
     padding-bottom: 10px;
   }
   .action{
     font-size: 25px;
     color: grey;
+    padding-bottom: 10px;
+  }
+  .msg-right{
+    justify-content: center;
+    align-items: flex-end;
   }
   .time{
-    position: absolute;
-    right: 20px;
     color: grey;
     font-size: 22px;
+    padding-bottom: 20px;
   }
   .action-img{
     width: 50px;
     height: 50px;
-    position: absolute;
-    right: 20px;
-    top: 0px;
   }
 </style>
