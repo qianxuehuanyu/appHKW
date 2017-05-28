@@ -4,10 +4,6 @@
       <text>画客圈</text>
     </div>
     <scroller class="main" @loadmore="onloading" loadmoreoffset="10">
-      <!-- refresh -->
-      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
-        <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
-      </refresh>
       <!-- 轮播图 -->
       <div style="width: 750px;">
         <slider class="slider" interval="3000" auto-play="true">
@@ -21,6 +17,10 @@
       <div style="width: 750px;">
         <link-tab class="nav" :items="linkList" itemWidth="80px" radius="30px" :showNum="true"></link-tab>
       </div>
+      <!-- refresh -->
+      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
+        <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
+      </refresh>
       <!-- 画客圈数据 -->
       <moment-list :listdata="momentsData" type="moment"></moment-list>
       <!-- loading -->

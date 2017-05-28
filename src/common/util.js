@@ -67,7 +67,10 @@ export function formUrlParam (params) {
 }
 
 export function jump (url, animate, params) {
-  if (url === '') return false
+  if (url === '') {
+    modal.toast({'message': '空链接', 'duration': 1})
+    return false  
+  }
 
   const bundleUrl = weex.config.bundleUrl
   console.log(bundleUrl)

@@ -5,7 +5,7 @@
         <div class="li">
           <text class="left">加入黑名单</text>
           <div class="right">
-            <switch class="black" @change="toggle('black')"></switch>
+            <switch @change="toggle('black')"></switch>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div class="li">
           <text class="left">关注他</text>
           <div class="right">
-            <switch class="watch" :checked="watch" @change="toggle('watch')"></switch>
+            <switch :checked="watch" @change="toggle('watch')"></switch>
           </div>
         </div>
         <div class="li">

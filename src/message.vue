@@ -2,9 +2,9 @@
   <div>
     <scroller class="main">
       <!-- refresh -->
-      <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
+      <!-- <refresh @refresh="onrefresh" :display="refreshing" style="justify-content:center;align-items:center;">
         <text style="font-size: 30px;padding-top: 20px;">正在刷新数据...</text>
-      </refresh>
+      </refresh> -->
       <div class="links">
         <div class="link" @click="goToCustomer">
           <div class="link-avatar">

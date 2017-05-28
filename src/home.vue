@@ -7,15 +7,19 @@
       </refresh>
       <cell class="designer" v-for="designer in designersData" >
         <div class="designer-info">
+          <!-- 头像 -->
           <img class="designer-avatar" :src="designer.avatar" @click="goToDesigner(designer.designerid)"/>
           <div class="info">
-            <div style="flex-direction: row;">
+            <div style="flex-direction: row; justify-content:flex-start; align-items:center;">
+              <!-- 姓名、性别 -->
               <text class="name">{{designer.name}}&nbsp;</text>
               <img v-if="designer.sex === 0" :src="picRoot+'male.png'" style="width:30px; height: 30px;" />
               <img v-if="designer.sex === 1" :src="picRoot+'female.png'" style="width:30px; height: 30px;" />
             </div>
+            <!-- 数字 -->
             <text class="num" style="fontSize: 25px;margin-top: 5px;">{{designer.exp}}年经验|{{designer.works}}作品|{{designer.likes}}人喜欢</text>  
           </div>
+          <!-- 距离、热度、最新 -->
           <div class="designer-sort">
             <img v-if="sortState === 1" :src="picRoot+'location.png'" key="location" style="width:20px; height: 20px;" />
             <img v-if="sortState === 2" :src="picRoot+'clock.png'" key="new" style="width:20px; height: 20px;" />
@@ -25,10 +29,12 @@
             <text v-if="sortState === 3" style="color: #999; font-size: 22px; line-height: 30px;">&nbsp;{{designer.hot}}</text>
           </div>
         </div>
+        <!-- 标签 -->
         <div class="designer-tags">
-          <img :src="picRoot+'idea.png'" style="width:20px; height: 20px;" />
+          <img :src="picRoot+'idea.png'" style="width:20px; height: 20px;margin-right: 10px;" />
           <text class="tag-contents" style="fontSize: 25px;line-height: 40px;">{{designer.tags.join('，')}}</text>
         </div>
+        <!-- 作品 -->
         <div class="designer-works">
           <img v-for="pic in designer.pics" class="work" :src="pic" />
         </div>
@@ -396,11 +402,15 @@
     top: 0;
     right: 0;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
   .designer-tags{
     padding-top: 10px;
     padding-bottom: 10px;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
   .tag-contents{
     flex: 1;

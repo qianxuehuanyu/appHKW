@@ -148,7 +148,7 @@
   .header{
     background-color: #f2f2f2;
     width: 750px;
-    height: 250px;
+    height: 300px;
     justify-content: center;
     align-items: center;
     position: relative;

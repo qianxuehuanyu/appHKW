@@ -6,7 +6,7 @@
         <img v-else :src="picRoot+'fail.png'" class="info-img" />
         <text>{{info}}</text>
       </div>
-      <div class="share" v-for="share in items" @click="">
+      <div class="share" v-for="share in items" @click="goTo(share.url)">
         <img src="" style="width: 90px; height: 90px;border-width: 1px;"/>
         <text style="font-size: 30px;">{{share.text}}</text>
       </div>
@@ -19,8 +19,7 @@
 
 <script>
   import config from '../common/config.js'
-
-  const dom = weex.requireModule('dom')
+  import {jump} from '../common/util.js'
 
   export default {
     props: {
@@ -44,6 +43,9 @@
     methods: {
       cancel () {
         this.$emit('cancelShare')
+      },
+      goTo (url) {
+        jump(url)
       }
     }
   }

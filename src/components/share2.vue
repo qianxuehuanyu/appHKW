@@ -1,7 +1,7 @@
 <template>
   <div class="mask">
     <div class="share-box">
-      <text class="share-item">分享</text>
+      <text class="share-item" @click="goTo('')">分享</text>
       <text class="share-item" @click="goTo('me_certificate.js')">修改资料</text>
       <text class="share-item">关闭公开展示</text>
     </div>
@@ -13,6 +13,7 @@
 
 <script>
   import config from '../common/config.js'
+  import {jump} from '../common/util.js'
 
   export default {
     props: {
@@ -33,6 +34,9 @@
     methods: {
       cancel () {
         this.$emit('cancelShare')
+      },
+      goTo (url) {
+        jump(url)
       }
     }
   }

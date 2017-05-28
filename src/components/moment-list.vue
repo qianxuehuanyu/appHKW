@@ -5,7 +5,7 @@
       <div class="person-header">
         <img class="person-avatar" :src="data.avatar" @click="goToDesigner(data.designerid)"/>
         <div class="info">
-          <div style="flex-direction: row;">
+          <div style="flex-direction: row; justify-content: flex-start; align-items: center;">
             <text class="name">{{data.name}}&nbsp;</text>
             <img v-if="data.sex === 0" :src="picRoot + 'male.png'" style="width: 30px; height: 30px;"/>
             <img v-if="data.sex === 1" :src="picRoot + 'female.png'" style="width: 30px; height: 30px;"/>
@@ -206,6 +206,8 @@
   .like-people{
     margin-top: 10px;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
   }
   .row{
     /*flex-direction: row;*/
@@ -213,7 +215,8 @@
     margin-bottom: 5px;
   }
   .showMore{
-
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .center{
     text-align: center;

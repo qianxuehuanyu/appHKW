@@ -3,7 +3,7 @@
     <scroller class="main">
       <div class="history-header">
         <text style="font-size: 25px;">历史搜索</text>
-        <img :src="picRoot + 'delete.png'" style="width: 25px; height: 25px;"/>
+        <img :src="picRoot + 'delete.png'" style="width: 30px; height: 30px;"/>
       </div>
       <div class="history-list">
         <div class="history" v-for="history in historyList">
@@ -12,7 +12,7 @@
       </div>
       <div class="choice-header">
         <text style="font-size: 25px;">搜索发现</text>
-        <img :src="picRoot + 'show.png'" style="width: 25px; height: 25px;"/>
+        <img :src="picRoot + 'show.png'" style="width: 40px; height: 40px;"/>
       </div>
       <div class="choice-list">
         <div class="choice" v-for="choice in choiceList">
@@ -85,8 +85,10 @@
     flex-direction: row;
   }
   .back{
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
   }
   .search-input{
     flex: 1;
@@ -98,8 +100,8 @@
     padding-right: 20px;
   }
   .search-btn{
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   /* 内容 */
   .main{
@@ -113,10 +115,10 @@
   .history-header, .choice-header{
     flex-direction: row;
     justify-content: space-between;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .history-list{
     flex-direction: row;
@@ -143,21 +145,22 @@
     border-top-width: 1px;
     border-top-style: dashed;
     border-top-color: #ddd;
-    padding-top: 10px;
+    padding-top: 20px;
     padding-right: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     padding-left: 20px;
   }
   .choice-circle{
     padding-right: 20px;
   }
   .choice-img{
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
   }
   .choice-title{
     font-size: 30px;
+    padding-bottom: 10px;
   }
   .choice-desc{
     color: #999;
