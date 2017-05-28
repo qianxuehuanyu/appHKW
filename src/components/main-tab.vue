@@ -159,6 +159,7 @@
         }
       },
       go (url) {
+        this.showPub = false
         jump(url)
       }
     }

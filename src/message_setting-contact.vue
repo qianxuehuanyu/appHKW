@@ -5,7 +5,7 @@
         <div class="li">
           <text class="left">加入黑名单</text>
           <div class="right">
-            <switch class="block" @change="toggle('block')"></switch>
+            <switch class="black" @change="toggle('black')"></switch>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
       return {
         picRoot: config.picRoot,
         contactid: urlParse().contactid,
-        block: true,
+        black: true,
         watch: false
       }
     },
@@ -106,5 +106,8 @@
   .clear, .report{
     width: 40px;
     height: 40px;
+  }
+  .right{
+    align-items: flex-start;
   }
 </style>

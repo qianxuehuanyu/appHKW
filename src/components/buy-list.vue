@@ -14,9 +14,9 @@
       <div class="li-footer">
         <text class="price">{{li.price}}元/{{li.unit}}</text>
         <div class="buy-num" v-if="li.checked">
-          <text class="num-plus" @click="plus(index)">+</text>
-          <text class="num-num">{{li.num}}</text>
-          <text class="num-minus" @click="minus(index)">-</text>
+          <div class="num-plus" @click="plus(index)"><text class="num-text">+</text></div>
+          <div class="num-num"><text class="num-text">{{li.num}}</text></div>
+          <div class="num-minus" @click="minus(index)"><text class="num-text">-</text></div>
         </div>
       </div>
     </div>
@@ -132,8 +132,8 @@
   .buy-num{
     flex-direction: row;
     border-width: 1px;
-    width: 150px;
-    height: 40px;
+    width: 200px;
+    height: 60px;
   }
   .num-plus, .num-minus{
     flex: 1;
@@ -146,7 +146,9 @@
     flex: 1.5;
     justify-content: center;
     align-items: center;
-    font-size: 22px;
+  }
+  .num-text{
+    font-size: 30px;
   }
   .edit{
     position: absolute;

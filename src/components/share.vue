@@ -60,7 +60,7 @@
   }
   .share-box{
     position: absolute;
-    bottom: 110px;
+    bottom: 100px;
     left: 10px;
     width: 730px;
     padding-bottom: 10px;
@@ -94,10 +94,10 @@
   }
   .cancel{
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     left: 10px;
     width: 730px;
-    height: 80px;
+    height: 90px;
     background-color: #fff;
     justify-content: center;
     align-items: center;

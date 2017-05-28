@@ -1,23 +1,23 @@
 <template>
   <div class="buy-footer">
     <div class="toggle-part" ref="slide">
+      <div class="toggle-btn"  @click="toggleSlide" ref="btn">
+        <img :src="picRoot + 'down.png'" style="width: 50px; height: 50px;" />
+      </div>
       <div class="tax-bar">
         <div class="taxs">
           <template v-for="(tax,index) in taxItems">
-            <div class="tax" v-if="tax.checked" @click="selectTax(tax)" style="background-color: #409ad6;">
-              <text class="tax-text" style="color: #fff;">{{tax.text}}</text>
+            <div class="tax" v-if="taxIndex === index" @click="selectTax(index)" style="background-color: #409ad6;">
+              <text class="tax-text" style="color: #fff;">{{tax}}%</text>
             </div>
-            <div class="tax" v-if="!tax.checked" @click="selectTax(tax)" style="background-color: #fff;">
-              <text class="tax-text" style="color: #000;">{{tax.text}}</text>
+            <div class="tax" v-if="taxIndex !== index" @click="selectTax(index)" style="background-color: #fff;">
+              <text class="tax-text" style="color: #000;">{{tax}}%</text>
             </div>
           </template>
         </div>
         <div class="ask" @click="help">
           <text style="color: grey;">?</text>
         </div>
-      </div>
-      <div class="toggle-btn"  @click="toggleSlide" ref="btn">
-        <img :src="picRoot + 'down-white.png'" style="width: 50px; height: 50px;" />
       </div>
     </div>
     <div class="pay-bar">
@@ -54,7 +54,7 @@
           let money = item.price * item.num
           num += money
         })
-        num = num * (100 - this.tax) / 100
+        num = num * (100 - this.taxItems[this.taxIndex]) / 100
         return num
       }
     },
@@ -62,23 +62,15 @@
       return {
         picRoot: config.picRoot,
         getBaseUrl: getBaseUrl(),
-        taxItems: [
-          {text: '不需要税率', num: 0, checked: true}, 
-          {text: '3%', num: 3, checked: false}, 
-          {text: '6%', num: 6, checked: false}
-        ],
-        tax: 0,
+        taxItems: [0,3,6],
+        taxIndex: 0,
         hide: false
       }
     },
     methods: {
-      selectTax (tax) {
-        if (tax.checked) return false
-        this.taxItems.forEach((item) => {
-          item.checked = false
-        })
-        tax.checked = true
-        this.tax = tax.num
+      selectTax (index) {
+        if (index === this.taxIndex) return false
+        this.taxIndex = index
       },
       toggleSlide () {
         const slide = this.$refs.slide
@@ -86,7 +78,7 @@
         this.hide = !this.hide
         animation.transition(slide, {
           styles: {
-            transform: this.hide ? 'translate(0, 80px)' : 'translate(0, 0)'
+            transform: this.hide ? 'translate(0, 60px)' : 'translate(0, 0)'
           },
           duration: 200,
           timingFunction: 'ease',
@@ -105,7 +97,7 @@
       // 支付
       pay () {
         let obj = {}
-        obj.taxRate = this.tax
+        obj.taxRate = this.taxItems[this.taxIndex]
         obj.amount = this.amount
         obj.orders = this.cart
         obj.designerid = this.designerid
@@ -145,23 +137,16 @@
   }
   .toggle-part{position: relative;}
   .toggle-btn{
-    position: absolute;
-    top: -40px;
-    left: 350px;
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    background-color: #eee; 
     justify-content: center;
     align-items: center;
   }
   .tax-bar{
-    height: 80px;
     width: 750px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
+    padding-bottom: 10px;
   }
   .taxs{
     flex-direction: row;

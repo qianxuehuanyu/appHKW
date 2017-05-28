@@ -49,7 +49,7 @@
   }
   .share-box{
     position: absolute;
-    bottom: 100px;
+    bottom: 110px;
     left: 10px;
     justify-content: center;
     align-items: center;
@@ -61,7 +61,7 @@
   }
   .cancel{
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 10px;
     justify-content: center;
     align-items: center;

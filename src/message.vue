@@ -119,7 +119,7 @@
         jump('message_notice.js')
       },
       goToContact (id) {
-        jump('message_contact.js', {contactid: id})
+        jump('message_contact.js', 'true', {contactid: id})
       },
       addCustomer () {
         jump('me_add-customer.js')
