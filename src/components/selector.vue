@@ -1,5 +1,5 @@
 <template>
-  <div class="selector" >
+  <div class="mask" >
     <div class="header">
       <text @click="cancelSelect">取消</text>
       <text @click="confirmSelect">确定</text>
@@ -124,14 +124,17 @@
 </script>
 
 <style scoped>
-  .selector{
+  .mask{
     position: fixed;
+    top: 0;
     bottom: 0;
-    border-top-width: 1px;
-    border-top-color: #000;
-    background-color: #fff;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.3);
   }
   .header{
+    position: absolute;
+    bottom: 310px;
     width: 750px;
     flex-direction: row;
     justify-content: space-between;
@@ -140,15 +143,20 @@
     padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    border-top-width: 1px;
+    border-top-color: #000;
+    background-color: #fff;
   }
   .main{
+    position: absolute;
+    bottom: 0;
     justify-content: flex-start;
     align-items: center;
     padding-top: 20px;
     padding-bottom: 40px;
     height: 310px;
     overflow: hidden;
-    position: relative;
+    background-color: #fff;
   }
   .wrapper{
     width: 750px;
@@ -165,7 +173,7 @@
     border-bottom-width: 1px;
     height: 55px;
     width: 750px; 
-    top: 130px;
     left: 0;
+    bottom: 125px;
   }
 </style>

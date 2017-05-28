@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="mask" @click="cancel"></div>
+  <div class="mask">
     <div class="selector">
       <div class="ul">
         <div class="title">
@@ -43,7 +42,7 @@
     background-color: rgba(0,0,0,0.3);
   }
   .selector{
-    position: fixed;
+    position: absolute;
     bottom: 10px;
     left: 10px;
     right: 10px;
