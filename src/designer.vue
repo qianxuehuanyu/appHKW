@@ -9,7 +9,7 @@
         <!-- 设计师面板 -->
         <div class="designer-top">
           <img :src="picRoot+'left.png'" class="left-btn" @click="back"/>
-          <img :src="picRoot+'more.png'" class="right-btn" @click="toggleShare(true)"/>
+          <img :src="picRoot+'more.png'" class="right-btn" @click="showThisShare"/>
           <img :src="designerData.avatar" class="avatar" style="width: 100px; height: 100px;"/>
           <img :src="picRoot+'male.png'" class="sex" v-if="designerData.sex === 0"/>
           <img :src="picRoot+'female.png'" class="sex" v-if="designerData.sex === 1"/>
@@ -117,18 +117,8 @@
       </div>
     </div>
     <buy-footer :cart="cart" :designerid="designerid" type="designer" v-if="!self && tabIndex === 1 && cart.length"></buy-footer>
-    <share v-if="!self && showShare" @cancelShare="toggleShare(false)"></share>
-    <div class="share2" v-if="self && showShare">
-      <div class="share-mask"></div>
-      <div class="share-box">
-        <text class="share-item">分享</text>
-        <text class="share-item" @click="goTo('me_certificate.js')">修改资料</text>
-        <text class="share-item">关闭公开展示</text>
-      </div>
-      <div class="share-cancel" @click="toggleShare(false)">
-        <text class="share-item">取消</text>
-      </div>
-    </div>
+    <share v-if="!self && showShare" @cancelShare="hideThisShare" ></share>
+    <share2 v-if="self && showShare" @cancelShare="hideThisShare" ></share2>
   </div>
 </template>
 
@@ -138,6 +128,7 @@
   import buyList from './components/buy-list.vue'
   import tab from './components/tab.vue'
   import share from './components/share.vue'
+  import share2 from './components/share2.vue'
   import buyFooter from './components/buy-footer.vue'
 
   import {getBaseUrl, jump, urlParse} from './common/util.js'
@@ -276,8 +267,12 @@
       getCart (cart) {
         this.cart = cart
       },
-      toggleShare (value) {
-        this.showShare = value
+      showThisShare () {
+        this.showShare = true
+      },
+      hideThisShare () {
+        this.showShare = false
+        console.log(this.showShare)
       },
       goTo (url) {
         jump(url)
@@ -293,10 +288,9 @@
       } else {
         this.onrefresh()
       }
-      
     },
     components: {
-      subHeader, momentList, tab, buyList, buyFooter, share
+      subHeader, momentList, tab, buyList, buyFooter, share, share2
     }
   }
 </script>
@@ -516,49 +510,5 @@
   .link2{
     background-color: #1a68ac;
     margin-left: 1px;
-  }
-  /* 我是设计师 分享 share2 */
-  .share2{
-  }
-  .share-mask{
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.3);
-  }
-  .share-box{
-    position: fixed;
-    bottom: 100px;
-    left: 10px;
-    justify-content: center;
-    align-items: center;
-    width: 730px;
-    background-color: #fff;
-    border-radius: 8px;
-    border-color: grey;
-    border-width: 1px;
-  }
-  .share-cancel{
-    position: fixed;
-    bottom: 0;
-    left: 10px;
-    justify-content: center;
-    align-items: center;
-    width: 730px;
-    background-color: #fff;
-    border-radius: 8px;
-    border-color: grey;
-    border-width: 1px;
-  }
-  .share-item{
-    height: 90px;
-    width: 730px;
-    text-align: center;
-    line-height: 90px;
-    border-bottom-width: 1px;
-    border-bottom-color: grey;
-    font-size: 25px;
   }
 </style>

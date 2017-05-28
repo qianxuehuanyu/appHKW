@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="mask"></div>
+  <div class="mask">
     <div class="share-box">
       <div class="info" v-if="info">
         <img v-if="info === '发送成功'" :src="picRoot+'success.png'" class="info-img" />
@@ -20,6 +19,8 @@
 
 <script>
   import config from '../common/config.js'
+
+  const dom = weex.requireModule('dom')
 
   export default {
     props: {
@@ -51,14 +52,14 @@
 <style scoped>
   .mask{
     position: fixed;
-    top: 0;
+    top:0;
     bottom: 0;
     left: 0;
     right: 0;
     background-color: rgba(0,0,0,0.3);
   }
   .share-box{
-    position: fixed;
+    position: absolute;
     bottom: 110px;
     left: 10px;
     width: 730px;
@@ -92,7 +93,7 @@
     padding-top: 20px;
   }
   .cancel{
-    position: fixed;
+    position: absolute;
     bottom: 10px;
     left: 10px;
     width: 730px;

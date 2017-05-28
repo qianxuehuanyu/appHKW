@@ -117,7 +117,7 @@
       },
       goToDesigner () {
         if (this.user.certificated) {
-          jump('designer.js', {
+          jump('designer.js', 'true', {
             self: true
           })
         } else {
