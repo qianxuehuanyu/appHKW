@@ -159,7 +159,7 @@
         }
       },
       go (url) {
-        this.showPub = false
+        this.selectTab(2)
         jump(url)
       }
     }
